@@ -47,6 +47,8 @@ import {
   Content,
   Flex,
   Item,
+  Provider,
+  defaultTheme,
 } from '@adobe/react-spectrum';
 import merge from 'lodash/merge';
 import { AjvProps, withAjvProps } from '../util';
@@ -91,59 +93,61 @@ class SpectrumCategorizationStepperRenderer extends RendererComponent<
     const { selectedStep } = this.state;
 
     return (
-      <Flex
-        direction='column'
-        isHidden={!visible}
-        UNSAFE_className='categorization-stepper'
-      >
-        <Tabs
-          isDisabled={!enabled}
-          selectedKey={String(selectedStep)}
-          onSelectionChange={this.selectStep}
+      <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
+        <Flex
+          direction='column'
+          isHidden={!visible}
+          UNSAFE_className='categorization-stepper'
         >
-          {categories.map((category, index) => (
-            <Item key={index} title={category.label}>
-              <Content margin='size-160'>
-                <SpectrumVerticalLayout
-                  uischema={
-                    {
-                      type: 'VerticalLayout',
-                      elements: category.elements ?? [],
-                    } as UISchemaElement
-                  }
-                  schema={schema}
-                  path={path}
-                ></SpectrumVerticalLayout>
-              </Content>
-            </Item>
-          ))}
-        </Tabs>
-        {Boolean(appliedUiSchemaOptions.showNavButtons) ? (
-          <ButtonGroup
-            marginX='size-160'
-            marginBottom='size-160'
-            flex='auto'
-            align='end'
+          <Tabs
+            isDisabled={!enabled}
+            selectedKey={String(selectedStep)}
+            onSelectionChange={this.selectStep}
           >
-            <Button
-              variant='secondary'
-              isDisabled={selectedStep <= 0}
-              onPress={() => this.selectStep(selectedStep - 1)}
+            {categories.map((category, index) => (
+              <Item key={index} title={category.label}>
+                <Content margin='size-160'>
+                  <SpectrumVerticalLayout
+                    uischema={
+                      {
+                        type: 'VerticalLayout',
+                        elements: category.elements ?? [],
+                      } as UISchemaElement
+                    }
+                    schema={schema}
+                    path={path}
+                  ></SpectrumVerticalLayout>
+                </Content>
+              </Item>
+            ))}
+          </Tabs>
+          {Boolean(appliedUiSchemaOptions.showNavButtons) ? (
+            <ButtonGroup
+              marginX='size-160'
+              marginBottom='size-160'
+              flex='auto'
+              align='end'
             >
-              Previous
-            </Button>
-            <Button
-              variant='primary'
-              isDisabled={selectedStep >= categories.length - 1}
-              onPress={() => this.selectStep(selectedStep + 1)}
-            >
-              Next
-            </Button>
-          </ButtonGroup>
-        ) : (
-          <></>
-        )}
-      </Flex>
+              <Button
+                variant='secondary'
+                isDisabled={selectedStep <= 0}
+                onPress={() => this.selectStep(selectedStep - 1)}
+              >
+                Previous
+              </Button>
+              <Button
+                variant='primary'
+                isDisabled={selectedStep >= categories.length - 1}
+                onPress={() => this.selectStep(selectedStep + 1)}
+              >
+                Next
+              </Button>
+            </ButtonGroup>
+          ) : (
+            <></>
+          )}
+        </Flex>
+      </Provider>
     );
   }
 

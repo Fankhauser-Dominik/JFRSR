@@ -21,7 +21,7 @@
 import React from 'react';
 import { CellProps } from '@jsonforms/core';
 import merge from 'lodash/merge';
-import { NumberField, Provider, defaultTheme } from '@adobe/react-spectrum';
+import { NumberField } from '@adobe/react-spectrum';
 import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
 
@@ -55,7 +55,7 @@ export class InputInteger extends React.PureComponent<
       : '100%';
 
     return (
-      <Provider theme={defaultTheme}>
+      <div>
         <NumberField
           label={label}
           necessityIndicator={necessityIndicator}
@@ -70,7 +70,7 @@ export class InputInteger extends React.PureComponent<
           minValue={schema.minimum}
           maxValue={schema.maximum}
         />
-      </Provider>
+      </div>
     );
   }
 }

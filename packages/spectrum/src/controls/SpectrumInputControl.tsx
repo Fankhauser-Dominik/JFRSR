@@ -78,26 +78,27 @@ export class SpectrumInputControl extends Control<
     };
 
     return (
-      <Provider
-        theme={defaultTheme}
-        /* hidden={visible === undefined || visible === null ? false : !visible}
+      <div
+        hidden={visible === undefined || visible === null ? false : !visible}
         onFocus={this.onFocus}
-        onBlur={this.onBlur} */
+        onBlur={this.onBlur}
         id={id}
       >
-        <Flex direction='column'>
-          <InnerComponent
-            {...this.props}
-            id={id && `${id}-input`}
-            isValid={isValid}
-          />
-          <View UNSAFE_style={!isValid ? UNSAFE_error : {}}>
-            <Text>
-              {!isValid ? errors : showDescription ? description : null}
-            </Text>
-          </View>
-        </Flex>
-      </Provider>
+        <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
+          <Flex direction='column'>
+            <InnerComponent
+              {...this.props}
+              id={id && `${id}-input`}
+              isValid={isValid}
+            />
+            <View UNSAFE_style={!isValid ? UNSAFE_error : {}}>
+              <Text>
+                {!isValid ? errors : showDescription ? description : null}
+              </Text>
+            </View>
+          </Flex>
+        </Provider>
+      </div>
     );
   }
 }

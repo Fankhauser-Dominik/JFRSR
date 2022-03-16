@@ -24,7 +24,7 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
-*/
+  */
 import React from 'react';
 
 import {
@@ -41,7 +41,7 @@ import {
   ResolvedJsonFormsDispatch,
   withJsonFormsAllOfProps,
 } from '@jsonforms/react';
-import { View } from '@adobe/react-spectrum';
+import { View, Provider, defaultTheme } from '@adobe/react-spectrum';
 
 const SpectrumAllOfRenderer = ({
   schema,
@@ -62,13 +62,15 @@ const SpectrumAllOfRenderer = ({
   if (delegateUISchema) {
     return (
       <View isHidden={!visible}>
-        <ResolvedJsonFormsDispatch
-          schema={_schema}
-          uischema={delegateUISchema}
-          path={path}
-          renderers={renderers}
-          cells={cells}
-        />
+        <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
+          <ResolvedJsonFormsDispatch
+            schema={_schema}
+            uischema={delegateUISchema}
+            path={path}
+            renderers={renderers}
+            cells={cells}
+          />
+        </Provider>
       </View>
     );
   }

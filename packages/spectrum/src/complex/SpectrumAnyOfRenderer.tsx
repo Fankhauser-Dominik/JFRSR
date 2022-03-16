@@ -41,7 +41,13 @@ import {
   withJsonFormsAnyOfProps,
 } from '@jsonforms/react';
 import CombinatorProperties from './CombinatorProperties';
-import { Content, Item, View } from '@adobe/react-spectrum';
+import {
+  Content,
+  Item,
+  View,
+  Provider,
+  defaultTheme,
+} from '@adobe/react-spectrum';
 import { Tabs } from '@react-spectrum/tabs';
 
 const SpectrumAnyOfRenderer = ({
@@ -73,30 +79,32 @@ const SpectrumAnyOfRenderer = ({
 
   return (
     <View isHidden={!visible} UNSAFE_className={`anyof-renderer`}>
-      <CombinatorProperties
-        schema={_schema}
-        combinatorKeyword={'anyOf'}
-        path={path}
-      />
-      <Tabs
-        selectedKey={String(selectedAnyOf)}
-        onSelectionChange={handleChange}
-      >
-        {anyOfRenderInfos.map((anyOfRenderInfo, anyOfIndex) => (
-          <Item key={anyOfIndex} title={anyOfRenderInfo.label}>
-            <Content margin='size-160'>
-              <ResolvedJsonFormsDispatch
-                key={anyOfIndex}
-                schema={anyOfRenderInfo.schema}
-                uischema={anyOfRenderInfo.uischema}
-                path={path}
-                renderers={renderers}
-                cells={cells}
-              />
-            </Content>
-          </Item>
-        ))}
-      </Tabs>
+      <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
+        <CombinatorProperties
+          schema={_schema}
+          combinatorKeyword={'anyOf'}
+          path={path}
+        />
+        <Tabs
+          selectedKey={String(selectedAnyOf)}
+          onSelectionChange={handleChange}
+        >
+          {anyOfRenderInfos.map((anyOfRenderInfo, anyOfIndex) => (
+            <Item key={anyOfIndex} title={anyOfRenderInfo.label}>
+              <Content margin='size-160'>
+                <ResolvedJsonFormsDispatch
+                  key={anyOfIndex}
+                  schema={anyOfRenderInfo.schema}
+                  uischema={anyOfRenderInfo.uischema}
+                  path={path}
+                  renderers={renderers}
+                  cells={cells}
+                />
+              </Content>
+            </Item>
+          ))}
+        </Tabs>
+      </Provider>
     </View>
   );
 };

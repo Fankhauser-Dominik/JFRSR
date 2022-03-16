@@ -24,7 +24,7 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
-*/
+  */
 import React, { Key, useCallback, useState } from 'react';
 import { isEmpty } from '../util/isEmpty';
 
@@ -55,7 +55,7 @@ import {
   Item,
   View,
 } from '@adobe/react-spectrum';
-import { Tabs } from '@react-spectrum/tabs';
+import { Tabs, Provider, defaultTheme } from '@adobe/react-spectrum';
 
 export interface OwnOneOfProps extends OwnPropsOfControl {
   indexOfFittingSchema?: number;
@@ -118,55 +118,57 @@ const SpectrumOneOfRenderer = ({
 
   return (
     <View isHidden={!visible}>
-      <CombinatorProperties
-        schema={_schema}
-        combinatorKeyword={'oneOf'}
-        path={path}
-      />
-      <Tabs
-        selectedKey={String(selectedIndex)}
-        onSelectionChange={handleTabChange}
-      >
-        {oneOfRenderInfos.map((oneOfRenderInfo, oneOfIndex) => (
-          <Item key={oneOfIndex} title={oneOfRenderInfo.label}>
-            <Content margin='size-160'>
-              <ResolvedJsonFormsDispatch
-                key={oneOfIndex}
-                schema={oneOfRenderInfo.schema}
-                uischema={oneOfRenderInfo.uischema}
-                path={path}
-                renderers={renderers}
-                cells={cells}
-              />
-            </Content>
-          </Item>
-        ))}
-      </Tabs>
-      <DialogContainer onDismiss={handleClose}>
-        {open && (
-          <Dialog>
-            <Heading>Clear form?</Heading>
-            <Divider />
-            <Content>
-              Your data will be cleared if you navigate away from this tab. Do
-              you want to proceed?
-            </Content>
-            <ButtonGroup>
-              <Button variant='secondary' onPress={cancel}>
-                Cancel
-              </Button>
-              <Button
-                variant='cta'
-                onPress={confirm}
-                autoFocus
-                id={id && `oneOf-${id}-confirm-yes`}
-              >
-                Confirm
-              </Button>
-            </ButtonGroup>
-          </Dialog>
-        )}
-      </DialogContainer>
+      <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
+        <CombinatorProperties
+          schema={_schema}
+          combinatorKeyword={'oneOf'}
+          path={path}
+        />
+        <Tabs
+          selectedKey={String(selectedIndex)}
+          onSelectionChange={handleTabChange}
+        >
+          {oneOfRenderInfos.map((oneOfRenderInfo, oneOfIndex) => (
+            <Item key={oneOfIndex} title={oneOfRenderInfo.label}>
+              <Content margin='size-160'>
+                <ResolvedJsonFormsDispatch
+                  key={oneOfIndex}
+                  schema={oneOfRenderInfo.schema}
+                  uischema={oneOfRenderInfo.uischema}
+                  path={path}
+                  renderers={renderers}
+                  cells={cells}
+                />
+              </Content>
+            </Item>
+          ))}
+        </Tabs>
+        <DialogContainer onDismiss={handleClose}>
+          {open && (
+            <Dialog>
+              <Heading>Clear form?</Heading>
+              <Divider />
+              <Content>
+                Your data will be cleared if you navigate away from this tab. Do
+                you want to proceed?
+              </Content>
+              <ButtonGroup>
+                <Button variant='secondary' onPress={cancel}>
+                  Cancel
+                </Button>
+                <Button
+                  variant='cta'
+                  onPress={confirm}
+                  autoFocus
+                  id={id && `oneOf-${id}-confirm-yes`}
+                >
+                  Confirm
+                </Button>
+              </ButtonGroup>
+            </Dialog>
+          )}
+        </DialogContainer>
+      </Provider>
     </View>
   );
 };

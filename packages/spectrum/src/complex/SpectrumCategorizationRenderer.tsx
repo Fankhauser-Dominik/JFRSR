@@ -16,7 +16,7 @@
 
   The above copyright notice and this permission notice shall be included in
   all copies or substantial portions of the Software.
-
+  
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,7 +24,7 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
-*/
+  */
 import React from 'react';
 import {
   and,
@@ -40,7 +40,13 @@ import {
 } from '@jsonforms/core';
 import { RendererComponent, withJsonFormsLayoutProps } from '@jsonforms/react';
 import { Tabs } from '@react-spectrum/tabs';
-import { Content, Item, View } from '@adobe/react-spectrum';
+import {
+  Content,
+  Item,
+  View,
+  Provider,
+  defaultTheme,
+} from '@adobe/react-spectrum';
 import { AjvProps, withAjvProps } from '../util';
 import { SpectrumVerticalLayout } from '../layouts';
 
@@ -84,24 +90,26 @@ class SpectrumCategorizationRenderer extends RendererComponent<
 
     return (
       <View isHidden={!visible}>
-        <Tabs isDisabled={!enabled}>
-          {categories.map((category, index) => (
-            <Item key={index} title={category.label}>
-              <Content margin='size-160'>
-                <SpectrumVerticalLayout
-                  uischema={
-                    {
-                      type: 'VerticalLayout',
-                      elements: category.elements ?? [],
-                    } as UISchemaElement
-                  }
-                  schema={schema}
-                  path={path}
-                ></SpectrumVerticalLayout>
-              </Content>
-            </Item>
-          ))}
-        </Tabs>
+        <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
+          <Tabs isDisabled={!enabled}>
+            {categories.map((category, index) => (
+              <Item key={index} title={category.label}>
+                <Content margin='size-160'>
+                  <SpectrumVerticalLayout
+                    uischema={
+                      {
+                        type: 'VerticalLayout',
+                        elements: category.elements ?? [],
+                      } as UISchemaElement
+                    }
+                    schema={schema}
+                    path={path}
+                  ></SpectrumVerticalLayout>
+                </Content>
+              </Item>
+            ))}
+          </Tabs>
+        </Provider>
       </View>
     );
   }

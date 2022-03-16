@@ -32,6 +32,7 @@ import {
   rankWith,
 } from '@jsonforms/core';
 import { withJsonFormsControlProps } from '@jsonforms/react';
+import { Provider, defaultTheme } from '@adobe/react-spectrum';
 import { isEmpty } from '../util/isEmpty';
 import React from 'react';
 import { SpectrumBooleanCell } from '../cells/CustomizableCells';
@@ -51,22 +52,24 @@ export const SpectrumBooleanControl = ({
   config,
 }: ControlProps) => {
   return (
-    <SpectrumBooleanCell
-      id={id && `${id}-input`}
-      isValid={isEmpty(errors)}
-      data={data}
-      enabled={enabled}
-      visible={visible}
-      path={path}
-      uischema={uischema}
-      schema={schema}
-      rootSchema={rootSchema}
-      handleChange={handleChange}
-      errors={errors}
-      config={config}
-    >
-      {label}
-    </SpectrumBooleanCell>
+    <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
+      <SpectrumBooleanCell
+        id={id && `${id}-input`}
+        isValid={isEmpty(errors)}
+        data={data}
+        enabled={enabled}
+        visible={visible}
+        path={path}
+        uischema={uischema}
+        schema={schema}
+        rootSchema={rootSchema}
+        handleChange={handleChange}
+        errors={errors}
+        config={config}
+      >
+        {label}
+      </SpectrumBooleanCell>
+    </Provider>
   );
 };
 

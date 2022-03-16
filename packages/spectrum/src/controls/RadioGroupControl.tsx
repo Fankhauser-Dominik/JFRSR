@@ -34,6 +34,7 @@ import {
   isPlainLabel,
 } from '@jsonforms/core';
 import { Control, withJsonFormsControlProps } from '@jsonforms/react';
+import { Provider, defaultTheme } from '@adobe/react-spectrum';
 import merge from 'lodash/merge';
 
 export class RadioGroupControl extends Control<ControlProps, ControlState> {
@@ -77,32 +78,34 @@ export class RadioGroupControl extends Control<ControlProps, ControlState> {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
       >
-        <label htmlFor={id} className={classNames.label}>
-          {computeLabel(
-            isPlainLabel(label) ? label : label.default,
-            required,
-            appliedUiSchemaOptions.hideRequiredAsterisk
-          )}
-        </label>
+        <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
+          <label htmlFor={id} className={classNames.label}>
+            {computeLabel(
+              isPlainLabel(label) ? label : label.default,
+              required,
+              appliedUiSchemaOptions.hideRequiredAsterisk
+            )}
+          </label>
 
-        <div style={groupStyle}>
-          {options.map((optionValue) => (
-            <div key={optionValue}>
-              <input
-                type='radio'
-                value={optionValue}
-                id={optionValue}
-                name={id}
-                checked={data === optionValue}
-                onChange={(ev) => this.handleChange(ev.currentTarget.value)}
-              />
-              <label htmlFor={optionValue}>{optionValue}</label>
-            </div>
-          ))}
-        </div>
-        <div className={divClassNames}>
-          {!isValid ? errors : showDescription ? description : null}
-        </div>
+          <div style={groupStyle}>
+            {options.map((optionValue) => (
+              <div key={optionValue}>
+                <input
+                  type='radio'
+                  value={optionValue}
+                  id={optionValue}
+                  name={id}
+                  checked={data === optionValue}
+                  onChange={(ev) => this.handleChange(ev.currentTarget.value)}
+                />
+                <label htmlFor={optionValue}>{optionValue}</label>
+              </div>
+            ))}
+          </div>
+          <div className={divClassNames}>
+            {!isValid ? errors : showDescription ? description : null}
+          </div>
+        </Provider>
       </div>
     );
   }

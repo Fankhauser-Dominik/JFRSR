@@ -42,7 +42,7 @@ import {
   withJsonFormsControlProps,
 } from '@jsonforms/react';
 import merge from 'lodash/merge';
-import { Flex, Text } from '@adobe/react-spectrum';
+import { Flex, Text, Provider, defaultTheme } from '@adobe/react-spectrum';
 
 export class InputControl extends Control<ControlProps, ControlState> {
   render() {
@@ -90,19 +90,21 @@ export class InputControl extends Control<ControlProps, ControlState> {
           onBlur={this.onBlur}
           id={id}
         >
-          <Flex direction='column'>
-            <DispatchCell
-              uischema={uischema}
-              schema={schema}
-              path={path}
-              id={id && `${id}-input`}
-            />
-            <div className={divClassNames}>
-              <Text>
-                {!isValid ? errors : showDescription ? description : null}
-              </Text>
-            </div>
-          </Flex>
+          <Provider theme={defaultTheme} id='InputControlProvider'>
+            <Flex direction='column'>
+              <DispatchCell
+                uischema={uischema}
+                schema={schema}
+                path={path}
+                id={id && `${id}-input`}
+              />
+              <div className={divClassNames}>
+                <Text>
+                  {!isValid ? errors : showDescription ? description : null}
+                </Text>
+              </div>
+            </Flex>
+          </Provider>
         </div>
       );
     }

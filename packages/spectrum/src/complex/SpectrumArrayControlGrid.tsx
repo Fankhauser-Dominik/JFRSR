@@ -49,6 +49,8 @@ import {
   TooltipTrigger,
   View,
   Grid,
+  Provider,
+  defaultTheme,
 } from '@adobe/react-spectrum';
 
 import Delete from '@spectrum-icons/workflow/Delete';
@@ -122,121 +124,127 @@ function SpectrumArrayControlGrid(props: ArrayControlProps) {
     <View
       isHidden={visible === undefined || visible === null ? false : !visible}
     >
-      <ArrayHeader
-        {...uioptions}
-        add={add}
-        allErrorsMessages={childErrors.map((e) => e.message)}
-        labelText={isPlainLabel(label) ? label : label.default}
-      />
-      {data && Array.isArray(data) && data.length > 0 && (
-        <Grid
-          columns={
-            spacing.length
-              ? `${fields.map((_, i) => `${spacing[i] || 1}fr`).join(' ')} 0fr`
-              : `repeat(${fields.length}, 1fr) 0fr`
-          }
-          rows='auto'
-          autoRows={`minmax(${rowMinHeight}, auto)`}
-          columnGap='size-100'
-        >
-          {fields
-            .map((prop) => (
-              <View
-                paddingBottom='size-50'
-                justifySelf={
-                  schema.properties?.[prop]?.type === 'boolean'
-                    ? 'center'
-                    : undefined
-                }
-                key={prop}
-              >
-                {startCase(prop)}
-              </View>
-            ))
-            .concat(<View key='spacer' />)}
-          {data.map((_, index) => {
-            const childPath = Paths.compose(path, `${index}`);
-            const rowCells: JSX.Element[] = schema.properties
-              ? fields
-                  .filter((prop) => schema.properties[prop].type !== 'array')
-                  .map((prop) => {
-                    const childPropPath = Paths.compose(
-                      childPath,
-                      prop.toString()
-                    );
-                    const isCheckbox =
-                      schema.properties[prop].type === 'boolean';
-                    return (
-                      <View
-                        key={childPropPath}
-                        paddingStart={isCheckbox ? 'size-200' : undefined}
-                      >
-                        <Flex
-                          direction='column'
-                          width='100%'
-                          alignItems={isCheckbox ? 'center' : 'start'}
+      <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
+        <ArrayHeader
+          {...uioptions}
+          add={add}
+          allErrorsMessages={childErrors.map((e) => e.message)}
+          labelText={isPlainLabel(label) ? label : label.default}
+        />
+        {data && Array.isArray(data) && data.length > 0 && (
+          <Grid
+            columns={
+              spacing.length
+                ? `${fields
+                    .map((_, i) => `${spacing[i] || 1}fr`)
+                    .join(' ')} 0fr`
+                : `repeat(${fields.length}, 1fr) 0fr`
+            }
+            rows='auto'
+            autoRows={`minmax(${rowMinHeight}, auto)`}
+            columnGap='size-100'
+          >
+            {fields
+              .map((prop) => (
+                <View
+                  paddingBottom='size-50'
+                  justifySelf={
+                    schema.properties?.[prop]?.type === 'boolean'
+                      ? 'center'
+                      : undefined
+                  }
+                  key={prop}
+                >
+                  {startCase(prop)}
+                </View>
+              ))
+              .concat(<View key='spacer' />)}
+            {data.map((_, index) => {
+              const childPath = Paths.compose(path, `${index}`);
+              const rowCells: JSX.Element[] = schema.properties
+                ? fields
+                    .filter((prop) => schema.properties[prop].type !== 'array')
+                    .map((prop) => {
+                      const childPropPath = Paths.compose(
+                        childPath,
+                        prop.toString()
+                      );
+                      const isCheckbox =
+                        schema.properties[prop].type === 'boolean';
+                      return (
+                        <View
+                          key={childPropPath}
+                          paddingStart={isCheckbox ? 'size-200' : undefined}
                         >
-                          <DispatchCell
-                            schema={Resolve.schema(
-                              schema,
-                              `#/properties/${prop}`,
-                              rootSchema
-                            )}
-                            uischema={
-                              isCheckbox
-                                ? {
-                                    ...createControlElement(prop),
-                                    options: { trim: true },
-                                  }
-                                : createControlElement(prop)
-                            }
-                            path={childPath + '.' + prop}
-                          />
-                          <View
-                            UNSAFE_style={errorStyle}
-                            isHidden={
-                              getChildError(childErrors, childPropPath) === ''
-                            }
+                          <Flex
+                            direction='column'
+                            width='100%'
+                            alignItems={isCheckbox ? 'center' : 'start'}
                           >
-                            <Text>
-                              {getChildError(childErrors, childPropPath)}
-                            </Text>
-                          </View>
-                        </Flex>
-                      </View>
-                    );
-                  })
-              : [
-                  <View key={Paths.compose(childPath, index.toString())}>
-                    <Flex direction='column' width='100%'>
-                      <DispatchCell
-                        schema={schema}
-                        uischema={createControlElement()}
-                        path={childPath}
-                      />
-                      <View
-                        UNSAFE_style={errorStyle}
-                        isHidden={getChildError(childErrors, childPath) === ''}
-                      >
-                        <Text>{getChildError(childErrors, childPath)}</Text>
-                      </View>
-                    </Flex>
-                  </View>,
-                ];
-            return (
-              <React.Fragment key={index}>
-                {rowCells}
-                <DeleteButton
-                  index={index}
-                  path={childPath}
-                  removeItems={removeItems}
-                />
-              </React.Fragment>
-            );
-          })}
-        </Grid>
-      )}
-      <ArrayFooter {...uioptions} add={add} />
+                            <DispatchCell
+                              schema={Resolve.schema(
+                                schema,
+                                `#/properties/${prop}`,
+                                rootSchema
+                              )}
+                              uischema={
+                                isCheckbox
+                                  ? {
+                                      ...createControlElement(prop),
+                                      options: { trim: true },
+                                    }
+                                  : createControlElement(prop)
+                              }
+                              path={childPath + '.' + prop}
+                            />
+                            <View
+                              UNSAFE_style={errorStyle}
+                              isHidden={
+                                getChildError(childErrors, childPropPath) === ''
+                              }
+                            >
+                              <Text>
+                                {getChildError(childErrors, childPropPath)}
+                              </Text>
+                            </View>
+                          </Flex>
+                        </View>
+                      );
+                    })
+                : [
+                    <View key={Paths.compose(childPath, index.toString())}>
+                      <Flex direction='column' width='100%'>
+                        <DispatchCell
+                          schema={schema}
+                          uischema={createControlElement()}
+                          path={childPath}
+                        />
+                        <View
+                          UNSAFE_style={errorStyle}
+                          isHidden={
+                            getChildError(childErrors, childPath) === ''
+                          }
+                        >
+                          <Text>{getChildError(childErrors, childPath)}</Text>
+                        </View>
+                      </Flex>
+                    </View>,
+                  ];
+              return (
+                <React.Fragment key={index}>
+                  {rowCells}
+                  <DeleteButton
+                    index={index}
+                    path={childPath}
+                    removeItems={removeItems}
+                  />
+                </React.Fragment>
+              );
+            })}
+          </Grid>
+        )}
+        <ArrayFooter {...uioptions} add={add} />
+      </Provider>
     </View>
   );
 }
