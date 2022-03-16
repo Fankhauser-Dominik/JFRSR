@@ -1396,7 +1396,7 @@ samples.push({
         type: 'Control',
         scope: '#/properties/integeroptional',
         options: {
-          necessityIndicator: true,
+          necessityIndicator: 'label',
         },
       },
       {
@@ -1404,7 +1404,7 @@ samples.push({
         type: 'Control',
         scope: '#/properties/integerrequired',
         options: {
-          necessityIndicator: true,
+          necessityIndicator: 'icon',
         },
       },
     ],

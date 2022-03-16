@@ -43,11 +43,9 @@ import {
   Cell,
   Column,
   Row,
-  Table,
+  TableView,
   TableBody,
   TableHeader,
-} from '@react-spectrum/table';
-import {
   ActionButton,
   AlertDialog,
   DialogTrigger,
@@ -148,7 +146,7 @@ class SpectrumTableArrayControl extends React.Component<
           allErrorsMessages={childErrors.map((e) => e.message)}
           labelText={isPlainLabel(label) ? label : label.default}
         />
-        <Table overflowMode='wrap' density='compact'>
+        <TableView overflowMode='wrap' density='compact'>
           <TableHeader>
             {[
               ...headerColumns,
@@ -262,7 +260,7 @@ class SpectrumTableArrayControl extends React.Component<
               })
             )}
           </TableBody>
-        </Table>
+        </TableView>
         <ArrayFooter {...uioptions} add={add} />
       </View>
     );
