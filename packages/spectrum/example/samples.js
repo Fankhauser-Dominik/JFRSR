@@ -60,9 +60,9 @@ samples.push({
       {
         type: 'Control',
         scope: '#/properties/comments',
-        "options": {
-          "table": true
-        }
+        options: {
+          table: true,
+        },
       },
     ],
   },
@@ -1383,4 +1383,47 @@ samples.push({
     dead: false,
     vegetables: false,
   },
+});
+
+samples.push({
+  name: 'spectrum-testerino',
+  label: 'Testerino',
+  uischema: {
+    type: 'HorizontalLayout',
+    elements: [
+      {
+        label: 'Optional NumberField',
+        type: 'Control',
+        scope: '#/properties/integeroptional',
+        options: {
+          necessityIndicator: true,
+        },
+      },
+      {
+        label: 'Required NumberField',
+        type: 'Control',
+        scope: '#/properties/integerrequired',
+        options: {
+          necessityIndicator: true,
+        },
+      },
+    ],
+  },
+  schema: {
+    type: 'object',
+    properties: {
+      integeroptional: {
+        type: 'integer',
+        minimum: 1,
+        maximum: 5,
+      },
+      integerrequired: {
+        type: 'integer',
+        minimum: 1,
+        maximum: 5,
+      },
+    },
+    required: ['integerrequired'],
+  },
+  data: {},
 });
