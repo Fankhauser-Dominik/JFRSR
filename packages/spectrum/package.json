@@ -41,7 +41,7 @@
     "customization"
   ],
   "dependencies": {
-    "@adobe/react-spectrum": "^3.14.0",
+    "@adobe/react-spectrum": "^3.16.4",
     "@date-io/moment": "1.3.11",
     "@types/uuid": "^3.4.6",
     "moment": "^2.24.0",

@@ -33,7 +33,13 @@ import {
 } from '@jsonforms/core';
 import { Control } from '@jsonforms/react';
 import merge from 'lodash/merge';
-import { Flex, Text, View } from '@adobe/react-spectrum';
+import {
+  Flex,
+  Text,
+  View,
+  Provider,
+  defaultTheme,
+} from '@adobe/react-spectrum';
 
 interface WithInput {
   input: any;
@@ -72,10 +78,11 @@ export class SpectrumInputControl extends Control<
     };
 
     return (
-      <div
-        hidden={visible === undefined || visible === null ? false : !visible}
+      <Provider
+        theme={defaultTheme}
+        /* hidden={visible === undefined || visible === null ? false : !visible}
         onFocus={this.onFocus}
-        onBlur={this.onBlur}
+        onBlur={this.onBlur} */
         id={id}
       >
         <Flex direction='column'>
@@ -90,7 +97,7 @@ export class SpectrumInputControl extends Control<
             </Text>
           </View>
         </Flex>
-      </div>
+      </Provider>
     );
   }
 }
