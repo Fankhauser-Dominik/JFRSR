@@ -13,6 +13,7 @@ Notice: This renderer set is work in progress and integrates yet unreleased Reac
 - Install [node.js](https://nodejs.org/) (version = 14.x.x)
 - Update npm (version = 6.x.x)
 - Clone this repository
+- Change into the Directory: `cd JFRSR`
 - Install dependencies and Hook up dependencies between packages: `npm ci && npm run init`
 - Build and Run React Spectrum examples: `cd packages/spectrum && npm run build && npm run dev`
 
