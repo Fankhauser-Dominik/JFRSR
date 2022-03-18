@@ -25,6 +25,7 @@
 export * from './InputText';
 export * from './InputTextArea';
 export * from './InputInteger';
+export * from './InputRating';
 export * from './InputNumber';
 export * from './InputNumberFormatted';
 export * from './InputEnum';

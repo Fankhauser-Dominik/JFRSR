@@ -39,6 +39,9 @@ import SpectrumEnumControl, {
 import SpectrumIntegerControl, {
   spectrumIntegerControlTester,
 } from './SpectrumIntegerControl';
+import SpectrumRatingControl, {
+  spectrumRatingControlTester,
+} from './SpectrumRatingControl';
 import SpectrumNumberControl, {
   spectrumNumberControlTester,
 } from './SpectrumNumberControl';
@@ -82,6 +85,8 @@ export {
   spectrumEnumControlTester,
   SpectrumIntegerControl,
   spectrumIntegerControlTester,
+  SpectrumRatingControl,
+  spectrumRatingControlTester,
   SpectrumNumberControl,
   spectrumNumberControlTester,
   SpectrumNumberFormattedControl,

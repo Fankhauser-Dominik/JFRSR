@@ -1,9 +1,6 @@
 /*
   The MIT License
 
-  Copyright (c) 2017-2019 EclipseSource Munich
-  https://github.com/eclipsesource/jsonforms
-
   Copyright (c) 2020 headwire.com, Inc
   https://github.com/headwirecom/jsonforms-react-spectrum-renderers
 
@@ -25,49 +22,27 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-import * as React from 'react';
+
 import {
   ControlProps,
-  ControlState,
-  mapDispatchToControlProps,
-  mapStateToControlProps,
+  isIntegerControl,
   RankedTester,
   rankWith,
-  scopeEndsWith,
+  optionIs,
+  and,
 } from '@jsonforms/core';
-import { Control } from '@jsonforms/react';
-import { Rating } from './Rating';
-import { connect } from 'react-redux';
+import { withJsonFormsControlProps } from '@jsonforms/react';
+import React from 'react';
+import { InputRating } from '../spectrum-control';
+import { SpectrumInputControl } from './SpectrumInputControl';
 
-/**
- * Default tester for integer controls.
- * @type {RankedTester}
- */
-export const ratingControlTester: RankedTester = rankWith(
-  Number.MAX_VALUE,
-  scopeEndsWith('ratingsssss')
+export const SpectrumRatingControl = (props: ControlProps) => (
+  <SpectrumInputControl {...props} input={InputRating} />
 );
 
-export class RatingControl extends Control<ControlProps, ControlState> {
-  /**
-   * @inheritDoc
-   */
-  render() {
-    return (
-      <div style={{ paddingTop: '1.5em' }}>
-        <Rating
-          value={this.props.data}
-          onClick={(ev: any) => {
-            this.props.handleChange(this.props.path, Number(ev.value));
-          }}
-          id={this.props.id}
-        />
-      </div>
-    );
-  }
-}
+export const spectrumRatingControlTester: RankedTester = rankWith(
+  4,
+  and(isIntegerControl, optionIs('rating', true))
+);
 
-export default connect(
-  mapStateToControlProps,
-  mapDispatchToControlProps
-)(RatingControl);
+export default withJsonFormsControlProps(SpectrumRatingControl);

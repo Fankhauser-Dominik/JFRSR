@@ -1396,7 +1396,7 @@ samples.push({
         type: 'Control',
         scope: '#/properties/integeroptional',
         options: {
-          necessityIndicator: 'label',
+          necessityIndicator: true,
         },
       },
       {
@@ -1404,6 +1404,15 @@ samples.push({
         type: 'Control',
         scope: '#/properties/integerrequired',
         options: {
+          necessityIndicator: true,
+        },
+      },
+      {
+        label: 'Rating',
+        type: 'Control',
+        scope: '#/properties/rating',
+        options: {
+          rating: true,
           necessityIndicator: 'icon',
         },
       },
@@ -1422,8 +1431,15 @@ samples.push({
         minimum: 1,
         maximum: 5,
       },
+      rating: {
+        type: 'integer',
+        minimum: 1,
+        maximum: 5,
+      },
     },
-    required: ['integerrequired'],
+    required: ['integerrequired', 'rating'],
   },
-  data: {},
+  data: {
+    rating: 0,
+  },
 });
