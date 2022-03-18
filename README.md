@@ -38,6 +38,39 @@ Notice: This renderer set is work in progress and integrates yet unreleased Reac
 
 The React Spectrum JSONForms project is build and tested via [Travis](https://travis-ci.org/). Coverage is documented by [Coveralls](https://coveralls.io).
 
+## JSON Schema Features
+
+- [x] boolean - checkbox
+- [ ] boolean - Toggle
+- [x] integer - Number
+- [ ] integer - Text (Don't know what they mean)
+- [x] String - Text
+- [x] String - TextArea
+- [x] Enum - Combo
+- [ ] Enum - Autocomplete
+- [ ] oneOf (const / title) - Combo
+- [ ] oneOf (const / title) - Autocomplete
+- [ ] Date format - Date field
+- [ ] Time format - Time field
+- [ ] Datetime format - Datetime field
+- [ ] Object - Vertical grid
+- [ ] Array of primitives - List
+- [ ] Array of objects - Table
+- [ ] Array of objects - List
+- [ ] Array of objects - List with Detail
+- [ ] Array of enums - Multiple Choice
+- [ ] oneOf - Tabs
+- [ ] allOf - Tabs
+- [ ] anyOf - Tabs
+
+## UI Schema Features
+
+- [ ] Vertical Layout - Vertical Grid
+- [ ] Horizontal Layout - Horizontal Grid
+- [ ] Categorization - Tabs
+- [ ] Group - Group
+- [ ] Label - Text
+
 # License
 
 The JSONForms project is licensed under the MIT License. See the [LICENSE file](https://github.com/headwirecom/jsonforms-react-spectrum-renderers/blob/master/LICENSE) for more information.

@@ -25,54 +25,45 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   CellProps,
   isBooleanControl,
   RankedTester,
   rankWith,
+  and,
+  optionIs,
 } from '@jsonforms/core';
 import { withJsonFormsCellProps } from '@jsonforms/react';
-import { FunctionComponent } from 'react';
-import { Checkbox } from '@adobe/react-spectrum';
+import { Switch } from '@adobe/react-spectrum';
 import merge from 'lodash/merge';
 import { DimensionValue } from '@react-types/shared';
 
 export const SpectrumBooleanCell: FunctionComponent<CellProps> = (
   props: React.PropsWithChildren<CellProps>
 ) => {
-  const {
-    data,
-    id,
-    enabled,
-    uischema,
-    path,
-    handleChange,
-    config,
-    isValid,
-  } = props;
+  const { data, id, enabled, uischema, path, handleChange, config } = props;
   const appliedUiSchemaOptions = merge({}, config, uischema.options);
   const autoFocus = !!appliedUiSchemaOptions.focus;
   // !! causes undefined value to be converted to false, otherwise has no effect
   const isSelected = !!data;
-  const validationState = !!isValid ? 'valid' : 'invalid';
   const width: DimensionValue = appliedUiSchemaOptions.trim
     ? undefined
     : '100%';
 
   return (
-    <Checkbox
+    <Switch
       isSelected={isSelected}
       onChange={(selected) => handleChange(path, selected)}
       id={id}
       isDisabled={!enabled}
       autoFocus={autoFocus}
-      validationState={validationState}
+      /* validationState={!!isValid ? 'valid' : 'invalid'} */
       width={width}
       aria-label={props.children ? undefined : path}
     >
       {props.children}
-    </Checkbox>
+    </Switch>
   );
 };
 
@@ -82,7 +73,7 @@ export const SpectrumBooleanCell: FunctionComponent<CellProps> = (
  */
 export const spectrumBooleanCellTester: RankedTester = rankWith(
   2,
-  isBooleanControl
+  and(isBooleanControl, optionIs('switch', true))
 );
 
 export default withJsonFormsCellProps(SpectrumBooleanCell);

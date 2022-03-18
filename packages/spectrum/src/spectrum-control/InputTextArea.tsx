@@ -29,42 +29,35 @@ import { TextArea } from '@adobe/react-spectrum';
 import { DimensionValue } from '@react-types/shared';
 import { SpectrumInputProps } from './index';
 
-export class InputTextArea extends React.PureComponent<
-  CellProps & SpectrumInputProps
-> {
-  render() {
-    const {
-      data,
-      config,
-      id,
-      enabled,
-      uischema,
-      path,
-      handleChange,
-      required,
-      label,
-    } = this.props;
+export const InputTextArea = ({
+  config,
+  data,
+  enabled,
+  handleChange,
+  id,
+  label,
+  path,
+  required,
+  uischema,
+}: CellProps & SpectrumInputProps) => {
+  const appliedUiSchemaOptions = merge({}, config, uischema.options);
 
-    const appliedUiSchemaOptions = merge({}, config, uischema.options);
+  const width: DimensionValue = appliedUiSchemaOptions.trim
+    ? undefined
+    : '100%';
 
-    const onChange = (value: string) => handleChange(path, value);
-    const isRequired = required && !appliedUiSchemaOptions.hideRequiredAsterisk;
-
-    const width: DimensionValue = appliedUiSchemaOptions.trim
-      ? undefined
-      : '100%';
-
-    return (
-      <TextArea
-        value={data ?? ''}
-        label={label}
-        isRequired={isRequired}
-        onChange={onChange}
-        id={id && `${id}-input`}
-        isDisabled={!enabled}
-        autoFocus={uischema.options && uischema.options.focus}
-        width={width}
-      />
-    );
-  }
-}
+  return (
+    <TextArea
+      type={appliedUiSchemaOptions.format ?? 'text'}
+      value={data ?? ''}
+      label={label}
+      isRequired={required}
+      necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+      onChange={(value: string) => handleChange(path, value)}
+      id={id && `${id}-input`}
+      isDisabled={enabled === undefined ? false : !enabled}
+      autoFocus={appliedUiSchemaOptions.focus}
+      width={width}
+    />
+  );
+};

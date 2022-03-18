@@ -29,42 +29,34 @@ import { DimensionValue } from '@react-types/shared';
 import { SpectrumInputProps } from './index';
 import { Slider } from '@adobe/react-spectrum';
 
-export class InputSlider extends React.PureComponent<
-  CellProps & SpectrumInputProps
-> {
-  render() {
-    const {
-      data,
-      config,
-      enabled,
-      uischema,
-      path,
-      handleChange,
-      label,
-      visible,
-      schema,
-    } = this.props;
+export const InputSlider = ({
+  config,
+  data,
+  enabled,
+  handleChange,
+  label,
+  path,
+  schema,
+  uischema,
+  visible,
+}: CellProps & SpectrumInputProps) => {
+  const appliedUiSchemaOptions = merge({}, config, uischema.options);
 
-    const appliedUiSchemaOptions = merge({}, config, uischema.options);
+  const width: DimensionValue = appliedUiSchemaOptions.trim
+    ? undefined
+    : '100%';
 
-    const onChange = (value: any) => handleChange(path, value);
-
-    const width: DimensionValue = appliedUiSchemaOptions.trim
-      ? undefined
-      : '100%';
-
-    return (
-      <Slider
-        value={data ?? ''}
-        label={label}
-        minValue={schema.minimum}
-        maxValue={schema.maximum}
-        isHidden={!visible}
-        onChange={onChange}
-        isDisabled={!enabled}
-        width={width}
-        step={schema.multipleOf || 1}
-      />
-    );
-  }
-}
+  return (
+    <Slider
+      value={data ?? schema.default}
+      label={label}
+      minValue={schema.minimum}
+      maxValue={schema.maximum}
+      isHidden={!visible}
+      onChange={(value: any) => handleChange(path, value)}
+      isDisabled={!enabled}
+      width={width}
+      step={schema.multipleOf || 1}
+    />
+  );
+};

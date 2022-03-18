@@ -36,3 +36,5 @@ export { SliderCell } from './SliderCell';
 export { SpectrumTextCell } from './SpectrumTextCell';
 export { SpectrumTextAreaCell } from './SpectrumTextAreaCell';
 export { TimeCell } from './TimeCell';
+export { SpectrumCheckboxCell } from './SpectrumCheckboxCell';
+export { SpectrumRatingCell } from './SpectrumRatingCell';

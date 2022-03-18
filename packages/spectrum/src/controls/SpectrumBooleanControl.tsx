@@ -25,56 +25,55 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
+import React from 'react';
 import {
   ControlProps,
   isBooleanControl,
   RankedTester,
   rankWith,
+  and,
+  optionIs,
 } from '@jsonforms/core';
 import { withJsonFormsControlProps } from '@jsonforms/react';
-import { Provider, defaultTheme } from '@adobe/react-spectrum';
 import { isEmpty } from '../util/isEmpty';
-import React from 'react';
 import { SpectrumBooleanCell } from '../cells/CustomizableCells';
 
 export const SpectrumBooleanControl = ({
-  data,
-  visible,
-  label,
-  id,
-  enabled,
-  uischema,
-  schema,
-  rootSchema,
-  handleChange,
-  errors,
-  path,
   config,
+  data,
+  enabled,
+  errors,
+  handleChange,
+  id,
+  label,
+  path,
+  rootSchema,
+  schema,
+  uischema,
+  visible,
 }: ControlProps) => {
   return (
-    <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
-      <SpectrumBooleanCell
-        id={id && `${id}-input`}
-        isValid={isEmpty(errors)}
-        data={data}
-        enabled={enabled}
-        visible={visible}
-        path={path}
-        uischema={uischema}
-        schema={schema}
-        rootSchema={rootSchema}
-        handleChange={handleChange}
-        errors={errors}
-        config={config}
-      >
-        {label}
-      </SpectrumBooleanCell>
-    </Provider>
+    <SpectrumBooleanCell
+      id={id && `${id}-input`}
+      isValid={isEmpty(errors)}
+      data={data}
+      enabled={enabled}
+      visible={visible}
+      path={path}
+      uischema={uischema}
+      schema={schema}
+      rootSchema={rootSchema}
+      handleChange={handleChange}
+      errors={errors}
+      config={config}
+    >
+      {label}
+    </SpectrumBooleanCell>
   );
 };
 
 export const spectrumBooleanControlTester: RankedTester = rankWith(
   2,
-  isBooleanControl
+  and(isBooleanControl, optionIs('switch', true))
 );
 export default withJsonFormsControlProps(SpectrumBooleanControl);

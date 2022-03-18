@@ -1397,6 +1397,7 @@ samples.push({
         scope: '#/properties/integeroptional',
         options: {
           necessityIndicator: true,
+          focus: true,
         },
       },
       {
@@ -1413,7 +1414,34 @@ samples.push({
         scope: '#/properties/rating',
         options: {
           rating: true,
+          necessityIndicator: 'label',
+        },
+      },
+      {
+        label: 'Range',
+        type: 'Control',
+        scope: '#/properties/range',
+        options: {
+          slider: true,
           necessityIndicator: 'icon',
+        },
+      },
+      {
+        label: 'Textarea',
+        type: 'Control',
+        scope: '#/properties/textarea',
+        options: {
+          necessityIndicator: 'label',
+          multi: true,
+        },
+      },
+      {
+        label: 'Format Number',
+        type: 'Control',
+        scope: '#/properties/formatnumber',
+        options: {
+          necessityIndicator: 'label',
+          format: true,
         },
       },
     ],
@@ -1434,10 +1462,24 @@ samples.push({
       rating: {
         type: 'integer',
         minimum: 1,
+      },
+      range: {
+        type: 'number',
+        default: 1,
+        minimum: 1,
         maximum: 5,
       },
+      textarea: {
+        type: 'string',
+        default: 1,
+        minimum: 1,
+        maximum: 5,
+      },
+      formatnumber: {
+        type: 'integer',
+      },
     },
-    required: ['integerrequired', 'rating'],
+    required: ['integerrequired', 'rating', 'range', 'time'],
   },
   data: {
     rating: 0,

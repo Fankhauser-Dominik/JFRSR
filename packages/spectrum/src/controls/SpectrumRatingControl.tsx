@@ -23,6 +23,7 @@
   THE SOFTWARE.
 */
 
+import React from 'react';
 import {
   ControlProps,
   isIntegerControl,
@@ -32,7 +33,6 @@ import {
   and,
 } from '@jsonforms/core';
 import { withJsonFormsControlProps } from '@jsonforms/react';
-import React from 'react';
 import { InputRating } from '../spectrum-control';
 import { SpectrumInputControl } from './SpectrumInputControl';
 

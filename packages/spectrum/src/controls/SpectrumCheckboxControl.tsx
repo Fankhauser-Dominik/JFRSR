@@ -1,6 +1,9 @@
 /*
   The MIT License
 
+  Copyright (c) 2017-2019 EclipseSource Munich
+  https://github.com/eclipsesource/jsonforms
+
   Copyright (c) 2020 headwire.com, Inc
   https://github.com/headwirecom/jsonforms-react-spectrum-renderers
 
@@ -22,25 +25,23 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-
 import React from 'react';
 import {
   ControlProps,
-  isIntegerControl,
+  isBooleanControl,
   RankedTester,
   rankWith,
 } from '@jsonforms/core';
 import { withJsonFormsControlProps } from '@jsonforms/react';
-import { InputInteger } from '../spectrum-control';
+import { InputCheckbox } from '../spectrum-control';
 import { SpectrumInputControl } from './SpectrumInputControl';
 
-export const SpectrumIntegerControl = (props: ControlProps) => (
-  <SpectrumInputControl {...props} input={InputInteger} />
+export const SpectrumCheckboxControl = (props: ControlProps) => (
+  <SpectrumInputControl {...props} input={InputCheckbox} />
 );
 
-export const spectrumIntegerControlTester: RankedTester = rankWith(
-  3,
-  isIntegerControl
+export const spectrumCheckboxControlTester: RankedTester = rankWith(
+  2,
+  isBooleanControl
 );
-
-export default withJsonFormsControlProps(SpectrumIntegerControl);
+export default withJsonFormsControlProps(SpectrumCheckboxControl);

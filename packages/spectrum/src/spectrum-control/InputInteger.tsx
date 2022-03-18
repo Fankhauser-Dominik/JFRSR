@@ -25,52 +25,41 @@ import { NumberField } from '@adobe/react-spectrum';
 import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
 
-export class InputInteger extends React.PureComponent<
-  CellProps & SpectrumInputProps
-> {
-  render() {
-    const {
-      config,
-      uischema,
-      data,
-      isValid,
-      id,
-      enabled,
-      required,
-      path,
-      handleChange,
-      label,
-      schema,
-    } = this.props;
+export const InputInteger = ({
+  config,
+  data,
+  enabled,
+  handleChange,
+  id,
+  isValid,
+  label,
+  path,
+  required,
+  schema,
+  uischema,
+}: CellProps & SpectrumInputProps) => {
+  const appliedUiSchemaOptions = merge({}, config, uischema.options);
 
-    const appliedUiSchemaOptions = merge({}, config, uischema.options);
-    const isRequired = required && !appliedUiSchemaOptions.hideRequiredAsterisk;
+  const width: DimensionValue = appliedUiSchemaOptions.trim
+    ? undefined
+    : '100%';
 
-    const necessityIndicator = appliedUiSchemaOptions.necessityIndicator
-      ? appliedUiSchemaOptions.necessityIndicator
-      : null;
-
-    const width: DimensionValue = appliedUiSchemaOptions.trim
-      ? undefined
-      : '100%';
-
-    return (
-      <div>
-        <NumberField
-          label={label}
-          necessityIndicator={necessityIndicator}
-          value={data}
-          isRequired={isRequired}
-          onChange={(value) => handleChange(path, value)}
-          id={id}
-          isDisabled={enabled === undefined ? false : !enabled}
-          autoFocus={uischema.options && uischema.options.focus}
-          validationState={isValid ? 'valid' : 'invalid'}
-          width={width}
-          minValue={schema.minimum}
-          maxValue={schema.maximum}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <NumberField
+      label={label}
+      necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+      value={data}
+      isRequired={required}
+      onChange={(value: number) => handleChange(path, value)}
+      id={id}
+      isDisabled={enabled === undefined ? false : !enabled}
+      autoFocus={appliedUiSchemaOptions.focus}
+      validationState={isValid ? 'valid' : 'invalid'}
+      width={width}
+      minValue={schema.minimum}
+      maxValue={schema.maximum}
+      step={appliedUiSchemaOptions.step ?? 1}
+      hideStepper={appliedUiSchemaOptions.hideStepper ?? false}
+    />
+  );
+};

@@ -34,18 +34,17 @@ export class InputNumberFormatted extends React.PureComponent<
 > {
   render() {
     const {
-      id,
-      enabled,
-      required,
-      isValid,
       config,
-      uischema,
-      path,
+      enabled,
       handleChange,
-      schema,
+      id,
+      isValid,
       label,
+      path,
+      required,
+      schema,
+      uischema,
     } = this.props;
-    const maxLength = schema.maxLength;
 
     const formattedNumber: string = this.props.toFormatted(this.props.data);
 
@@ -57,7 +56,6 @@ export class InputNumberFormatted extends React.PureComponent<
     };
 
     const appliedUiSchemaOptions = merge({}, config, uischema.options);
-    const isRequired = required && !appliedUiSchemaOptions.hideRequiredAsterisk;
 
     const width: DimensionValue = appliedUiSchemaOptions.trim
       ? undefined
@@ -69,12 +67,12 @@ export class InputNumberFormatted extends React.PureComponent<
         type='text'
         inputMode='numeric'
         value={formattedNumber}
-        isRequired={isRequired}
         onChange={onChange}
         id={id}
         isDisabled={!enabled}
-        autoFocus={uischema.options && uischema.options.focus}
-        maxLength={maxLength}
+        maxLength={schema.maxLength}
+        autoFocus={appliedUiSchemaOptions.focus}
+        isRequired={required}
         validationState={isValid ? 'valid' : 'invalid'}
         width={width}
       />

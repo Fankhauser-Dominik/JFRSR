@@ -1,6 +1,6 @@
 /*
   The MIT License
-  Copyright (c) 2020 headwire.com, Inc
+  Copyright (c) 2022 headwire.com, Inc
   https://github.com/headwirecom/jsonforms-react-spectrum-renderers
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -29,51 +29,40 @@ import Star from '@spectrum-icons/workflow/Star';
 
 export const InputRating = ({
   config,
-  uischema,
   data,
-  isValid,
-  id,
   enabled,
-  required,
-  path,
   handleChange,
+  id,
+  isValid,
   label,
+  path,
+  required,
   schema,
+  uischema,
 }: CellProps & SpectrumInputProps) => {
   const [hover, setHover] = React.useState(null);
 
   const appliedUiSchemaOptions = merge({}, config, uischema.options);
-  const isRequired = required && !appliedUiSchemaOptions.hideRequiredAsterisk;
-
-  const necessityIndicator = appliedUiSchemaOptions.necessityIndicator
-    ? appliedUiSchemaOptions.necessityIndicator
-    : null;
 
   const width: DimensionValue = appliedUiSchemaOptions.trim
     ? undefined
     : '100%';
 
-  const maximum = schema.maximum ? schema.maximum : 5;
-
-  const setSelected = (value: any) => {
-    handleChange(path, parseInt(value));
-  };
-
   return (
     <div>
       <RadioGroup
         label={label}
-        necessityIndicator={necessityIndicator}
+        necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
         value={data}
-        isRequired={isRequired}
-        onChange={setSelected}
+        isRequired={required}
+        onChange={(value: any) => handleChange(path, parseInt(value))}
         id={id}
         isDisabled={enabled === undefined ? false : !enabled}
         validationState={isValid ? 'valid' : 'invalid'}
         width={width}
         orientation={'horizontal'}
       >
-        {[...Array(maximum)].map((Stars, i) => {
+        {[...Array(schema.maximum ?? 5)].map((Stars, i) => {
           const ratingValue = i + 1;
           return (
             <label

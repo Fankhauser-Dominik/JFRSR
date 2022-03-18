@@ -1,6 +1,9 @@
 /*
   The MIT License
 
+  Copyright (c) 2017-2019 EclipseSource Munich
+  https://github.com/eclipsesource/jsonforms
+
   Copyright (c) 2020 headwire.com, Inc
   https://github.com/headwirecom/jsonforms-react-spectrum-renderers
 
@@ -22,25 +25,28 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-
 import React from 'react';
 import {
-  ControlProps,
+  CellProps,
   isIntegerControl,
   RankedTester,
   rankWith,
+  optionIs,
+  and,
 } from '@jsonforms/core';
-import { withJsonFormsControlProps } from '@jsonforms/react';
-import { InputInteger } from '../spectrum-control';
-import { SpectrumInputControl } from './SpectrumInputControl';
+import { withJsonFormsCellProps } from '@jsonforms/react';
+import { InputRating, SpectrumInputProps } from '../spectrum-control';
 
-export const SpectrumIntegerControl = (props: ControlProps) => (
-  <SpectrumInputControl {...props} input={InputInteger} />
+export const SpectrumRatingCell = (props: CellProps & SpectrumInputProps) => (
+  <InputRating {...props} />
+);
+/**
+ * Default tester for rating controls.
+ * @type {RankedTester}
+ */
+export const spectrumRatingCellTester: RankedTester = rankWith(
+  2,
+  and(isIntegerControl, optionIs('rating', true))
 );
 
-export const spectrumIntegerControlTester: RankedTester = rankWith(
-  3,
-  isIntegerControl
-);
-
-export default withJsonFormsControlProps(SpectrumIntegerControl);
+export default withJsonFormsCellProps(SpectrumRatingCell);

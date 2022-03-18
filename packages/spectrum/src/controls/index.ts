@@ -33,6 +33,9 @@ import SpectrumAnyOfStringOrEnumControl, {
 import SpectrumBooleanControl, {
   spectrumBooleanControlTester,
 } from './SpectrumBooleanControl';
+import SpectrumCheckboxControl, {
+  spectrumCheckboxControlTester,
+} from './SpectrumCheckboxControl';
 import SpectrumEnumControl, {
   spectrumEnumControlTester,
 } from './SpectrumEnumControl';
@@ -87,6 +90,8 @@ export {
   spectrumIntegerControlTester,
   SpectrumRatingControl,
   spectrumRatingControlTester,
+  SpectrumCheckboxControl,
+  spectrumCheckboxControlTester,
   SpectrumNumberControl,
   spectrumNumberControlTester,
   SpectrumNumberFormattedControl,
