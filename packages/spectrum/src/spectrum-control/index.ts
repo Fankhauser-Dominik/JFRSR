@@ -31,6 +31,7 @@ export * from './InputNumber';
 export * from './InputNumberFormatted';
 export * from './InputRating';
 export * from './InputSlider';
+export * from './InputSwitch';
 export * from './InputText';
 export * from './InputTextArea';
 export * from './InputTime';

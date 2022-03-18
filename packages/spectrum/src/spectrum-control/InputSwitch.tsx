@@ -21,20 +21,18 @@
 import React from 'react';
 import { CellProps } from '@jsonforms/core';
 import merge from 'lodash/merge';
-import { Checkbox } from '@adobe/react-spectrum';
+import { Switch } from '@adobe/react-spectrum';
 import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
 
-export const InputCheckbox = ({
+export const InputSwitch = ({
   config,
   data,
   enabled,
   handleChange,
   id,
-  isValid,
   label,
   path,
-  required,
   uischema,
 }: CellProps & SpectrumInputProps) => {
   const appliedUiSchemaOptions = merge({}, config, uischema.options);
@@ -44,17 +42,15 @@ export const InputCheckbox = ({
     : '100%';
 
   return (
-    <Checkbox
+    <Switch
       value={data}
-      isRequired={required}
       onChange={(value: boolean) => handleChange(path, value)}
       id={id}
       isDisabled={enabled === undefined ? false : !enabled}
       autoFocus={appliedUiSchemaOptions.focus}
-      validationState={isValid ? 'valid' : 'invalid'}
       width={width}
     >
       {label}
-    </Checkbox>
+    </Switch>
   );
 };
