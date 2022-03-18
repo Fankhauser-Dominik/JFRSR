@@ -567,7 +567,7 @@ describe('Input control', () => {
       type: 'object',
       properties: {
         expectedValue: {
-          type: ['string', 'integer', 'number', 'boolean'],
+          type: ['string', 'integer', 'rating', 'number', 'boolean'],
         },
       },
     };
