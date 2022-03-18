@@ -25,16 +25,17 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-export { SpectrumBooleanCell } from './SpectrumBooleanCell';
 export { DateCell } from './DateCell';
 export { DateTimeCell } from './DateTimeCell';
+export { SliderCell } from './SliderCell';
+export { SpectrumBooleanCell } from './SpectrumBooleanCell';
+export { SpectrumCheckboxCell } from './SpectrumCheckboxCell';
 export { SpectrumEnumCell } from './SpectrumEnumCell';
 export { SpectrumIntegerCell } from './SpectrumIntegerCell';
 export { SpectrumNumberCell } from './SpectrumNumberCell';
 export { SpectrumNumberFormatCell } from './SpectrumNumberFormatCell';
-export { SliderCell } from './SliderCell';
-export { SpectrumTextCell } from './SpectrumTextCell';
-export { SpectrumTextAreaCell } from './SpectrumTextAreaCell';
-export { TimeCell } from './TimeCell';
-export { SpectrumCheckboxCell } from './SpectrumCheckboxCell';
 export { SpectrumRatingCell } from './SpectrumRatingCell';
+export { SpectrumSwitchCell } from './SpectrumSwitchCell';
+export { SpectrumTextAreaCell } from './SpectrumTextAreaCell';
+export { SpectrumTextCell } from './SpectrumTextCell';
+export { TimeCell } from './TimeCell';

@@ -41,7 +41,7 @@ The React Spectrum JSONForms project is build and tested via [Travis](https://tr
 ## JSON Schema Features
 
 - [x] boolean - checkbox
-- [ ] boolean - Toggle
+- [x] boolean - Toggle
 - [x] integer - Number
 - [ ] integer - Text (Don't know what they mean)
 - [x] String - Text
