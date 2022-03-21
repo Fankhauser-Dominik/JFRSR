@@ -23,4 +23,4 @@
   THE SOFTWARE.
 */
 import { createContext } from 'react';
-export const ColorSchemeContext = createContext<'light' | 'dark'>('dark');
+export const ColorSchemeContext = createContext<'light' | 'dark'>('light');

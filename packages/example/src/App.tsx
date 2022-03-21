@@ -104,15 +104,15 @@ function App(props: AppProps & { selectedExample: ReactExampleDescription }) {
   );
 
   return (
-    <JsonFormsReduxContext>
-      <View
-        padding='size-100'
-        minHeight='100vh'
-        paddingTop='0'
-        paddingBottom='size-800'
-      >
-        <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
-          <div className='container'>
+    <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
+      <JsonFormsReduxContext>
+        <View
+          padding='size-100'
+          minHeight='100vh'
+          paddingTop='0'
+          paddingBottom='size-800'
+        >
+          <div className='bigerinocontainer'>
             <View padding='size-100'>
               <Heading>
                 react, json-schema, jsonforms.io, react-spectrum
@@ -200,9 +200,9 @@ function App(props: AppProps & { selectedExample: ReactExampleDescription }) {
               </View>
             </div>
           </div>
-        </Provider>
-      </View>
-    </JsonFormsReduxContext>
+        </View>
+      </JsonFormsReduxContext>
+    </Provider>
   );
 }
 

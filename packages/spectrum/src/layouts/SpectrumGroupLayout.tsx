@@ -26,7 +26,7 @@
   THE SOFTWARE.
 */
 import { isEmpty } from '../util/isEmpty';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import {
   GroupLayout,
   RankedTester,
@@ -35,8 +35,16 @@ import {
   uiTypeIs,
 } from '@jsonforms/core';
 import { withJsonFormsLayoutProps } from '@jsonforms/react';
-import { Content, Divider, Heading, View } from '@adobe/react-spectrum';
+import {
+  Content,
+  Divider,
+  Heading,
+  View,
+  Provider,
+  defaultTheme,
+} from '@adobe/react-spectrum';
 import { renderChildren } from './util';
+import { ColorSchemeContext } from '../util/ColorSchemeContext';
 
 /**
  * Default tester for a group layout.
@@ -56,6 +64,7 @@ export const SpectrumGroupLayoutRenderer: FunctionComponent<RendererProps> = ({
   enabled,
 }: RendererProps) => {
   const group = uischema as GroupLayout;
+  const colorScheme = useContext(ColorSchemeContext);
 
   return (
     <View
@@ -65,19 +74,25 @@ export const SpectrumGroupLayoutRenderer: FunctionComponent<RendererProps> = ({
       borderRadius='medium'
       padding='size-250'
     >
-      {!isEmpty(group.label) ? (
-        <Heading level={4} margin={0}>
-          {group.label}
-        </Heading>
-      ) : (
-        ''
-      )}
-      {!isEmpty(group.label) ? (
-        <Divider size='M' marginTop='size-150' marginBottom='size-200' />
-      ) : (
-        ''
-      )}
-      <Content>{renderChildren(group, schema, {}, path, enabled)}</Content>
+      <Provider
+        colorScheme={colorScheme}
+        theme={defaultTheme}
+        id='SpectrumInputControlProvider'
+      >
+        {!isEmpty(group.label) ? (
+          <Heading level={4} margin={0}>
+            {group.label}
+          </Heading>
+        ) : (
+          ''
+        )}
+        {!isEmpty(group.label) ? (
+          <Divider size='M' marginTop='size-150' marginBottom='size-200' />
+        ) : (
+          ''
+        )}
+        <Content>{renderChildren(group, schema, {}, path, enabled)}</Content>
+      </Provider>
     </View>
   );
 };

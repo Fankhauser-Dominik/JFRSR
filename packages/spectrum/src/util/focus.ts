@@ -1,11 +1,8 @@
 /*
   The MIT License
   
-  Copyright (c) 2017-2019 EclipseSource Munich
+  Copyright (c) 2021 EclipseSource Munich
   https://github.com/eclipsesource/jsonforms
-  
-  Copyright (c) 2020 headwire.com, Inc
-  https://github.com/headwirecom/jsonforms-react-spectrum-renderers
   
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -25,32 +22,11 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-import React, { useContext } from 'react';
-import { RendererProps } from '@jsonforms/core';
-import { Flex, Provider, defaultTheme } from '@adobe/react-spectrum';
-import { FlexProps } from '@react-types/layout';
+import { useState, useCallback } from 'react';
 
-import { ColorSchemeContext } from '../util/ColorSchemeContext';
-
-export const SpectrumLayout = ({
-  children,
-  visible,
-  ...flexProps
-}: RendererProps & FlexProps) => {
-  const colorScheme = useContext(ColorSchemeContext);
-  return (
-    <Provider
-      colorScheme={colorScheme}
-      theme={defaultTheme}
-      id='SpectrumInputControlProvider'
-    >
-      <Flex
-        isHidden={visible === undefined || visible === null ? false : !visible}
-        gap='size-100'
-        {...flexProps}
-      >
-        {children}
-      </Flex>
-    </Provider>
-  );
+export const useFocus = (): [boolean, () => void, () => void] => {
+  const [focused, setFocused] = useState(false);
+  const onFocus = useCallback(() => setFocused(true), []);
+  const onBlur = useCallback(() => setFocused(false), []);
+  return [focused, onFocus, onBlur];
 };
