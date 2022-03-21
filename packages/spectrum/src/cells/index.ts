@@ -31,6 +31,9 @@ import SpectrumEnumCell, { spectrumEnumCellTester } from './SpectrumEnumCell';
 import SpectrumBooleanCell, {
   spectrumBooleanCellTester,
 } from './SpectrumBooleanCell';
+import SpectrumBooleanButtonCell, {
+  spectrumBooleanButtonCellTester,
+} from './SpectrumBooleanButtonCell';
 import SpectrumCheckboxCell, {
   SpectrumCheckboxCellTester,
 } from './SpectrumCheckboxCell';
@@ -66,6 +69,8 @@ export {
   spectrumEnumCellTester,
   SpectrumBooleanCell,
   spectrumBooleanCellTester,
+  SpectrumBooleanButtonCell,
+  spectrumBooleanButtonCellTester,
   SpectrumCheckboxCell,
   SpectrumCheckboxCellTester,
   SpectrumSwitchCell,

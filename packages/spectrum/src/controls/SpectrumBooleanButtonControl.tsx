@@ -25,18 +25,55 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-export { DateCell } from './DateCell';
-export { DateTimeCell } from './DateTimeCell';
-export { SliderCell } from './SliderCell';
-export { SpectrumBooleanCell } from './SpectrumBooleanCell';
-export { SpectrumBooleanButtonCell } from './SpectrumBooleanButtonCell';
-export { SpectrumCheckboxCell } from './SpectrumCheckboxCell';
-export { SpectrumEnumCell } from './SpectrumEnumCell';
-export { SpectrumIntegerCell } from './SpectrumIntegerCell';
-export { SpectrumNumberCell } from './SpectrumNumberCell';
-export { SpectrumNumberFormatCell } from './SpectrumNumberFormatCell';
-export { SpectrumRatingCell } from './SpectrumRatingCell';
-export { SpectrumSwitchCell } from './SpectrumSwitchCell';
-export { SpectrumTextAreaCell } from './SpectrumTextAreaCell';
-export { SpectrumTextCell } from './SpectrumTextCell';
-export { TimeCell } from './TimeCell';
+import React from 'react';
+import {
+  ControlProps,
+  isBooleanControl,
+  RankedTester,
+  rankWith,
+  and,
+  optionIs,
+} from '@jsonforms/core';
+import { withJsonFormsControlProps } from '@jsonforms/react';
+import { isEmpty } from '../util/isEmpty';
+import { SpectrumBooleanButtonCell } from '../cells/CustomizableCells';
+
+export const SpectrumBooleanButtonControl = ({
+  config,
+  data,
+  enabled,
+  errors,
+  handleChange,
+  id,
+  label,
+  path,
+  rootSchema,
+  schema,
+  uischema,
+  visible,
+}: ControlProps) => {
+  return (
+    <SpectrumBooleanButtonCell
+      id={id && `${id}-input`}
+      isValid={isEmpty(errors)}
+      data={data}
+      enabled={enabled}
+      visible={visible}
+      path={path}
+      uischema={uischema}
+      schema={schema}
+      rootSchema={rootSchema}
+      handleChange={handleChange}
+      errors={errors}
+      config={config}
+    >
+      {label}
+    </SpectrumBooleanButtonCell>
+  );
+};
+
+export const SpectrumBooleanButtonControlTester: RankedTester = rankWith(
+  2,
+  and(isBooleanControl, optionIs('button', true))
+);
+export default withJsonFormsControlProps(SpectrumBooleanButtonControl);

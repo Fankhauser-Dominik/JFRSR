@@ -33,6 +33,9 @@ import SpectrumAnyOfStringOrEnumControl, {
 import SpectrumBooleanControl, {
   spectrumBooleanControlTester,
 } from './SpectrumBooleanControl';
+import SpectrumBooleanButtonControl, {
+  SpectrumBooleanButtonControlTester,
+} from './SpectrumBooleanButtonControl';
 import SpectrumCheckboxControl, {
   spectrumCheckboxControlTester,
 } from './SpectrumCheckboxControl';
@@ -83,6 +86,8 @@ export {
   spectrumAnyOfStringOrEnumControlTester,
   SpectrumBooleanControl,
   spectrumBooleanControlTester,
+  SpectrumBooleanButtonControl,
+  SpectrumBooleanButtonControlTester,
   SpectrumDateControl,
   spectrumDateControlTester,
   SpectrumDateTimeControl,
