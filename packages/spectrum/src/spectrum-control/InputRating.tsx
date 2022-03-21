@@ -68,8 +68,20 @@ export const InputRating = ({
             <label
               onMouseEnter={() => setHover(ratingValue)}
               onMouseLeave={() => setHover(null)}
+              key={ratingValue + '/' + (schema.maximum ?? 5)}
             >
-              <Radio value={'' + ratingValue} isHidden={true} />
+              <Radio
+                value={'' + ratingValue}
+                isHidden={true}
+                aria-label={
+                  'Rating ' +
+                  ratingValue +
+                  '/' +
+                  (schema.maximum ?? 5) +
+                  ', currently selected value: ' +
+                  data
+                }
+              />
               <span>
                 {ratingValue <= (hover ?? data) ? (
                   <Star id={Stars} margin='size-25' />
