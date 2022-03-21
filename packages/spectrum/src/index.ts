@@ -35,6 +35,8 @@ import {
   sliderCellTester,
   SpectrumBooleanCell,
   spectrumBooleanCellTester,
+  SpectrumBooleanButtonCell,
+  spectrumBooleanButtonCellTester,
   SpectrumCheckboxCell,
   SpectrumCheckboxCellTester,
   SpectrumSwitchCell,
@@ -61,6 +63,8 @@ import {
   spectrumAnyOfStringOrEnumControlTester,
   SpectrumBooleanControl,
   spectrumBooleanControlTester,
+  SpectrumBooleanButtonControl,
+  SpectrumBooleanButtonControlTester,
   SpectrumDateControl,
   spectrumDateControlTester,
   SpectrumDateTimeControl,
@@ -146,6 +150,10 @@ export const spectrumRenderers: { tester: RankedTester; renderer: any }[] = [
     renderer: SpectrumAnyOfStringOrEnumControl,
   },
   { tester: spectrumBooleanControlTester, renderer: SpectrumBooleanControl },
+  {
+    tester: SpectrumBooleanButtonControlTester,
+    renderer: SpectrumBooleanButtonControl,
+  },
   { tester: spectrumCheckboxControlTester, renderer: SpectrumCheckboxControl },
   { tester: spectrumSwitchControlTester, renderer: SpectrumSwitchControl },
   { tester: spectrumDateControlTester, renderer: SpectrumDateControl },
@@ -210,6 +218,7 @@ export const spectrumRenderers: { tester: RankedTester; renderer: any }[] = [
 
 export const spectrumCells: { tester: RankedTester; cell: any }[] = [
   { tester: spectrumBooleanCellTester, cell: SpectrumBooleanCell },
+  { tester: spectrumBooleanButtonCellTester, cell: SpectrumBooleanButtonCell },
   { tester: SpectrumCheckboxCellTester, cell: SpectrumCheckboxCell },
   { tester: SpectrumSwitchCellTester, cell: SpectrumSwitchCell },
   { tester: dateCellTester, cell: DateCell },

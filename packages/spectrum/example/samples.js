@@ -1436,12 +1436,12 @@ samples.push({
         },
       },
       {
-        label: 'Format Number',
+        label: 'Boolean Button',
         type: 'Control',
-        scope: '#/properties/formatnumber',
+        scope: '#/properties/booleanbutton',
         options: {
           necessityIndicator: 'label',
-          format: true,
+          button: true,
         },
       },
     ],
@@ -1475,8 +1475,8 @@ samples.push({
         minimum: 1,
         maximum: 5,
       },
-      formatnumber: {
-        type: 'integer',
+      booleanbutton: {
+        type: 'boolean',
       },
     },
     required: ['integerrequired', 'rating', 'range', 'time'],
