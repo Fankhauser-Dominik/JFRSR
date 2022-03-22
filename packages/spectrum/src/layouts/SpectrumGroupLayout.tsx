@@ -41,6 +41,7 @@ import {
   Heading,
   View,
   Provider,
+  useProvider,
   defaultTheme,
 } from '@adobe/react-spectrum';
 import { renderChildren } from './util';
@@ -64,7 +65,13 @@ export const SpectrumGroupLayoutRenderer: FunctionComponent<RendererProps> = ({
   enabled,
 }: RendererProps) => {
   const group = uischema as GroupLayout;
-  const colorScheme = useContext(ColorSchemeContext);
+
+  const colorSchemeContext = useContext(ColorSchemeContext);
+  const parentProvider = useProvider();
+  const colorScheme = parentProvider
+    ? parentProvider.colorScheme
+    : colorSchemeContext;
+  const theme = parentProvider ? parentProvider.theme : defaultTheme;
 
   return (
     <View
@@ -76,7 +83,7 @@ export const SpectrumGroupLayoutRenderer: FunctionComponent<RendererProps> = ({
     >
       <Provider
         colorScheme={colorScheme}
-        theme={defaultTheme}
+        theme={theme}
         id='SpectrumInputControlProvider'
       >
         {!isEmpty(group.label) ? (

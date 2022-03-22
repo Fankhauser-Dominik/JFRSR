@@ -27,7 +27,12 @@
 */
 import React, { useContext } from 'react';
 import { RendererProps } from '@jsonforms/core';
-import { Flex, Provider, defaultTheme } from '@adobe/react-spectrum';
+import {
+  Flex,
+  Provider,
+  useProvider,
+  defaultTheme,
+} from '@adobe/react-spectrum';
 import { FlexProps } from '@react-types/layout';
 
 import { ColorSchemeContext } from '../util/ColorSchemeContext';
@@ -37,11 +42,17 @@ export const SpectrumLayout = ({
   visible,
   ...flexProps
 }: RendererProps & FlexProps) => {
-  const colorScheme = useContext(ColorSchemeContext);
+  const colorSchemeContext = useContext(ColorSchemeContext);
+  const parentProvider = useProvider();
+  const colorScheme = parentProvider
+    ? parentProvider.colorScheme
+    : colorSchemeContext;
+  const theme = parentProvider ? parentProvider.theme : defaultTheme;
+
   return (
     <Provider
       colorScheme={colorScheme}
-      theme={defaultTheme}
+      theme={theme}
       id='SpectrumInputControlProvider'
     >
       <Flex
