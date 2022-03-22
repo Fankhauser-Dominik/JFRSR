@@ -66,10 +66,10 @@ The React Spectrum JSONForms project is build and tested via [Travis](https://tr
 
 ## UI Schema Features
 
-- [ ] Vertical Layout - Vertical Grid
-- [ ] Horizontal Layout - Horizontal Grid
+- [x] Vertical Layout - Vertical Grid
+- [x] Horizontal Layout - Horizontal Grid
 - [ ] Categorization - Tabs
-- [ ] Group - Group
+- [x] Group - Group
 - [ ] Label - Text
 
 # License
