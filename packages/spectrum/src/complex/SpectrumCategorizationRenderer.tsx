@@ -39,7 +39,7 @@ import {
   uiTypeIs,
 } from '@jsonforms/core';
 import { RendererComponent, withJsonFormsLayoutProps } from '@jsonforms/react';
-import { Tabs } from '@react-spectrum/tabs';
+import { Tabs, TabList, TabPanels } from '@react-spectrum/tabs';
 import {
   Content,
   Item,
@@ -92,22 +92,29 @@ class SpectrumCategorizationRenderer extends RendererComponent<
       <View isHidden={!visible}>
         <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
           <Tabs isDisabled={!enabled}>
-            {categories.map((category, index) => (
-              <Item key={index} title={category.label}>
-                <Content margin='size-160'>
-                  <SpectrumVerticalLayout
-                    uischema={
-                      {
-                        type: 'VerticalLayout',
-                        elements: category.elements ?? [],
-                      } as UISchemaElement
-                    }
-                    schema={schema}
-                    path={path}
-                  ></SpectrumVerticalLayout>
-                </Content>
-              </Item>
-            ))}
+            <TabList>
+              {categories.map((category, index) => (
+                <Item key={index}>{category.label}</Item>
+              ))}
+            </TabList>
+            <TabPanels>
+              {categories.map((category, index) => (
+                <Item key={index} title={category.label}>
+                  <Content margin='size-160'>
+                    <SpectrumVerticalLayout
+                      uischema={
+                        {
+                          type: 'VerticalLayout',
+                          elements: category.elements ?? [],
+                        } as UISchemaElement
+                      }
+                      schema={schema}
+                      path={path}
+                    ></SpectrumVerticalLayout>
+                  </Content>
+                </Item>
+              ))}
+            </TabPanels>
           </Tabs>
         </Provider>
       </View>
