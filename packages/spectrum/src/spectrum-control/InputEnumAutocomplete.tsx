@@ -1,7 +1,7 @@
 /*
   The MIT License
 
-  Copyright (c) 2020 headwire.com, Inc
+  Copyright (c) 2022 headwire.com, Inc
   https://github.com/headwirecom/jsonforms-react-spectrum-renderers
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,38 +22,46 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-
 import React from 'react';
-import {
-  ControlProps,
-  isEnumControl,
-  RankedTester,
-  rankWith,
-} from '@jsonforms/core';
-import { withJsonFormsEnumProps } from '@jsonforms/react';
+import { EnumCellProps } from '@jsonforms/core';
 import merge from 'lodash/merge';
-import { SpectrumInputControl } from './SpectrumInputControl';
-import { InputEnum } from '../spectrum-control/InputEnum';
-import { InputEnumAutocomplete } from '../spectrum-control/InputEnumAutocomplete';
+import { SpectrumInputProps } from './index';
+import { DimensionValue } from '@react-types/shared';
+import { Item, ComboBox } from '@adobe/react-spectrum';
 
-export const SpectrumEnumControl = (props: ControlProps) => {
-  const { config, uischema } = props;
+export const InputEnumAutocomplete = ({
+  config,
+  data,
+  enabled,
+  handleChange,
+  id,
+  label,
+  options,
+  path,
+  required,
+  uischema,
+}: EnumCellProps & SpectrumInputProps) => {
   const appliedUiSchemaOptions = merge({}, config, uischema.options);
 
+  const width: DimensionValue = appliedUiSchemaOptions.trim
+    ? undefined
+    : '100%';
+
   return (
-    <SpectrumInputControl
-      {...props}
-      input={
-        appliedUiSchemaOptions.autocomplete === false
-          ? InputEnum
-          : InputEnumAutocomplete
-      }
-    />
+    <ComboBox
+      key={id}
+      id={id}
+      label={label}
+      isRequired={required}
+      isDisabled={enabled === undefined ? false : !enabled}
+      necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+      width={width}
+      selectedKey={data}
+      onSelectionChange={(value) => handleChange(path, value)}
+    >
+      {options.map((item) => (
+        <Item key={item.value}>{item.label}</Item>
+      ))}
+    </ComboBox>
   );
 };
-export const spectrumEnumControlTester: RankedTester = rankWith(
-  3,
-  isEnumControl
-);
-
-export default withJsonFormsEnumProps(SpectrumEnumControl);

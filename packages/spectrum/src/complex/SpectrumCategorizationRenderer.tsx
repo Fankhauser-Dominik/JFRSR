@@ -39,14 +39,16 @@ import {
   uiTypeIs,
 } from '@jsonforms/core';
 import { withJsonFormsLayoutProps } from '@jsonforms/react';
-import { Tabs, TabList, TabPanels } from '@react-spectrum/tabs';
 import {
   Content,
-  Item,
-  View,
-  Provider,
-  useProvider,
   defaultTheme,
+  Item,
+  Provider,
+  TabList,
+  TabPanels,
+  Tabs,
+  useProvider,
+  View,
 } from '@adobe/react-spectrum';
 import { AjvProps, withAjvProps } from '../util';
 import { SpectrumVerticalLayout } from '../layouts';

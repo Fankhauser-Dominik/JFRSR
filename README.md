@@ -48,7 +48,7 @@ The React Spectrum JSONForms project is build and tested via [Travis](https://tr
 - [x] String - Text
 - [x] String - TextArea
 - [x] Enum - Combo
-- [ ] Enum - Autocomplete
+- [x] Enum - Autocomplete
 - [ ] oneOf (const / title) - Combo
 - [ ] oneOf (const / title) - Autocomplete
 - [ ] Date format - Date field
@@ -68,9 +68,9 @@ The React Spectrum JSONForms project is build and tested via [Travis](https://tr
 
 - [x] Vertical Layout - Vertical Grid
 - [x] Horizontal Layout - Horizontal Grid
-- [ ] Categorization - Tabs
+- [x] Categorization - Tabs
 - [x] Group - Group
-- [ ] Label - Text
+- [x] Label - Text
 
 # License
 

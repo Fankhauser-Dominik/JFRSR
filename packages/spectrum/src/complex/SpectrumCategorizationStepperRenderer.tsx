@@ -40,16 +40,18 @@ import {
   uiTypeIs,
 } from '@jsonforms/core';
 import { withJsonFormsLayoutProps } from '@jsonforms/react';
-import { Tabs, TabList, TabPanels } from '@react-spectrum/tabs';
 import {
   Button,
   ButtonGroup,
   Content,
+  defaultTheme,
   Flex,
   Item,
   Provider,
+  TabList,
+  TabPanels,
+  Tabs,
   useProvider,
-  defaultTheme,
 } from '@adobe/react-spectrum';
 import merge from 'lodash/merge';
 import { AjvProps, withAjvProps } from '../util';
@@ -99,7 +101,6 @@ export const SpectrumCategorizationStepperRenderer = (
       theme={theme}
       id='SpectrumInputControlProvider'
     >
-      Stepper
       <Flex
         direction='column'
         isHidden={!visible}
