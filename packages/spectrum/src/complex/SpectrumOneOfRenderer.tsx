@@ -54,8 +54,10 @@ import {
   Heading,
   Item,
   View,
+  TabList,
+  TabPanels,
+  Tabs,
 } from '@adobe/react-spectrum';
-import { Tabs, Provider, defaultTheme } from '@adobe/react-spectrum';
 
 export interface OwnOneOfProps extends OwnPropsOfControl {
   indexOfFittingSchema?: number;
@@ -66,15 +68,16 @@ const SpectrumOneOfRenderer = ({
   handleChange,
   schema,
   path,
+  enabled,
   renderers,
   cells,
   rootSchema,
   id,
   visible,
-  indexOfFittingSchema,
   uischema,
   uischemas,
   data,
+  indexOfFittingSchema,
 }: CombinatorProps) => {
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(indexOfFittingSchema || 0);
@@ -118,16 +121,22 @@ const SpectrumOneOfRenderer = ({
 
   return (
     <View isHidden={!visible}>
-      <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
-        <CombinatorProperties
-          schema={_schema}
-          combinatorKeyword={'oneOf'}
-          path={path}
-        />
-        <Tabs
-          selectedKey={String(selectedIndex)}
-          onSelectionChange={handleTabChange}
-        >
+      <CombinatorProperties
+        schema={_schema}
+        combinatorKeyword={'oneOf'}
+        path={path}
+      />
+      <Tabs
+        isDisabled={!enabled}
+        selectedKey={String(selectedIndex)}
+        onSelectionChange={handleTabChange}
+      >
+        <TabList>
+          {oneOfRenderInfos.map((oneOfRenderInfo, oneOfIndex) => (
+            <Item key={oneOfIndex}>{oneOfRenderInfo.label}</Item>
+          ))}
+        </TabList>
+        <TabPanels>
           {oneOfRenderInfos.map((oneOfRenderInfo, oneOfIndex) => (
             <Item key={oneOfIndex} title={oneOfRenderInfo.label}>
               <Content margin='size-160'>
@@ -142,33 +151,33 @@ const SpectrumOneOfRenderer = ({
               </Content>
             </Item>
           ))}
-        </Tabs>
-        <DialogContainer onDismiss={handleClose}>
-          {open && (
-            <Dialog>
-              <Heading>Clear form?</Heading>
-              <Divider />
-              <Content>
-                Your data will be cleared if you navigate away from this tab. Do
-                you want to proceed?
-              </Content>
-              <ButtonGroup>
-                <Button variant='secondary' onPress={cancel}>
-                  Cancel
-                </Button>
-                <Button
-                  variant='cta'
-                  onPress={confirm}
-                  autoFocus
-                  id={id && `oneOf-${id}-confirm-yes`}
-                >
-                  Confirm
-                </Button>
-              </ButtonGroup>
-            </Dialog>
-          )}
-        </DialogContainer>
-      </Provider>
+        </TabPanels>
+      </Tabs>
+      <DialogContainer onDismiss={handleClose}>
+        {open && (
+          <Dialog>
+            <Heading>Clear Form?</Heading>
+            <Divider />
+            <Content>
+              Your Data will be cleared if you navigate away from this Tab. Do
+              you want to Clear your Form?
+            </Content>
+            <ButtonGroup>
+              <Button variant='secondary' onPress={cancel}>
+                Cancel
+              </Button>
+              <Button
+                variant='cta'
+                onPress={confirm}
+                autoFocus
+                id={id && `oneOf-${id}-confirm-yes`}
+              >
+                Clear Form
+              </Button>
+            </ButtonGroup>
+          </Dialog>
+        )}
+      </DialogContainer>
     </View>
   );
 };
