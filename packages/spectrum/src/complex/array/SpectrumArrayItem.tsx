@@ -121,34 +121,38 @@ const SpectrumArrayItem = ({
             <Text UNSAFE_style={{ textAlign: 'left' }}>{childLabel}</Text>
           </ActionButton>
           <View>
-            <ActionButton
-              onPress={handleExpand(index)}
-              isQuiet={true}
-              aria-label={`expand-item-${childLabel}`}
-            >
-              {expanded ? <ChevronUp /> : <ChevronDown />}
-            </ActionButton>
-            <DialogTrigger>
-              <TooltipTrigger delay={0}>
-                <ActionButton
-                  isQuiet={true}
-                  aria-label={`delete-item-${childLabel}`}
-                >
-                  <Delete />
-                </ActionButton>
-                <Tooltip>Delete</Tooltip>
-              </TooltipTrigger>
-              <AlertDialog
-                variant='confirmation'
-                title='Delete'
-                primaryActionLabel='Delete'
-                cancelLabel='Cancel'
-                autoFocusButton='primary'
-                onPrimaryAction={removeItem(path, index)}
+            <TooltipTrigger delay={0}>
+              <ActionButton
+                onPress={handleExpand(index)}
+                isQuiet={true}
+                aria-label={`expand-item-${childLabel}`}
               >
-                Are you sure you wish to delete this item?
-              </AlertDialog>
-            </DialogTrigger>
+                {expanded ? (
+                  <ChevronUp aria-label='Collapse' />
+                ) : (
+                  <ChevronDown aria-label='Expand' />
+                )}
+              </ActionButton>
+              <Tooltip>{expanded ? 'Collapse' : 'Expand'}</Tooltip>
+            </TooltipTrigger>
+            <TooltipTrigger>
+              <DialogTrigger>
+                <ActionButton aria-label={`delete-item-${childLabel}`}>
+                  <Delete aria-label='Delete' />
+                </ActionButton>
+                <AlertDialog
+                  variant='confirmation'
+                  title='Delete'
+                  primaryActionLabel='Delete'
+                  cancelLabel='Cancel'
+                  autoFocusButton='primary'
+                  onPrimaryAction={removeItem(path, index)}
+                >
+                  Are you sure you wish to delete this item?
+                </AlertDialog>
+              </DialogTrigger>
+              <Tooltip>Delete</Tooltip>
+            </TooltipTrigger>
           </View>
         </Flex>
       </View>
@@ -230,9 +234,17 @@ export const withJsonFormsSpectrumArrayItemProps = (
           prevProps: StatePropsOfSpectrumArrayItem,
           nextProps: StatePropsOfSpectrumArrayItem
         ) => {
-          const { handleExpand: prevHandleExpand, removeItem: prevRemoveItem, ...restPrevProps } = prevProps
-          const { handleExpand: nextHandleExpand, removeItem: nextRemoveItem, ...restNextProps } = nextProps
-          return areEqual(restPrevProps, restNextProps)
+          const {
+            handleExpand: prevHandleExpand,
+            removeItem: prevRemoveItem,
+            ...restPrevProps
+          } = prevProps;
+          const {
+            handleExpand: nextHandleExpand,
+            removeItem: nextRemoveItem,
+            ...restNextProps
+          } = nextProps;
+          return areEqual(restPrevProps, restNextProps);
         }
       )
     )

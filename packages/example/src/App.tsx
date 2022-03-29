@@ -112,7 +112,7 @@ function App(props: AppProps & { selectedExample: ReactExampleDescription }) {
           paddingTop='0'
           paddingBottom='size-800'
         >
-          <div className='bigerinocontainer'>
+          <div className='container'>
             <View padding='size-100'>
               <Heading>
                 react, json-schema, jsonforms.io, react-spectrum
