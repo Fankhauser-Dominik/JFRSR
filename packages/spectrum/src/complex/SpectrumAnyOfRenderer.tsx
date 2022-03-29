@@ -45,10 +45,10 @@ import {
   Content,
   Item,
   View,
-  Provider,
-  defaultTheme,
+  TabList,
+  TabPanels,
+  Tabs,
 } from '@adobe/react-spectrum';
-import { Tabs } from '@react-spectrum/tabs';
 
 const SpectrumAnyOfRenderer = ({
   schema,
@@ -79,16 +79,21 @@ const SpectrumAnyOfRenderer = ({
 
   return (
     <View isHidden={!visible} UNSAFE_className={`anyof-renderer`}>
-      <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
-        <CombinatorProperties
-          schema={_schema}
-          combinatorKeyword={'anyOf'}
-          path={path}
-        />
-        <Tabs
-          selectedKey={String(selectedAnyOf)}
-          onSelectionChange={handleChange}
-        >
+      <CombinatorProperties
+        schema={_schema}
+        combinatorKeyword={'anyOf'}
+        path={path}
+      />
+      <Tabs
+        selectedKey={String(selectedAnyOf)}
+        onSelectionChange={handleChange}
+      >
+        <TabList>
+          {anyOfRenderInfos.map((anyOfRenderInfo, anyOfIndex) => (
+            <Item key={anyOfIndex}>{anyOfRenderInfo.label}</Item>
+          ))}
+        </TabList>
+        <TabPanels>
           {anyOfRenderInfos.map((anyOfRenderInfo, anyOfIndex) => (
             <Item key={anyOfIndex} title={anyOfRenderInfo.label}>
               <Content margin='size-160'>
@@ -103,8 +108,8 @@ const SpectrumAnyOfRenderer = ({
               </Content>
             </Item>
           ))}
-        </Tabs>
-      </Provider>
+        </TabPanels>
+      </Tabs>
     </View>
   );
 };

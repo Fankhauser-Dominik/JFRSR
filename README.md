@@ -62,7 +62,7 @@ The React Spectrum JSONForms project is build and tested via [Travis](https://tr
 - [ ] Array of enums - Multiple Choice
 - [x] oneOf - Tabs
 - [ ] allOf - Tabs
-- [ ] anyOf - Tabs
+- [x] anyOf - Tabs
 
 ## UI Schema Features
 
