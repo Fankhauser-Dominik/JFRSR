@@ -25,91 +25,100 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-import maxBy from 'lodash/maxBy';
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   ControlProps,
-  ControlState,
   isControl,
   isDescriptionHidden,
   NOT_APPLICABLE,
   RankedTester,
   rankWith,
 } from '@jsonforms/core';
-import {
-  Control,
-  DispatchCell,
-  withJsonFormsControlProps,
-} from '@jsonforms/react';
+import { DispatchCell, withJsonFormsControlProps } from '@jsonforms/react';
+import { useFocus } from '../util/focus';
 import merge from 'lodash/merge';
-import { Flex, Text, Provider, defaultTheme } from '@adobe/react-spectrum';
+import maxBy from 'lodash/maxBy';
+import {
+  defaultTheme,
+  Flex,
+  Provider,
+  Text,
+  useProvider,
+} from '@adobe/react-spectrum';
+import { ColorSchemeContext } from '../util/ColorSchemeContext';
 
-export class InputControl extends Control<ControlProps, ControlState> {
-  render() {
-    const {
-      description,
-      id,
-      errors,
-      uischema,
-      schema,
-      visible,
-      path,
-      cells,
-      config,
-    } = this.props;
-    const classNames: any = {
-      wrapper: 'control',
-      description: 'input-description',
-    }; // TODO: remove when fully implemented with Spectrum
-    const isValid = errors.length === 0;
-    const divClassNames = `validation  ${
-      isValid ? classNames.description : 'validation_error'
-    }`;
+export const InputControl = ({
+  cells,
+  config,
+  description,
+  errors,
+  id,
+  path,
+  schema,
+  uischema,
+  visible,
+}: ControlProps) => {
+  const [focused, onFocus, onBlur] = useFocus();
+  const classNames: any = {
+    wrapper: 'control',
+    description: 'input-description',
+  }; // TODO: remove when fully implemented with Spectrum
+  const isValid = errors.length === 0;
+  const divClassNames = `validation  ${
+    isValid ? classNames.description : 'validation_error'
+  }`;
 
-    const appliedUiSchemaOptions = merge({}, config, uischema.options);
-    const showDescription = !isDescriptionHidden(
-      visible,
-      description,
-      this.state.isFocused,
-      appliedUiSchemaOptions.showUnfocusedDescription
-    );
+  const appliedUiSchemaOptions = merge({}, config, uischema.options);
+  const showDescription = !isDescriptionHidden(
+    visible,
+    description,
+    focused,
+    appliedUiSchemaOptions.showUnfocusedDescription
+  );
 
-    const cell = maxBy(cells, (r) => r.tester(uischema, schema));
-    if (
-      cell === undefined ||
-      cell.tester(uischema, schema) === NOT_APPLICABLE
-    ) {
-      console.warn('No applicable cell found.', uischema, schema);
-      return null;
-    } else {
-      return (
-        <div
-          className={classNames.wrapper}
-          hidden={!visible}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          id={id}
+  const colorSchemeContext = useContext(ColorSchemeContext);
+  const parentProvider = useProvider();
+  const colorScheme = parentProvider
+    ? parentProvider.colorScheme
+    : colorSchemeContext;
+  const theme = parentProvider ? parentProvider.theme : defaultTheme;
+
+  const cell = maxBy(cells, (r) => r.tester(uischema, schema));
+  if (cell === undefined || cell.tester(uischema, schema) === NOT_APPLICABLE) {
+    console.warn('No applicable cell found.', uischema, schema);
+    return null;
+  } else {
+    return (
+      <div
+        className={classNames.wrapper}
+        hidden={!visible}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        id={id}
+      >
+        <Provider
+          colorScheme={colorScheme}
+          theme={theme}
+          id='InputControlProvider'
         >
-          <Provider theme={defaultTheme} id='InputControlProvider'>
-            <Flex direction='column'>
-              <DispatchCell
-                uischema={uischema}
-                schema={schema}
-                path={path}
-                id={id && `${id}-input`}
-              />
-              <div className={divClassNames}>
-                <Text>
-                  {!isValid ? errors : showDescription ? description : null}
-                </Text>
-              </div>
-            </Flex>
-          </Provider>
-        </div>
-      );
-    }
+          <Flex direction='column'>
+            <DispatchCell
+              uischema={uischema}
+              schema={schema}
+              path={path}
+              id={id && `${id}-input`}
+            />
+            <div className={divClassNames}>
+              <Text>
+                {!isValid ? errors : showDescription ? description : null}
+              </Text>
+            </div>
+          </Flex>
+        </Provider>
+      </div>
+    );
   }
-}
+};
 
 export const inputControlTester: RankedTester = rankWith(1, isControl);
 
