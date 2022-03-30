@@ -18,27 +18,29 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
+
 import React from 'react';
 import {
   and,
   ControlProps,
-  isEnumControl,
+  isOneOfEnumControl,
   optionIs,
   OwnPropsOfEnum,
   RankedTester,
   rankWith,
 } from '@jsonforms/core';
-import { withJsonFormsEnumProps } from '@jsonforms/react';
+import { withJsonFormsOneOfEnumProps } from '@jsonforms/react';
 import { SpectrumRadioGroup } from './SpectrumRadioGroup';
 
-export const SpectrumRadioGroupControl = (
+export const SpectrumOneOfRadioGroupControl = (
   props: ControlProps & OwnPropsOfEnum
 ) => {
   return <SpectrumRadioGroup {...props} />;
 };
 
-export const SpectrumRadioGroupControlTester: RankedTester = rankWith(
+export const SpectrumOneOfRadioGroupControlTester: RankedTester = rankWith(
   20,
-  and(isEnumControl, optionIs('format', 'radio'))
+  and(isOneOfEnumControl, optionIs('format', 'radio'))
 );
-export default withJsonFormsEnumProps(SpectrumRadioGroupControl);
+
+export default withJsonFormsOneOfEnumProps(SpectrumOneOfRadioGroupControl);

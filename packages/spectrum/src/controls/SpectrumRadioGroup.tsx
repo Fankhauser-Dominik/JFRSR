@@ -19,26 +19,23 @@
   THE SOFTWARE.
 */
 import React from 'react';
-import {
-  and,
-  ControlProps,
-  isEnumControl,
-  optionIs,
-  OwnPropsOfEnum,
-  RankedTester,
-  rankWith,
-} from '@jsonforms/core';
-import { withJsonFormsEnumProps } from '@jsonforms/react';
-import { SpectrumRadioGroup } from './SpectrumRadioGroup';
+import { ControlProps, OwnPropsOfEnum } from '@jsonforms/core';
+import { View, RadioGroup, Radio } from '@adobe/react-spectrum';
 
-export const SpectrumRadioGroupControl = (
-  props: ControlProps & OwnPropsOfEnum
-) => {
-  return <SpectrumRadioGroup {...props} />;
+export const SpectrumRadioGroup = (props: ControlProps & OwnPropsOfEnum) => {
+  const { visible, options, handleChange, path } = props;
+
+  return (
+    <View
+      isHidden={visible === undefined || visible === null ? false : !visible}
+    >
+      <RadioGroup value={props.data} onChange={(ev) => handleChange(path, ev)}>
+        {options.map((option) => (
+          <Radio value={option.value} key={option.label}>
+            {option.label}
+          </Radio>
+        ))}
+      </RadioGroup>
+    </View>
+  );
 };
-
-export const SpectrumRadioGroupControlTester: RankedTester = rankWith(
-  20,
-  and(isEnumControl, optionIs('format', 'radio'))
-);
-export default withJsonFormsEnumProps(SpectrumRadioGroupControl);
