@@ -29,53 +29,48 @@ import { TextField } from '@adobe/react-spectrum';
 import { DimensionValue } from '@react-types/shared';
 import { SpectrumInputProps } from './index';
 
-export class InputNumberFormatted extends React.PureComponent<
-  CellProps & SpectrumInputProps & Formatted<number>
-> {
-  render() {
-    const {
-      config,
-      enabled,
-      handleChange,
-      id,
-      isValid,
-      label,
-      path,
-      required,
-      schema,
-      uischema,
-    } = this.props;
+export const InputNumberFormatted = ({
+  config,
+  data,
+  enabled,
+  fromFormatted,
+  handleChange,
+  id,
+  isValid,
+  label,
+  path,
+  required,
+  schema,
+  toFormatted,
+  uischema,
+}: CellProps & SpectrumInputProps & Formatted<number>) => {
+  const formattedNumber: string = toFormatted(data);
 
-    const formattedNumber: string = this.props.toFormatted(this.props.data);
+  const onChange = (ev: any) => {
+    const validStringNumber = fromFormatted(ev.currentTarget.value);
+    handleChange(path, validStringNumber);
+  };
 
-    const onChange = (ev: any) => {
-      const validStringNumber = this.props.fromFormatted(
-        ev.currentTarget.value
-      );
-      handleChange(path, validStringNumber);
-    };
+  const appliedUiSchemaOptions = merge({}, config, uischema.options);
 
-    const appliedUiSchemaOptions = merge({}, config, uischema.options);
+  const width: DimensionValue = appliedUiSchemaOptions.trim
+    ? undefined
+    : '100%';
 
-    const width: DimensionValue = appliedUiSchemaOptions.trim
-      ? undefined
-      : '100%';
-
-    return (
-      <TextField
-        label={label}
-        type='text'
-        inputMode='numeric'
-        value={formattedNumber}
-        onChange={onChange}
-        id={id}
-        isDisabled={!enabled}
-        maxLength={schema.maxLength}
-        autoFocus={appliedUiSchemaOptions.focus}
-        isRequired={required}
-        validationState={isValid ? 'valid' : 'invalid'}
-        width={width}
-      />
-    );
-  }
-}
+  return (
+    <TextField
+      label={label}
+      type='text'
+      inputMode='numeric'
+      value={formattedNumber}
+      onChange={onChange}
+      id={id}
+      isDisabled={!enabled}
+      maxLength={schema.maxLength}
+      autoFocus={appliedUiSchemaOptions.focus}
+      isRequired={required}
+      validationState={isValid ? 'valid' : 'invalid'}
+      width={width}
+    />
+  );
+};

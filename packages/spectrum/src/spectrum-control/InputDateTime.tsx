@@ -30,51 +30,45 @@ import { SpectrumInputProps } from './index';
 import { Flex } from '@adobe/react-spectrum';
 import { DatePicker, DatePickerLabel } from '../additional/DatePicker';
 
-export class InputDateTime extends React.PureComponent<
-  CellProps & SpectrumInputProps
-> {
-  render() {
-    const {
-      config,
-      uischema,
-      data,
-      id,
-      enabled,
-      required,
-      path,
-      handleChange,
-      label,
-    } = this.props;
+export const InputDateTime = ({
+  config,
+  data,
+  enabled,
+  handleChange,
+  id,
+  label,
+  path,
+  required,
+  uischema,
+}: CellProps & SpectrumInputProps) => {
+  const toISOString = (inputDateTime: string) => {
+    return inputDateTime === '' ? '' : inputDateTime + ':00.000Z';
+  };
 
-    const toISOString = (inputDateTime: string) => {
-      return inputDateTime === '' ? '' : inputDateTime + ':00.000Z';
-    };
+  const appliedUiSchemaOptions = merge({}, config, uischema.options);
 
-    const appliedUiSchemaOptions = merge({}, config, uischema.options);
+  const width: DimensionValue = appliedUiSchemaOptions.trim
+    ? undefined
+    : '100%';
 
-    const width: DimensionValue = appliedUiSchemaOptions.trim
-      ? undefined
-      : '100%';
-
-    return (
-      <Flex direction='column'>
-        <DatePickerLabel htmlFor={id + '-input'}>
-          {computeLabel(
-            label,
-            required,
-            appliedUiSchemaOptions.hideRequiredAsterisk
-          )}
-        </DatePickerLabel>
-        <DatePicker
-          type='datetime-local'
-          width={width}
-          value={(data ?? '').substr(0, 16)}
-          onChange={(ev) => handleChange(path, toISOString(ev.target.value))}
-          id={id}
-          disabled={!enabled}
-          autoFocus={uischema.options && uischema.options.focus}
-        />
-      </Flex>
-    );
-  }
-}
+  return (
+    <Flex direction='column'>
+      <DatePickerLabel htmlFor={id + '-input'}>
+        {computeLabel(
+          label,
+          required,
+          appliedUiSchemaOptions.hideRequiredAsterisk
+        )}
+      </DatePickerLabel>
+      <DatePicker
+        type='datetime-local'
+        width={width}
+        value={(data ?? '').substr(0, 16)}
+        onChange={(ev) => handleChange(path, toISOString(ev.target.value))}
+        id={id}
+        disabled={!enabled}
+        autoFocus={uischema.options && uischema.options.focus}
+      />
+    </Flex>
+  );
+};
