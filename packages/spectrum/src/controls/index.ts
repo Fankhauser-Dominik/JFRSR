@@ -48,6 +48,9 @@ import SpectrumEnumControl, {
 import SpectrumIntegerControl, {
   spectrumIntegerControlTester,
 } from './SpectrumIntegerControl';
+import SpectrumRadioGroupControl, {
+  SpectrumRadioGroupControlTester,
+} from './SpectrumRadioGroupControl';
 import SpectrumRatingControl, {
   spectrumRatingControlTester,
 } from './SpectrumRatingControl';
@@ -96,6 +99,8 @@ export {
   spectrumEnumControlTester,
   SpectrumIntegerControl,
   spectrumIntegerControlTester,
+  SpectrumRadioGroupControl,
+  SpectrumRadioGroupControlTester,
   SpectrumRatingControl,
   spectrumRatingControlTester,
   SpectrumCheckboxControl,

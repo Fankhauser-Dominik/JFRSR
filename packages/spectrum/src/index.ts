@@ -72,6 +72,8 @@ import {
   SpectrumEnumControl,
   SpectrumIntegerControl,
   spectrumIntegerControlTester,
+  SpectrumRadioGroupControl,
+  SpectrumRadioGroupControlTester,
   SpectrumRatingControl,
   spectrumRatingControlTester,
   SpectrumCheckboxControl,
@@ -164,6 +166,10 @@ export const spectrumRenderers: { tester: RankedTester; renderer: any }[] = [
     renderer: SpectrumOneOfEnumControl,
   },
   { tester: spectrumIntegerControlTester, renderer: SpectrumIntegerControl },
+  {
+    tester: SpectrumRadioGroupControlTester,
+    renderer: SpectrumRadioGroupControl,
+  },
   { tester: spectrumRatingControlTester, renderer: SpectrumRatingControl },
   { tester: spectrumNumberControlTester, renderer: SpectrumNumberControl },
   {

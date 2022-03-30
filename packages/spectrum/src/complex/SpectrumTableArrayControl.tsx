@@ -54,8 +54,6 @@ import {
   Tooltip,
   TooltipTrigger,
   View,
-  Provider,
-  defaultTheme,
 } from '@adobe/react-spectrum';
 
 import './table-cell.css';
@@ -93,188 +91,171 @@ export const spectrumTableArrayControlTester: RankedTester = rankWith(
   )
 );
 
-class SpectrumTableArrayControl extends React.Component<
-  ArrayControlProps,
-  any
-> {
-  confirmDelete = (path: string, index: number) => {
+const SpectrumTableArrayControl = ({
+  addItem,
+  uischema,
+  schema,
+  rootSchema,
+  path,
+  data,
+  visible,
+  label,
+  childErrors,
+  removeItems,
+}: ArrayControlProps) => {
+  const confirmDelete = (path: string, index: number) => {
     const p = path.substring(0, path.lastIndexOf('.'));
-    this.props.removeItems(p, [index])();
+    removeItems(p, [index])();
   };
 
-  render() {
-    const {
-      addItem,
-      uischema,
-      schema,
-      rootSchema,
-      path,
-      data,
-      visible,
-      label,
-      childErrors,
-    } = this.props;
+  const controlElement = uischema as ControlElement;
+  const createControlElement = (key?: string): ControlElement => ({
+    type: 'Control',
+    label: false,
+    scope: schema.type === 'object' ? `#/properties/${key}` : '#',
+  });
 
-    const controlElement = uischema as ControlElement;
-    const createControlElement = (key?: string): ControlElement => ({
-      type: 'Control',
-      label: false,
-      scope: schema.type === 'object' ? `#/properties/${key}` : '#',
-    });
+  const labelObject = createLabelDescriptionFrom(controlElement, schema);
 
-    const labelObject = createLabelDescriptionFrom(controlElement, schema);
+  const UNSAFE_error = {
+    color: 'rgb(215, 55, 63)',
+  };
 
-    const UNSAFE_error = {
-      color: 'rgb(215, 55, 63)',
-    };
+  const headerColumns: JSX.Element[] = schema.properties
+    ? Object.keys(schema.properties)
+        .filter((prop) => schema.properties[prop].type !== 'array')
+        .map((prop) => <Column key={prop}>{startCase(prop)}</Column>)
+    : [<Column key='items'>Items</Column>];
 
-    const headerColumns: JSX.Element[] = schema.properties
-      ? Object.keys(schema.properties)
-          .filter((prop) => schema.properties[prop].type !== 'array')
-          .map((prop) => <Column key={prop}>{startCase(prop)}</Column>)
-      : [<Column key='items'>Items</Column>];
+  const uioptions = getUIOptions(uischema, labelObject.text);
+  const add = addItem(path, createDefaultValue(schema));
 
-    const uioptions = getUIOptions(uischema, labelObject.text);
-    const add = addItem(path, createDefaultValue(schema));
+  return (
+    <View
+      UNSAFE_className='spectrum-table-array-control'
+      isHidden={visible === undefined || visible === null ? false : !visible}
+    >
+      <ArrayHeader
+        {...uioptions}
+        add={add}
+        allErrorsMessages={childErrors.map((e) => e.message)}
+        labelText={isPlainLabel(label) ? label : label.default}
+      />
+      <TableView overflowMode='wrap' density='compact'>
+        <TableHeader>
+          {[
+            ...headerColumns,
+            <Column key='none' width={70}>
+              &nbsp;
+            </Column>,
+          ]}
+        </TableHeader>
+        <TableBody>
+          {!data || !Array.isArray(data) || data.length === 0 ? (
+            <Row>
+              {[...headerColumns, 3].map((_, index) =>
+                index === 0 ? (
+                  <Cell key={index}>No data</Cell>
+                ) : (
+                  <Cell key={index}>&nbsp;</Cell>
+                )
+              )}
+            </Row>
+          ) : (
+            data.map((_child, index) => {
+              const childPath = Paths.compose(path, `${index}`);
 
-    return (
-      <View
-        UNSAFE_className='spectrum-table-array-control'
-        isHidden={visible === undefined || visible === null ? false : !visible}
-      >
-        <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
-          <ArrayHeader
-            {...uioptions}
-            add={add}
-            allErrorsMessages={childErrors.map((e) => e.message)}
-            labelText={isPlainLabel(label) ? label : label.default}
-          />
-          <TableView overflowMode='wrap' density='compact'>
-            <TableHeader>
-              {[
-                ...headerColumns,
-                <Column key='none' width={70}>
-                  &nbsp;
-                </Column>,
-              ]}
-            </TableHeader>
-            <TableBody>
-              {!data || !Array.isArray(data) || data.length === 0 ? (
-                <Row>
-                  {[...headerColumns, 3].map((_, index) =>
-                    index === 0 ? (
-                      <Cell key={index}>No data</Cell>
-                    ) : (
-                      <Cell key={index}>&nbsp;</Cell>
-                    )
-                  )}
-                </Row>
-              ) : (
-                data.map((_child, index) => {
-                  const childPath = Paths.compose(path, `${index}`);
+              const rowCells: JSX.Element[] = schema.properties
+                ? Object.keys(schema.properties)
+                    .filter((prop) => schema.properties[prop].type !== 'array')
+                    .map((prop) => {
+                      const childPropPath = Paths.compose(
+                        childPath,
+                        prop.toString()
+                      );
 
-                  const rowCells: JSX.Element[] = schema.properties
-                    ? Object.keys(schema.properties)
-                        .filter(
-                          (prop) => schema.properties[prop].type !== 'array'
-                        )
-                        .map((prop) => {
-                          const childPropPath = Paths.compose(
-                            childPath,
-                            prop.toString()
-                          );
-
-                          return (
-                            <Cell key={childPropPath}>
-                              <Flex direction='column' width='100%'>
-                                <DispatchCell
-                                  schema={Resolve.schema(
-                                    schema,
-                                    `#/properties/${prop}`,
-                                    rootSchema
-                                  )}
-                                  uischema={createControlElement(prop)}
-                                  path={childPath + '.' + prop}
-                                />
-                                <View
-                                  UNSAFE_style={UNSAFE_error}
-                                  isHidden={
-                                    getChildError(
-                                      childErrors,
-                                      childPropPath
-                                    ) === ''
-                                  }
-                                >
-                                  <Text>
-                                    {getChildError(childErrors, childPropPath)}
-                                  </Text>
-                                </View>
-                              </Flex>
-                            </Cell>
-                          );
-                        })
-                    : [
-                        <Cell key={Paths.compose(childPath, index.toString())}>
+                      return (
+                        <Cell key={childPropPath}>
                           <Flex direction='column' width='100%'>
                             <DispatchCell
-                              schema={schema}
-                              uischema={createControlElement()}
-                              path={childPath}
+                              schema={Resolve.schema(
+                                schema,
+                                `#/properties/${prop}`,
+                                rootSchema
+                              )}
+                              uischema={createControlElement(prop)}
+                              path={childPath + '.' + prop}
                             />
                             <View
                               UNSAFE_style={UNSAFE_error}
                               isHidden={
-                                getChildError(childErrors, childPath) === ''
+                                getChildError(childErrors, childPropPath) === ''
                               }
                             >
                               <Text>
-                                {getChildError(childErrors, childPath)}
+                                {getChildError(childErrors, childPropPath)}
                               </Text>
                             </View>
                           </Flex>
-                        </Cell>,
-                      ];
+                        </Cell>
+                      );
+                    })
+                : [
+                    <Cell key={Paths.compose(childPath, index.toString())}>
+                      <Flex direction='column' width='100%'>
+                        <DispatchCell
+                          schema={schema}
+                          uischema={createControlElement()}
+                          path={childPath}
+                        />
+                        <View
+                          UNSAFE_style={UNSAFE_error}
+                          isHidden={
+                            getChildError(childErrors, childPath) === ''
+                          }
+                        >
+                          <Text>{getChildError(childErrors, childPath)}</Text>
+                        </View>
+                      </Flex>
+                    </Cell>,
+                  ];
 
-                  return (
-                    <Row key={childPath}>
-                      {[
-                        ...rowCells,
-                        <Cell key={`delete-row-${index}`}>
-                          <DialogTrigger>
-                            <TooltipTrigger delay={0}>
-                              <ActionButton
-                                aria-label={`Delete row at ${index}`}
-                              >
-                                <Delete />
-                              </ActionButton>
-                              <Tooltip>Delete</Tooltip>
-                            </TooltipTrigger>
-                            <AlertDialog
-                              variant='confirmation'
-                              title='Delete'
-                              primaryActionLabel='Delete'
-                              cancelLabel='Cancel'
-                              autoFocusButton='primary'
-                              onPrimaryAction={() =>
-                                this.confirmDelete(childPath, index)
-                              }
-                            >
-                              Are you sure you wish to delete this item?
-                            </AlertDialog>
-                          </DialogTrigger>
-                        </Cell>,
-                      ]}
-                    </Row>
-                  );
-                })
-              )}
-            </TableBody>
-          </TableView>
-          <ArrayFooter {...uioptions} add={add} />
-        </Provider>
-      </View>
-    );
-  }
-}
+              return (
+                <Row key={childPath}>
+                  {[
+                    ...rowCells,
+                    <Cell key={`delete-row-${index}`}>
+                      <TooltipTrigger delay={0}>
+                        <DialogTrigger>
+                          <ActionButton aria-label={`Delete row at ${index}`}>
+                            <Delete />
+                          </ActionButton>
+                          <AlertDialog
+                            variant='confirmation'
+                            title='Delete'
+                            primaryActionLabel='Delete'
+                            cancelLabel='Cancel'
+                            autoFocusButton='primary'
+                            onPrimaryAction={() =>
+                              confirmDelete(childPath, index)
+                            }
+                          >
+                            Are you sure you wish to delete this item?
+                          </AlertDialog>
+                        </DialogTrigger>
+                        <Tooltip>Delete</Tooltip>
+                      </TooltipTrigger>
+                    </Cell>,
+                  ]}
+                </Row>
+              );
+            })
+          )}
+        </TableBody>
+      </TableView>
+      <ArrayFooter {...uioptions} add={add} />
+    </View>
+  );
+};
 
 export default withJsonFormsArrayControlProps(SpectrumTableArrayControl);

@@ -1,22 +1,15 @@
 /*
   The MIT License
-
-  Copyright (c) 2017-2019 EclipseSource Munich
+  Copyright (c) 2022 headwire.com, Inc
   https://github.com/eclipsesource/jsonforms
-
-  Copyright (c) 2020 headwire.com, Inc
-  https://github.com/headwirecom/jsonforms-react-spectrum-renderers
-
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
   copies of the Software, and to permit persons to whom the Software is
   furnished to do so, subject to the following conditions:
-
   The above copyright notice and this permission notice shall be included in
   all copies or substantial portions of the Software.
-
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,49 +19,42 @@
   THE SOFTWARE.
 */
 import React from 'react';
+import {
+  and,
+  ControlProps,
+  isEnumControl,
+  optionIs,
+  OwnPropsOfEnum,
+  RankedTester,
+  rankWith,
+} from '@jsonforms/core';
+import { withJsonFormsEnumProps } from '@jsonforms/react';
+import { Radio, RadioGroup, View } from '@adobe/react-spectrum';
 
-import { ArrayControlProps, ControlElement, Helpers } from '@jsonforms/core';
-import { withJsonFormsArrayControlProps } from '@jsonforms/react';
-import { SpectrumArrayControl } from './SpectrumArrayControl';
-
-const SpectrumArrayControlRenderer = ({
-  schema,
-  uischema,
+export const SpectrumRadioGroupControl = ({
   data,
+  handleChange,
+  options,
   path,
-  rootSchema,
-  uischemas,
-  addItem,
-  removeItems,
-  id,
   visible,
-  enabled,
-  errors,
-}: ArrayControlProps) => {
-  const controlElement = uischema as ControlElement;
-  const labelDescription = Helpers.createLabelDescriptionFrom(
-    controlElement,
-    schema
-  );
-  const label = labelDescription.show ? labelDescription.text : '';
-
+}: ControlProps & OwnPropsOfEnum) => {
   return (
-    <SpectrumArrayControl
-      errors={errors}
-      removeItems={removeItems}
-      data={data}
-      label={label}
-      path={path}
-      addItem={addItem}
-      uischemas={uischemas}
-      uischema={uischema}
-      schema={schema}
-      rootSchema={rootSchema}
-      id={id}
-      visible={visible}
-      enabled={enabled}
-    />
+    <View
+      isHidden={visible === undefined || visible === null ? false : !visible}
+    >
+      <RadioGroup value={data} onChange={(ev) => handleChange(path, ev)}>
+        {options.map((option) => (
+          <Radio value={option.value} key={option.label}>
+            {option.label}
+          </Radio>
+        ))}
+      </RadioGroup>
+    </View>
   );
 };
 
-export default withJsonFormsArrayControlProps(SpectrumArrayControlRenderer);
+export const SpectrumRadioGroupControlTester: RankedTester = rankWith(
+  20,
+  and(isEnumControl, optionIs('format', 'radio'))
+);
+export default withJsonFormsEnumProps(SpectrumRadioGroupControl);
