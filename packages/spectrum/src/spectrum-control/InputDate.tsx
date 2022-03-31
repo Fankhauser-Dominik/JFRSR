@@ -28,18 +28,18 @@ import merge from 'lodash/merge';
 import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
 import { Flex } from '@adobe/react-spectrum';
-import { DatePicker, DatePickerLabel } from '../additional/DatePicker';
+import { DatePicker } from '@react-spectrum/datepicker';
+import { parseDate } from '@internationalized/date';
 
 export const InputDate = ({
   config,
-  uischema,
   data,
-  id,
-  enabled,
-  required,
-  path,
   handleChange,
+  id,
   label,
+  path,
+  required,
+  uischema,
 }: CellProps & SpectrumInputProps) => {
   const appliedUiSchemaOptions = merge({}, config, uischema.options);
 
@@ -49,21 +49,18 @@ export const InputDate = ({
 
   return (
     <Flex direction='column'>
-      <DatePickerLabel htmlFor={id + '-input'}>
-        {computeLabel(
+      <DatePicker
+        label={computeLabel(
           label,
           required,
           appliedUiSchemaOptions.hideRequiredAsterisk
         )}
-      </DatePickerLabel>
-      <DatePicker
         width={width}
-        type='date'
-        value={data ?? ''}
-        onChange={(ev) => handleChange(path, ev.target.value)}
         id={id}
-        disabled={!enabled}
-        autoFocus={uischema.options && uischema.options.focus}
+        value={parseDate(data) || null}
+        onChange={(datetime: any) =>
+          handleChange(path, datetime ? datetime?.toString() : '')
+        }
       />
     </Flex>
   );
