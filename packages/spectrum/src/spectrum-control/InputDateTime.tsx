@@ -25,10 +25,11 @@
 import React from 'react';
 import { DimensionValue } from '@react-types/shared';
 import { CellProps, computeLabel } from '@jsonforms/core';
-import merge from 'lodash/merge';
 import { SpectrumInputProps } from './index';
-import { Flex } from '@adobe/react-spectrum';
-import { DatePicker, DatePickerLabel } from '../additional/DatePicker';
+import { DatePicker } from '@react-spectrum/datepicker';
+import { parseAbsoluteToLocal } from '@internationalized/date';
+import merge from 'lodash/merge';
+import moment from 'moment';
 
 export const InputDateTime = ({
   config,
@@ -42,7 +43,7 @@ export const InputDateTime = ({
   uischema,
 }: CellProps & SpectrumInputProps) => {
   const toISOString = (inputDateTime: string) => {
-    return inputDateTime === '' ? '' : inputDateTime + ':00.000Z';
+    return inputDateTime === '' ? '' : inputDateTime + 'Z';
   };
 
   const appliedUiSchemaOptions = merge({}, config, uischema.options);
@@ -52,23 +53,26 @@ export const InputDateTime = ({
     : '100%';
 
   return (
-    <Flex direction='column'>
-      <DatePickerLabel htmlFor={id + '-input'}>
-        {computeLabel(
-          label,
-          required,
-          appliedUiSchemaOptions.hideRequiredAsterisk
-        )}
-      </DatePickerLabel>
-      <DatePicker
-        type='datetime-local'
-        width={width}
-        value={(data ?? '').substr(0, 16)}
-        onChange={(ev) => handleChange(path, toISOString(ev.target.value))}
-        id={id}
-        disabled={!enabled}
-        autoFocus={uischema.options && uischema.options.focus}
-      />
-    </Flex>
+    <DatePicker
+      label={computeLabel(
+        label,
+        required,
+        appliedUiSchemaOptions.hideRequiredAsterisk
+      )}
+      width={width}
+      value={parseAbsoluteToLocal(moment().format(data)) || null}
+      onChange={(datetime: any) =>
+        handleChange(
+          path,
+          datetime ? toISOString(datetime?.toString().substr(0, 19)) : ''
+        )
+      }
+      granularity={appliedUiSchemaOptions.granularity ?? null}
+      necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+      id={id}
+      isDisabled={!enabled}
+      autoFocus={uischema.options && uischema.options.focus}
+      hideTimeZone
+    />
   );
 };

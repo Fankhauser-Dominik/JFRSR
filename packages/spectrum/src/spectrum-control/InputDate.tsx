@@ -27,7 +27,6 @@ import { CellProps, computeLabel } from '@jsonforms/core';
 import merge from 'lodash/merge';
 import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
-import { Flex } from '@adobe/react-spectrum';
 import { DatePicker } from '@react-spectrum/datepicker';
 import { parseDate } from '@internationalized/date';
 
@@ -48,20 +47,19 @@ export const InputDate = ({
     : '100%';
 
   return (
-    <Flex direction='column'>
-      <DatePicker
-        label={computeLabel(
-          label,
-          required,
-          appliedUiSchemaOptions.hideRequiredAsterisk
-        )}
-        width={width}
-        id={id}
-        value={parseDate(data) || null}
-        onChange={(datetime: any) =>
-          handleChange(path, datetime ? datetime?.toString() : '')
-        }
-      />
-    </Flex>
+    <DatePicker
+      label={computeLabel(
+        label,
+        required,
+        appliedUiSchemaOptions.hideRequiredAsterisk
+      )}
+      width={width}
+      id={id}
+      necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+      value={parseDate(data) || null}
+      onChange={(datetime: any) =>
+        handleChange(path, datetime ? datetime?.toString() : '')
+      }
+    />
   );
 };
