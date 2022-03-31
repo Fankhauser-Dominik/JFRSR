@@ -26,9 +26,11 @@ import React from 'react';
 import { DimensionValue } from '@react-types/shared';
 import { CellProps, computeLabel } from '@jsonforms/core';
 import { SpectrumInputProps } from './index';
+import { Provider } from '@adobe/react-spectrum';
 import { DatePicker } from '@react-spectrum/datepicker';
-import { parseAbsoluteToLocal } from '@internationalized/date';
 import merge from 'lodash/merge';
+import { parseAbsoluteToLocal } from '@internationalized/date';
+
 import moment from 'moment';
 
 export const InputDateTime = ({
@@ -42,37 +44,41 @@ export const InputDateTime = ({
   required,
   uischema,
 }: CellProps & SpectrumInputProps) => {
-  const toISOString = (inputDateTime: string) => {
-    return inputDateTime === '' ? '' : inputDateTime + 'Z';
-  };
-
   const appliedUiSchemaOptions = merge({}, config, uischema.options);
 
   const width: DimensionValue = appliedUiSchemaOptions.trim
     ? undefined
     : '100%';
 
+  const toISOString = (inputDateTime: string) => {
+    if (!inputDateTime) {
+      return null;
+    } else if (inputDateTime.length >= 25) {
+      return inputDateTime.substring(0, 25);
+    } else {
+      return inputDateTime.substring(0, 19) + 'Z';
+    }
+  };
   return (
-    <DatePicker
-      label={computeLabel(
-        label,
-        required,
-        appliedUiSchemaOptions.hideRequiredAsterisk
-      )}
-      width={width}
-      value={parseAbsoluteToLocal(moment().format(data)) || null}
-      onChange={(datetime: any) =>
-        handleChange(
-          path,
-          datetime ? toISOString(datetime?.toString().substr(0, 19)) : ''
-        )
-      }
-      granularity={appliedUiSchemaOptions.granularity ?? null}
-      necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
-      id={id}
-      isDisabled={!enabled}
-      autoFocus={uischema.options && uischema.options.focus}
-      hideTimeZone
-    />
+    <Provider locale={appliedUiSchemaOptions.calendar ?? 'gregory'}>
+      <DatePicker
+        label={computeLabel(
+          label,
+          required,
+          appliedUiSchemaOptions.hideRequiredAsterisk
+        )}
+        width={width}
+        value={parseAbsoluteToLocal(moment().format(data))}
+        onChange={(datetime: any) =>
+          handleChange(path, datetime ? toISOString(datetime?.toString()) : '')
+        }
+        granularity={appliedUiSchemaOptions.granularity ?? null}
+        necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+        id={id}
+        isDisabled={!enabled}
+        autoFocus={uischema.options && uischema.options.focus}
+        hideTimeZone
+      />
+    </Provider>
   );
 };

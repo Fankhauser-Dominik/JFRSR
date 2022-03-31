@@ -52,7 +52,7 @@ The React Spectrum JSONForms project is build and tested via [Travis](https://tr
 - [ ] oneOf (const / title) - Combo
 - [ ] oneOf (const / title) - Autocomplete
 - [x] Date format - Date field
-- [ ] Time format - Time field
+- [x] Time format - Time field
 - [x] Datetime format - Datetime field
 - [ ] Object - Vertical grid
 - [ ] Array of primitives - List

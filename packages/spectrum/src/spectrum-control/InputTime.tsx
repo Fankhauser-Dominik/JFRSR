@@ -27,8 +27,10 @@ import { CellProps } from '@jsonforms/core';
 import merge from 'lodash/merge';
 import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
-import { Flex } from '@adobe/react-spectrum';
-import { DatePicker, DatePickerLabel } from '../additional/DatePicker';
+import { Provider } from '@adobe/react-spectrum';
+import { TimeField } from '@react-spectrum/datepicker';
+import { parseAbsoluteToLocal } from '@internationalized/date';
+import moment from 'moment';
 
 export const InputTime = ({
   config,
@@ -47,19 +49,49 @@ export const InputTime = ({
     ? undefined
     : '100%';
 
+  const toISOString = (inputDateTime: string) => {
+    if (!inputDateTime) {
+      return null;
+    } else if (inputDateTime.length >= 25) {
+      return inputDateTime.substring(0, 16) + 'Z';
+    } else if (inputDateTime.length <= 8) {
+      return '2022-06-06T' + inputDateTime + 'Z';
+    } else {
+      return inputDateTime.substring(0, 19) + 'Z';
+    }
+  };
+
   return (
-    <Flex direction='column'>
-      <DatePickerLabel htmlFor={id + '-input'}>{label}</DatePickerLabel>
-      <DatePicker
-        width={width}
-        type='time'
-        value={data ?? ''}
-        onChange={(value) => handleChange(path, value)}
+    <Provider locale={appliedUiSchemaOptions.calendar ?? 'gregory'}>
+      <TimeField
+        label={label}
+        granularity='minute'
+        value={
+          data ? parseAbsoluteToLocal(moment().format(toISOString(data))) : null
+        }
+        onChange={(datetime: any) =>
+          handleChange(
+            path,
+            datetime
+              ? datetime
+                  ?.toString()
+                  .split('T')
+                  .pop()
+                  .split('+')[0]
+                  .substring(
+                    0,
+                    5
+                  ) /* substring is needed, because it throws an error when we use the format HH:mm:ss */
+              : ''
+          )
+        }
         id={id}
-        required={required}
-        disabled={enabled === undefined ? false : !enabled}
+        isRequired={required}
+        width={width}
         autoFocus={appliedUiSchemaOptions.focus}
+        isDisabled={enabled === undefined ? false : !enabled}
+        hideTimeZone
       />
-    </Flex>
+    </Provider>
   );
 };
