@@ -56,7 +56,7 @@ export const InputDate = ({
       width={width}
       id={id}
       necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
-      value={parseDate(data) || null}
+      value={data ? parseDate(data) : null}
       onChange={(datetime: any) =>
         handleChange(path, datetime ? datetime?.toString() : '')
       }

@@ -34,14 +34,14 @@ import moment from 'moment';
 
 export const InputTime = ({
   config,
-  uischema,
   data,
-  id,
   enabled,
-  required,
-  path,
   handleChange,
+  id,
   label,
+  path,
+  required,
+  uischema,
 }: CellProps & SpectrumInputProps) => {
   const appliedUiSchemaOptions = merge({}, config, uischema.options);
 
