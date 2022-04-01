@@ -71,24 +71,24 @@ const ListWithDetailMasterItem = ({
           <Text UNSAFE_style={{ textAlign: 'left' }}>{childLabel}</Text>
         </ActionButton>
         <View>
-          <DialogTrigger>
-            <TooltipTrigger delay={0}>
+          <TooltipTrigger delay={0}>
+            <DialogTrigger>
               <ActionButton aria-label={`delete-item-${childLabel}`}>
                 <Delete />
               </ActionButton>
-              <Tooltip>Delete</Tooltip>
-            </TooltipTrigger>
-            <AlertDialog
-              variant='confirmation'
-              title='Delete'
-              primaryActionLabel='Delete'
-              cancelLabel='Cancel'
-              autoFocusButton='primary'
-              onPrimaryAction={removeItem(path, index)}
-            >
-              Are you sure you wish to delete this item?
-            </AlertDialog>
-          </DialogTrigger>
+              <AlertDialog
+                variant='confirmation'
+                title='Delete'
+                primaryActionLabel='Delete'
+                cancelLabel='Cancel'
+                autoFocusButton='primary'
+                onPrimaryAction={removeItem(path, index)}
+              >
+                Are you sure you wish to delete this item?
+              </AlertDialog>
+            </DialogTrigger>
+            <Tooltip>Delete</Tooltip>
+          </TooltipTrigger>
         </View>
       </Flex>
     </div>
