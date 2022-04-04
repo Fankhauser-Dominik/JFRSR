@@ -26,7 +26,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-import React, { ComponentType } from 'react';
+import React, { useContext, ComponentType } from 'react';
 import {
   Text,
   Flex,
@@ -36,6 +36,9 @@ import {
   TooltipTrigger,
   Tooltip,
   AlertDialog,
+  Provider,
+  useProvider,
+  defaultTheme,
 } from '@adobe/react-spectrum';
 import {
   composePaths,
@@ -58,6 +61,7 @@ import {
 import Delete from '@spectrum-icons/workflow/Delete';
 import ChevronDown from '@spectrum-icons/workflow/ChevronDown';
 import ChevronUp from '@spectrum-icons/workflow/ChevronUp';
+import { ColorSchemeContext } from '../../util/ColorSchemeContext';
 
 import './SpectrumArrayItem.css';
 
@@ -93,83 +97,96 @@ const SpectrumArrayItem = ({
   uischemas,
   renderers,
 }: StatePropsOfSpectrumArrayItem) => {
+  const colorSchemeContext = useContext(ColorSchemeContext);
+  const parentProvider = useProvider();
+  const colorScheme = parentProvider
+    ? parentProvider.colorScheme
+    : colorSchemeContext;
+  const theme = parentProvider ? parentProvider.theme : defaultTheme;
+
   const foundUISchema = findUISchema(uischemas, schema, uischema.scope, path);
   const childPath = composePaths(path, `${index}`);
   return (
-    <View
-      borderWidth='thin'
-      borderColor='dark'
-      borderRadius='medium'
-      padding='size-250'
+    <Provider
+      colorScheme={colorScheme}
+      theme={theme}
+      id='SpectrumInputControlProvider'
     >
-      <View aria-selected={expanded}>
-        <Flex
-          direction='row'
-          margin='size-50'
-          justifyContent='space-between'
-          alignItems='center'
-        >
-          <View UNSAFE_className='spectrum-array-item-number'>
-            <Text>{index + 1}</Text>
-          </View>
-          <ActionButton
-            flex='auto'
-            isQuiet
-            onPress={handleExpand(index)}
-            aria-label={`expand-item-${childLabel}`}
+      <View
+        borderWidth='thin'
+        borderColor='dark'
+        borderRadius='medium'
+        padding='size-250'
+      >
+        <View aria-selected={expanded}>
+          <Flex
+            direction='row'
+            margin='size-50'
+            justifyContent='space-between'
+            alignItems='center'
           >
-            <Text UNSAFE_style={{ textAlign: 'left' }}>{childLabel}</Text>
-          </ActionButton>
-          <View>
-            <TooltipTrigger delay={0}>
-              <ActionButton
-                onPress={handleExpand(index)}
-                isQuiet={true}
-                aria-label={`expand-item-${childLabel}`}
-              >
-                {expanded ? (
-                  <ChevronUp aria-label='Collapse' />
-                ) : (
-                  <ChevronDown aria-label='Expand' />
-                )}
-              </ActionButton>
-              <Tooltip>{expanded ? 'Collapse' : 'Expand'}</Tooltip>
-            </TooltipTrigger>
-            <TooltipTrigger>
-              <DialogTrigger>
-                <ActionButton aria-label={`delete-item-${childLabel}`}>
-                  <Delete aria-label='Delete' />
-                </ActionButton>
-                <AlertDialog
-                  variant='confirmation'
-                  title='Delete'
-                  primaryActionLabel='Delete'
-                  cancelLabel='Cancel'
-                  autoFocusButton='primary'
-                  onPrimaryAction={removeItem(path, index)}
+            <View UNSAFE_className='spectrum-array-item-number'>
+              <Text>{index + 1}</Text>
+            </View>
+            <ActionButton
+              flex='auto'
+              isQuiet
+              onPress={handleExpand(index)}
+              aria-label={`expand-item-${childLabel}`}
+            >
+              <Text UNSAFE_style={{ textAlign: 'left' }}>{childLabel}</Text>
+            </ActionButton>
+            <View>
+              <TooltipTrigger delay={0}>
+                <ActionButton
+                  onPress={handleExpand(index)}
+                  isQuiet={true}
+                  aria-label={`expand-item-${childLabel}`}
                 >
-                  Are you sure you wish to delete this item?
-                </AlertDialog>
-              </DialogTrigger>
-              <Tooltip>Delete</Tooltip>
-            </TooltipTrigger>
-          </View>
-        </Flex>
-      </View>
-      {expanded ? (
-        <View>
-          <ResolvedJsonFormsDispatch
-            schema={schema}
-            uischema={foundUISchema || uischema}
-            path={childPath}
-            key={childPath}
-            renderers={renderers}
-          />
+                  {expanded ? (
+                    <ChevronUp aria-label='Collapse' />
+                  ) : (
+                    <ChevronDown aria-label='Expand' />
+                  )}
+                </ActionButton>
+                <Tooltip>{expanded ? 'Collapse' : 'Expand'}</Tooltip>
+              </TooltipTrigger>
+              <TooltipTrigger>
+                <DialogTrigger>
+                  <ActionButton aria-label={`delete-item-${childLabel}`}>
+                    <Delete aria-label='Delete' />
+                  </ActionButton>
+                  <AlertDialog
+                    variant='confirmation'
+                    title='Delete'
+                    primaryActionLabel='Delete'
+                    cancelLabel='Cancel'
+                    autoFocusButton='primary'
+                    onPrimaryAction={removeItem(path, index)}
+                  >
+                    Are you sure you wish to delete this item?
+                  </AlertDialog>
+                </DialogTrigger>
+                <Tooltip>Delete</Tooltip>
+              </TooltipTrigger>
+            </View>
+          </Flex>
         </View>
-      ) : (
-        ''
-      )}
-    </View>
+        {expanded ? (
+          <View>
+            <ResolvedJsonFormsDispatch
+              schema={schema}
+              uischema={foundUISchema || uischema}
+              path={childPath}
+              key={childPath}
+              renderers={renderers}
+            />
+          </View>
+        ) : (
+          ''
+        )}
+      </View>
+    </Provider>
   );
 };
 

@@ -27,6 +27,7 @@
   THE SOFTWARE.
 */
 
+import React, { useContext } from 'react';
 import {
   ActionButton,
   Flex,
@@ -34,11 +35,13 @@ import {
   Tooltip,
   TooltipTrigger,
   View,
+  Provider,
+  useProvider,
+  defaultTheme,
 } from '@adobe/react-spectrum';
 import Add from '@spectrum-icons/workflow/Add';
-import React from 'react';
 import { ErrorIndicator } from '../components/ErrorIndicator';
-
+import { ColorSchemeContext } from '../util/ColorSchemeContext';
 export interface ArrayLayoutToolbarProps {
   label: string;
   errors: string;
@@ -54,25 +57,38 @@ export const ArrayLayoutToolbar = React.memo(
     path,
     createDefault,
   }: ArrayLayoutToolbarProps) => {
+    const colorSchemeContext = useContext(ColorSchemeContext);
+    const parentProvider = useProvider();
+    const colorScheme = parentProvider
+      ? parentProvider.colorScheme
+      : colorSchemeContext;
+    const theme = parentProvider ? parentProvider.theme : defaultTheme;
+
     return (
-      <Flex direction='row' alignItems='center'>
-        <Heading level={4}>{label}</Heading>
-        <View isHidden={errors.length !== 0} marginEnd='auto' />
-        <View isHidden={errors.length === 0} marginEnd='auto'>
-          <ErrorIndicator errors={errors} />
-        </View>
-        <View>
-          <TooltipTrigger delay={0}>
-            <ActionButton
-              aria-label='add'
-              onPress={addItem(path, createDefault())}
-            >
-              <Add />
-            </ActionButton>
-            <Tooltip>{`Add to ${label}`}</Tooltip>
-          </TooltipTrigger>
-        </View>
-      </Flex>
+      <Provider
+        colorScheme={colorScheme}
+        theme={theme}
+        id='SpectrumInputControlProvider'
+      >
+        <Flex direction='row' alignItems='center'>
+          <Heading level={4}>{label}</Heading>
+          <View isHidden={errors.length !== 0} marginEnd='auto' />
+          <View isHidden={errors.length === 0} marginEnd='auto'>
+            <ErrorIndicator errors={errors} />
+          </View>
+          <View>
+            <TooltipTrigger delay={0}>
+              <ActionButton
+                aria-label='add'
+                onPress={addItem(path, createDefault())}
+              >
+                <Add />
+              </ActionButton>
+              <Tooltip>{`Add to ${label}`}</Tooltip>
+            </TooltipTrigger>
+          </View>
+        </Flex>
+      </Provider>
     );
   }
 );

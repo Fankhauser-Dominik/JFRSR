@@ -26,72 +26,92 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-import React from 'react';
+import React, { useContext } from 'react';
 import {
-  Text,
-  Flex,
   ActionButton,
-  View,
-  DialogTrigger,
-  TooltipTrigger,
-  Tooltip,
   AlertDialog,
+  defaultTheme,
+  DialogTrigger,
+  Flex,
+  Provider,
+  Text,
+  Tooltip,
+  TooltipTrigger,
+  useProvider,
+  View,
 } from '@adobe/react-spectrum';
 import { StatePropsOfMasterItem } from '@jsonforms/core';
 import { withJsonFormsMasterListItemProps } from '@jsonforms/react';
 import Delete from '@spectrum-icons/workflow/Delete';
+import { ColorSchemeContext } from '../util/ColorSchemeContext';
 
 import './ListDetailMasterItem.css';
 
 const ListWithDetailMasterItem = ({
-  index,
   childLabel,
-  selected,
-  removeItem,
-  path,
   handleSelect,
+  index,
+  path,
+  removeItem,
+  selected,
 }: StatePropsOfMasterItem) => {
+  const colorSchemeContext = useContext(ColorSchemeContext);
+  const parentProvider = useProvider();
+  const colorScheme = parentProvider
+    ? parentProvider.colorScheme
+    : colorSchemeContext;
+  const theme = parentProvider ? parentProvider.theme : defaultTheme;
+
   return (
-    <div className='list-with-detail-master-item-row' aria-selected={selected}>
-      <Flex
-        direction='row'
-        margin='size-50'
-        justifyContent='space-between'
-        alignItems='center'
+    <Provider
+      colorScheme={colorScheme}
+      theme={theme}
+      id='SpectrumInputControlProvider'
+    >
+      <div
+        className='list-with-detail-master-item-row'
+        aria-selected={selected}
       >
-        <View UNSAFE_className='list-with-detail-master-item-number'>
-          <Text>{index + 1}</Text>
-        </View>
-        <ActionButton
-          flex='auto'
-          isQuiet
-          onPress={handleSelect(index)}
-          aria-label={`select-item-${childLabel}`}
+        <Flex
+          direction='row'
+          margin='size-50'
+          justifyContent='space-between'
+          alignItems='center'
         >
-          <Text UNSAFE_style={{ textAlign: 'left' }}>{childLabel}</Text>
-        </ActionButton>
-        <View>
-          <TooltipTrigger delay={0}>
-            <DialogTrigger>
-              <ActionButton aria-label={`delete-item-${childLabel}`}>
-                <Delete />
-              </ActionButton>
-              <AlertDialog
-                variant='confirmation'
-                title='Delete'
-                primaryActionLabel='Delete'
-                cancelLabel='Cancel'
-                autoFocusButton='primary'
-                onPrimaryAction={removeItem(path, index)}
-              >
-                Are you sure you wish to delete this item?
-              </AlertDialog>
-            </DialogTrigger>
-            <Tooltip>Delete</Tooltip>
-          </TooltipTrigger>
-        </View>
-      </Flex>
-    </div>
+          <View UNSAFE_className='list-with-detail-master-item-number'>
+            <Text>{index + 1}</Text>
+          </View>
+          <ActionButton
+            flex='auto'
+            isQuiet
+            onPress={handleSelect(index)}
+            aria-label={`select-item-${childLabel}`}
+          >
+            <Text UNSAFE_style={{ textAlign: 'left' }}>{childLabel}</Text>
+          </ActionButton>
+          <View>
+            <TooltipTrigger delay={0}>
+              <DialogTrigger>
+                <ActionButton aria-label={`delete-item-${childLabel}`}>
+                  <Delete />
+                </ActionButton>
+                <AlertDialog
+                  variant='confirmation'
+                  title='Delete'
+                  primaryActionLabel='Delete'
+                  cancelLabel='Cancel'
+                  autoFocusButton='primary'
+                  onPrimaryAction={removeItem(path, index)}
+                >
+                  Are you sure you wish to delete this item?
+                </AlertDialog>
+              </DialogTrigger>
+              <Tooltip>Delete</Tooltip>
+            </TooltipTrigger>
+          </View>
+        </Flex>
+      </div>
+    </Provider>
   );
 };
 
