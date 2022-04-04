@@ -60,10 +60,12 @@ export function AddButton(
 ) {
   const { addButtonLabel, addButtonLabelType, onPress } = props;
   const button = (
-    <ActionButton UNSAFE_className='add-button' onPress={onPress}>
-      <Add />
-      {addButtonLabelType === 'inline' && <Text>{addButtonLabel}</Text>}
-    </ActionButton>
+    <SpectrumProvider>
+      <ActionButton UNSAFE_className='add-button' onPress={onPress}>
+        <Add />
+        {addButtonLabelType === 'inline' && <Text>{addButtonLabel}</Text>}
+      </ActionButton>
+    </SpectrumProvider>
   );
 
   return addButtonLabelType === 'tooltip' ? (

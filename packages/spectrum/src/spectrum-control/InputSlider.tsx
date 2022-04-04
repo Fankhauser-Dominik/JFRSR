@@ -28,6 +28,7 @@ import merge from 'lodash/merge';
 import { DimensionValue } from '@react-types/shared';
 import { SpectrumInputProps } from './index';
 import { Slider } from '@adobe/react-spectrum';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const InputSlider = ({
   config,
@@ -47,16 +48,18 @@ export const InputSlider = ({
     : '100%';
 
   return (
-    <Slider
-      value={data ?? schema.default}
-      label={label}
-      minValue={schema.minimum}
-      maxValue={schema.maximum}
-      isHidden={!visible}
-      onChange={(value: any) => handleChange(path, value)}
-      isDisabled={!enabled}
-      width={width}
-      step={schema.multipleOf || 1}
-    />
+    <SpectrumProvider width={width}>
+      <Slider
+        value={data ?? schema.default}
+        label={label}
+        minValue={schema.minimum}
+        maxValue={schema.maximum}
+        isHidden={!visible}
+        onChange={(value: any) => handleChange(path, value)}
+        isDisabled={!enabled}
+        width={width}
+        step={schema.multipleOf || 1}
+      />
+    </SpectrumProvider>
   );
 };

@@ -28,6 +28,7 @@ import merge from 'lodash/merge';
 import { TextField } from '@adobe/react-spectrum';
 import { DimensionValue } from '@react-types/shared';
 import { SpectrumInputProps } from './index';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const InputNumberFormatted = ({
   config,
@@ -58,19 +59,21 @@ export const InputNumberFormatted = ({
     : '100%';
 
   return (
-    <TextField
-      label={label}
-      type='text'
-      inputMode='numeric'
-      value={formattedNumber}
-      onChange={onChange}
-      id={id}
-      isDisabled={!enabled}
-      maxLength={schema.maxLength}
-      autoFocus={appliedUiSchemaOptions.focus}
-      isRequired={required}
-      validationState={isValid ? 'valid' : 'invalid'}
-      width={width}
-    />
+    <SpectrumProvider width={width}>
+      <TextField
+        label={label}
+        type='text'
+        inputMode='numeric'
+        value={formattedNumber}
+        onChange={onChange}
+        id={id}
+        isDisabled={!enabled}
+        maxLength={schema.maxLength}
+        autoFocus={appliedUiSchemaOptions.focus}
+        isRequired={required}
+        validationState={isValid ? 'valid' : 'invalid'}
+        width={width}
+      />
+    </SpectrumProvider>
   );
 };

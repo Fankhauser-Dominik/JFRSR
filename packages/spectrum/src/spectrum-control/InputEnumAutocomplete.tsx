@@ -28,6 +28,7 @@ import merge from 'lodash/merge';
 import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
 import { Item, ComboBox } from '@adobe/react-spectrum';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const InputEnumAutocomplete = ({
   config,
@@ -48,20 +49,22 @@ export const InputEnumAutocomplete = ({
     : '100%';
 
   return (
-    <ComboBox
-      key={id}
-      id={id}
-      label={label}
-      isRequired={required}
-      isDisabled={enabled === undefined ? false : !enabled}
-      necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
-      width={width}
-      selectedKey={data}
-      onSelectionChange={(value) => handleChange(path, value)}
-    >
-      {options.map((item) => (
-        <Item key={item.value}>{item.label}</Item>
-      ))}
-    </ComboBox>
+    <SpectrumProvider width={width}>
+      <ComboBox
+        key={id}
+        id={id}
+        label={label}
+        isRequired={required}
+        isDisabled={enabled === undefined ? false : !enabled}
+        necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+        width={width}
+        selectedKey={data}
+        onSelectionChange={(value) => handleChange(path, value)}
+      >
+        {options.map((item) => (
+          <Item key={item.value}>{item.label}</Item>
+        ))}
+      </ComboBox>
+    </SpectrumProvider>
   );
 };

@@ -28,6 +28,7 @@ import merge from 'lodash/merge';
 import { TextField } from '@adobe/react-spectrum';
 import { DimensionValue } from '@react-types/shared';
 import { SpectrumInputProps } from './index';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const InputText = ({
   config,
@@ -49,20 +50,23 @@ export const InputText = ({
     : '100%';
 
   return (
-    <TextField
-      type={appliedUiSchemaOptions.format ?? 'text'}
-      isRequired={required}
-      value={data ?? ''}
-      label={label}
-      necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
-      onChange={(value: any) => handleChange(path, value)}
-      id={id && `${id}-input`}
-      isDisabled={enabled === undefined ? false : !enabled}
-      autoFocus={appliedUiSchemaOptions.focus}
-      maxLength={schema.maxLength}
-      minLength={schema.minLength}
-      validationState={isValid ? 'valid' : 'invalid'}
-      width={width}
-    />
+    <SpectrumProvider width={width}>
+      <TextField
+        aria-label={label ? label : 'textfield'}
+        type={appliedUiSchemaOptions.format ?? 'text'}
+        isRequired={required}
+        value={data ?? ''}
+        label={label}
+        necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+        onChange={(value: any) => handleChange(path, value)}
+        id={id && `${id}-input`}
+        isDisabled={enabled === undefined ? false : !enabled}
+        autoFocus={appliedUiSchemaOptions.focus}
+        maxLength={schema.maxLength}
+        minLength={schema.minLength}
+        validationState={isValid ? 'valid' : 'invalid'}
+        width={width}
+      />
+    </SpectrumProvider>
   );
 };

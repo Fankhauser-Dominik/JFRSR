@@ -1386,8 +1386,8 @@ samples.push({
 });
 
 samples.push({
-  name: 'spectrum-testerino',
-  label: 'Testerino',
+  name: 'spectrum-big-test',
+  label: 'Big Test',
   uischema: {
     type: 'HorizontalLayout',
     elements: [

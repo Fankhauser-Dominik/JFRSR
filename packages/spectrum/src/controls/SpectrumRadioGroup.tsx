@@ -29,7 +29,11 @@ export const SpectrumRadioGroup = (props: ControlProps & OwnPropsOfEnum) => {
     <View
       isHidden={visible === undefined || visible === null ? false : !visible}
     >
-      <RadioGroup value={props.data} onChange={(ev) => handleChange(path, ev)}>
+      <RadioGroup
+        aria-label={'radiogroup' + props.data}
+        value={props.data}
+        onChange={(ev) => handleChange(path, ev)}
+      >
         {options.map((option) => (
           <Radio value={option.value} key={option.label}>
             {option.label}

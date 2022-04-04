@@ -28,6 +28,7 @@ import merge from 'lodash/merge';
 import { NumberField } from '@adobe/react-spectrum';
 import { DimensionValue } from '@react-types/shared';
 import { SpectrumInputProps } from './index';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const InputNumber = ({
   config,
@@ -48,18 +49,21 @@ export const InputNumber = ({
     : '100%';
 
   return (
-    <NumberField
-      label={label}
-      value={data ?? ''}
-      onChange={(value: number) => handleChange(path, value)}
-      id={id}
-      isDisabled={!enabled}
-      autoFocus={appliedUiSchemaOptions.focus}
-      isRequired={required}
-      validationState={isValid ? 'valid' : 'invalid'}
-      width={width}
-      step={appliedUiSchemaOptions.step ?? 0.1}
-      hideStepper={appliedUiSchemaOptions.hideStepper ?? false}
-    />
+    <SpectrumProvider width={width}>
+      <NumberField
+        label={label}
+        aria-label={label ? label : 'numberfield'}
+        value={data ?? ''}
+        onChange={(value: number) => handleChange(path, value)}
+        id={id}
+        isDisabled={!enabled}
+        autoFocus={appliedUiSchemaOptions.focus}
+        isRequired={required}
+        validationState={isValid ? 'valid' : 'invalid'}
+        width={width}
+        step={appliedUiSchemaOptions.step ?? 0.1}
+        hideStepper={appliedUiSchemaOptions.hideStepper ?? false}
+      />
+    </SpectrumProvider>
   );
 };

@@ -58,6 +58,7 @@ import {
   TabPanels,
   Tabs,
 } from '@adobe/react-spectrum';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export interface OwnOneOfProps extends OwnPropsOfControl {
   indexOfFittingSchema?: number;
@@ -121,38 +122,40 @@ const SpectrumOneOfRenderer = ({
 
   return (
     <View isHidden={!visible}>
-      <CombinatorProperties
-        schema={_schema}
-        combinatorKeyword={'oneOf'}
-        path={path}
-      />
-      <Tabs
-        isDisabled={!enabled}
-        selectedKey={String(selectedIndex)}
-        onSelectionChange={handleTabChange}
-      >
-        <TabList>
-          {oneOfRenderInfos.map((oneOfRenderInfo, oneOfIndex) => (
-            <Item key={oneOfIndex}>{oneOfRenderInfo.label}</Item>
-          ))}
-        </TabList>
-        <TabPanels>
-          {oneOfRenderInfos.map((oneOfRenderInfo, oneOfIndex) => (
-            <Item key={oneOfIndex} title={oneOfRenderInfo.label}>
-              <Content margin='size-160'>
-                <ResolvedJsonFormsDispatch
-                  key={oneOfIndex}
-                  schema={oneOfRenderInfo.schema}
-                  uischema={oneOfRenderInfo.uischema}
-                  path={path}
-                  renderers={renderers}
-                  cells={cells}
-                />
-              </Content>
-            </Item>
-          ))}
-        </TabPanels>
-      </Tabs>
+      <SpectrumProvider>
+        <CombinatorProperties
+          schema={_schema}
+          combinatorKeyword={'oneOf'}
+          path={path}
+        />
+        <Tabs
+          isDisabled={!enabled}
+          selectedKey={String(selectedIndex)}
+          onSelectionChange={handleTabChange}
+        >
+          <TabList>
+            {oneOfRenderInfos.map((oneOfRenderInfo, oneOfIndex) => (
+              <Item key={oneOfIndex}>{oneOfRenderInfo.label}</Item>
+            ))}
+          </TabList>
+          <TabPanels>
+            {oneOfRenderInfos.map((oneOfRenderInfo, oneOfIndex) => (
+              <Item key={oneOfIndex} title={oneOfRenderInfo.label}>
+                <Content margin='size-160'>
+                  <ResolvedJsonFormsDispatch
+                    key={oneOfIndex}
+                    schema={oneOfRenderInfo.schema}
+                    uischema={oneOfRenderInfo.uischema}
+                    path={path}
+                    renderers={renderers}
+                    cells={cells}
+                  />
+                </Content>
+              </Item>
+            ))}
+          </TabPanels>
+        </Tabs>
+      </SpectrumProvider>
       <DialogContainer onDismiss={handleClose}>
         {open && (
           <Dialog>

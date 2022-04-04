@@ -24,6 +24,7 @@ import merge from 'lodash/merge';
 import { Checkbox } from '@adobe/react-spectrum';
 import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const InputCheckbox = ({
   config,
@@ -44,17 +45,19 @@ export const InputCheckbox = ({
     : '100%';
 
   return (
-    <Checkbox
-      value={data}
-      isRequired={required}
-      onChange={(value: boolean) => handleChange(path, value)}
-      id={id}
-      isDisabled={enabled === undefined ? false : !enabled}
-      autoFocus={appliedUiSchemaOptions.focus}
-      validationState={isValid ? 'valid' : 'invalid'}
-      width={width}
-    >
-      {label}
-    </Checkbox>
+    <SpectrumProvider width={width}>
+      <Checkbox
+        value={data}
+        isRequired={required}
+        onChange={(value: boolean) => handleChange(path, value)}
+        id={id}
+        isDisabled={enabled === undefined ? false : !enabled}
+        autoFocus={appliedUiSchemaOptions.focus}
+        validationState={isValid ? 'valid' : 'invalid'}
+        width={width}
+      >
+        {label}
+      </Checkbox>
+    </SpectrumProvider>
   );
 };

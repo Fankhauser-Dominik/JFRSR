@@ -59,14 +59,14 @@ export const SpectrumGroupLayoutRenderer: FunctionComponent<RendererProps> = ({
   const group = uischema as GroupLayout;
 
   return (
-    <View
-      isHidden={visible === undefined || visible === null ? false : !visible}
-      borderWidth='thin'
-      borderColor='dark'
-      borderRadius='medium'
-      padding='size-250'
-    >
-      <SpectrumProvider>
+    <SpectrumProvider>
+      <View
+        isHidden={visible === undefined || visible === null ? false : !visible}
+        borderWidth='thin'
+        borderColor='dark'
+        borderRadius='medium'
+        padding='size-250'
+      >
         {!isEmpty(group.label) ? (
           <Heading level={4} margin={0}>
             {group.label}
@@ -80,8 +80,8 @@ export const SpectrumGroupLayoutRenderer: FunctionComponent<RendererProps> = ({
           ''
         )}
         <Content>{renderChildren(group, schema, {}, path, enabled)}</Content>
-      </SpectrumProvider>
-    </View>
+      </View>
+    </SpectrumProvider>
   );
 };
 

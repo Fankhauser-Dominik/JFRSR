@@ -24,6 +24,7 @@ import merge from 'lodash/merge';
 import { NumberField } from '@adobe/react-spectrum';
 import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const InputInteger = ({
   config,
@@ -45,21 +46,23 @@ export const InputInteger = ({
     : '100%';
 
   return (
-    <NumberField
-      label={label}
-      necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
-      value={data}
-      isRequired={required}
-      onChange={(value: number) => handleChange(path, value)}
-      id={id}
-      isDisabled={enabled === undefined ? false : !enabled}
-      autoFocus={appliedUiSchemaOptions.focus}
-      validationState={isValid ? 'valid' : 'invalid'}
-      width={width}
-      minValue={schema.minimum}
-      maxValue={schema.maximum}
-      step={appliedUiSchemaOptions.step ?? 1}
-      hideStepper={appliedUiSchemaOptions.hideStepper ?? false}
-    />
+    <SpectrumProvider width={width}>
+      <NumberField
+        label={label}
+        necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+        value={data}
+        isRequired={required}
+        onChange={(value: number) => handleChange(path, value)}
+        id={id}
+        isDisabled={enabled === undefined ? false : !enabled}
+        autoFocus={appliedUiSchemaOptions.focus}
+        validationState={isValid ? 'valid' : 'invalid'}
+        width={width}
+        minValue={schema.minimum}
+        maxValue={schema.maximum}
+        step={appliedUiSchemaOptions.step ?? 1}
+        hideStepper={appliedUiSchemaOptions.hideStepper ?? false}
+      />
+    </SpectrumProvider>
   );
 };

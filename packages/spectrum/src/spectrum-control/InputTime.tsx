@@ -30,6 +30,7 @@ import { DimensionValue } from '@react-types/shared';
 import { Provider } from '@adobe/react-spectrum';
 import { TimeField } from '@react-spectrum/datepicker';
 import { parseAbsoluteToLocal } from '@internationalized/date';
+import SpectrumProvider from '../additional/SpectrumProvider';
 import moment from 'moment';
 
 export const InputTime = ({
@@ -62,36 +63,40 @@ export const InputTime = ({
   };
 
   return (
-    <Provider locale={appliedUiSchemaOptions.locale ?? 'gregory'}>
-      <TimeField
-        label={label}
-        granularity='minute'
-        value={
-          data ? parseAbsoluteToLocal(moment().format(toISOString(data))) : null
-        }
-        onChange={(datetime: any) =>
-          handleChange(
-            path,
-            datetime
-              ? datetime
-                  ?.toString()
-                  .split('T')
-                  .pop()
-                  .split('+')[0]
-                  .substring(
-                    0,
-                    5
-                  ) /* substring is needed, because it throws an error when we use the format HH:mm:ss */
-              : ''
-          )
-        }
-        id={id}
-        isRequired={required}
-        width={width}
-        autoFocus={appliedUiSchemaOptions.focus}
-        isDisabled={enabled === undefined ? false : !enabled}
-        hideTimeZone
-      />
-    </Provider>
+    <SpectrumProvider width={width}>
+      <Provider locale={appliedUiSchemaOptions.locale ?? 'gregory'}>
+        <TimeField
+          label={label}
+          granularity='minute'
+          value={
+            data
+              ? parseAbsoluteToLocal(moment().format(toISOString(data)))
+              : null
+          }
+          onChange={(datetime: any) =>
+            handleChange(
+              path,
+              datetime
+                ? datetime
+                    ?.toString()
+                    .split('T')
+                    .pop()
+                    .split('+')[0]
+                    .substring(
+                      0,
+                      5
+                    ) /* substring is needed, because it throws an error when we use the format HH:mm:ss */
+                : ''
+            )
+          }
+          id={id}
+          isRequired={required}
+          width={width}
+          autoFocus={appliedUiSchemaOptions.focus}
+          isDisabled={enabled === undefined ? false : !enabled}
+          hideTimeZone
+        />
+      </Provider>
+    </SpectrumProvider>
   );
 };

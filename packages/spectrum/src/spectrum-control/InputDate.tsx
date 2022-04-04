@@ -29,6 +29,7 @@ import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
 import { DatePicker } from '@react-spectrum/datepicker';
 import { parseDate } from '@internationalized/date';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const InputDate = ({
   config,
@@ -47,19 +48,21 @@ export const InputDate = ({
     : '100%';
 
   return (
-    <DatePicker
-      label={computeLabel(
-        label,
-        required,
-        appliedUiSchemaOptions.hideRequiredAsterisk
-      )}
-      width={width}
-      id={id}
-      necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
-      value={data ? parseDate(data) : null}
-      onChange={(datetime: any) =>
-        handleChange(path, datetime ? datetime?.toString() : '')
-      }
-    />
+    <SpectrumProvider width={width}>
+      <DatePicker
+        label={computeLabel(
+          label,
+          required,
+          appliedUiSchemaOptions.hideRequiredAsterisk
+        )}
+        width={width}
+        id={id}
+        necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+        value={data ? parseDate(data) : null}
+        onChange={(datetime: any) =>
+          handleChange(path, datetime ? datetime?.toString() : '')
+        }
+      />
+    </SpectrumProvider>
   );
 };

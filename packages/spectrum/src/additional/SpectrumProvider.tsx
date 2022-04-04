@@ -26,6 +26,7 @@ import React, { useContext } from 'react';
 import { Provider, useProvider, defaultTheme } from '@adobe/react-spectrum';
 import { ColorSchemeContext } from '../util/ColorSchemeContext';
 import { ProviderProps } from '@react-types/provider';
+
 const SpectrumProvider = (props: ProviderProps) => {
   let { children } = props;
   const colorSchemeContext = useContext(ColorSchemeContext);
@@ -36,6 +37,7 @@ const SpectrumProvider = (props: ProviderProps) => {
   const theme = parentProvider ? parentProvider.theme : defaultTheme;
   return (
     <Provider
+      {...props}
       colorScheme={colorScheme}
       theme={theme}
       id='SpectrumInputControlProvider'

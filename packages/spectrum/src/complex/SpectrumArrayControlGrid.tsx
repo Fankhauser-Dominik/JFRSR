@@ -58,6 +58,7 @@ import {
   ArrayHeader,
   ArrayFooter,
 } from './array/utils';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 const { createLabelDescriptionFrom } = Helpers;
 
@@ -229,24 +230,26 @@ const SpectrumArrayControlGrid = ({
             return (
               <React.Fragment key={childPath}>
                 {rowCells}
-                <TooltipTrigger delay={0}>
-                  <DialogTrigger>
-                    <ActionButton aria-label={`Delete row at ${index}`}>
-                      <Delete />
-                    </ActionButton>
-                    <AlertDialog
-                      variant='confirmation'
-                      title='Delete'
-                      primaryActionLabel='Delete'
-                      cancelLabel='Cancel'
-                      autoFocusButton='primary'
-                      onPrimaryAction={() => confirmDelete(childPath, index)}
-                    >
-                      Are you sure you wish to delete this item?
-                    </AlertDialog>
-                  </DialogTrigger>
-                  <Tooltip>Delete</Tooltip>
-                </TooltipTrigger>
+                <SpectrumProvider>
+                  <TooltipTrigger delay={0}>
+                    <DialogTrigger>
+                      <ActionButton aria-label={`Delete row at ${index}`}>
+                        <Delete />
+                      </ActionButton>
+                      <AlertDialog
+                        variant='confirmation'
+                        title='Delete'
+                        primaryActionLabel='Delete'
+                        cancelLabel='Cancel'
+                        autoFocusButton='primary'
+                        onPrimaryAction={() => confirmDelete(childPath, index)}
+                      >
+                        Are you sure you wish to delete this item?
+                      </AlertDialog>
+                    </DialogTrigger>
+                    <Tooltip>Delete</Tooltip>
+                  </TooltipTrigger>
+                </SpectrumProvider>
               </React.Fragment>
             );
           })}

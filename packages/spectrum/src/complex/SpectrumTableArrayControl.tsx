@@ -141,7 +141,11 @@ const SpectrumTableArrayControl = ({
         allErrorsMessages={childErrors.map((e) => e.message)}
         labelText={isPlainLabel(label) ? label : label.default}
       />
-      <TableView overflowMode='wrap' density='compact'>
+      <TableView
+        aria-label={label + 'TableView'}
+        overflowMode='wrap'
+        density='compact'
+      >
         <TableHeader>
           {[
             ...headerColumns,

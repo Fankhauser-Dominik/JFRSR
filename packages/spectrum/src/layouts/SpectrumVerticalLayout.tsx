@@ -37,6 +37,7 @@ import { withJsonFormsLayoutProps } from '@jsonforms/react';
 import { StyleProps } from '@react-types/shared';
 import { SpectrumLayout } from './SpectrumLayout';
 import { renderChildren } from './util';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 /**
  * Default tester for a vertical layout.
@@ -63,16 +64,18 @@ export const SpectrumVerticalLayoutRenderer: FunctionComponent<RendererProps> = 
   };
 
   return (
-    <SpectrumLayout
-      direction={direction}
-      uischema={uischema}
-      schema={schema}
-      visible={visible}
-      enabled={enabled}
-      path={path}
-    >
-      {renderChildren(verticalLayout, schema, childrenStyles, path, enabled)}
-    </SpectrumLayout>
+    <SpectrumProvider>
+      <SpectrumLayout
+        direction={direction}
+        uischema={uischema}
+        schema={schema}
+        visible={visible}
+        enabled={enabled}
+        path={path}
+      >
+        {renderChildren(verticalLayout, schema, childrenStyles, path, enabled)}
+      </SpectrumLayout>
+    </SpectrumProvider>
   );
 };
 

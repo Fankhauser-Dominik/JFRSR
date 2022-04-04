@@ -28,6 +28,7 @@ import merge from 'lodash/merge';
 import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
 import { Item, Picker } from '@adobe/react-spectrum';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const InputEnum = ({
   config,
@@ -62,19 +63,22 @@ export const InputEnum = ({
   };
 
   return (
-    <Picker
-      key={id}
-      id={id}
-      label={label}
-      isRequired={required}
-      isDisabled={enabled === undefined ? false : !enabled}
-      necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
-      width={width}
-      items={options ?? tryEnumSchema(schema.anyOf)}
-      selectedKey={data}
-      onSelectionChange={(value) => handleChange(path, value)}
-    >
-      {(item) => <Item key={item.value}>{item.label}</Item>}
-    </Picker>
+    <SpectrumProvider width='100%'>
+      <Picker
+        aria-label={label ? label : 'picker'}
+        key={id}
+        id={id}
+        label={label}
+        isRequired={required}
+        isDisabled={enabled === undefined ? false : !enabled}
+        necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+        width={width}
+        items={options ?? tryEnumSchema(schema.anyOf)}
+        selectedKey={data}
+        onSelectionChange={(value) => handleChange(path, value)}
+      >
+        {(item) => <Item key={item.value}>{item.label}</Item>}
+      </Picker>
+    </SpectrumProvider>
   );
 };

@@ -30,6 +30,7 @@ import { Provider } from '@adobe/react-spectrum';
 import { DatePicker } from '@react-spectrum/datepicker';
 import merge from 'lodash/merge';
 import { parseAbsoluteToLocal } from '@internationalized/date';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 import moment from 'moment';
 
@@ -60,25 +61,30 @@ export const InputDateTime = ({
     }
   };
   return (
-    <Provider locale={appliedUiSchemaOptions.locale ?? 'gregory'}>
-      <DatePicker
-        label={computeLabel(
-          label,
-          required,
-          appliedUiSchemaOptions.hideRequiredAsterisk
-        )}
-        width={width}
-        value={parseAbsoluteToLocal(moment().format(data))}
-        onChange={(datetime: any) =>
-          handleChange(path, datetime ? toISOString(datetime?.toString()) : '')
-        }
-        granularity={appliedUiSchemaOptions.granularity ?? null}
-        necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
-        id={id}
-        isDisabled={!enabled}
-        autoFocus={uischema.options && uischema.options.focus}
-        hideTimeZone
-      />
-    </Provider>
+    <SpectrumProvider width={width}>
+      <Provider locale={appliedUiSchemaOptions.locale ?? 'gregory'}>
+        <DatePicker
+          label={computeLabel(
+            label,
+            required,
+            appliedUiSchemaOptions.hideRequiredAsterisk
+          )}
+          width={width}
+          value={parseAbsoluteToLocal(moment().format(data))}
+          onChange={(datetime: any) =>
+            handleChange(
+              path,
+              datetime ? toISOString(datetime?.toString()) : ''
+            )
+          }
+          granularity={appliedUiSchemaOptions.granularity ?? null}
+          necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+          id={id}
+          isDisabled={!enabled}
+          autoFocus={uischema.options && uischema.options.focus}
+          hideTimeZone
+        />
+      </Provider>
+    </SpectrumProvider>
   );
 };

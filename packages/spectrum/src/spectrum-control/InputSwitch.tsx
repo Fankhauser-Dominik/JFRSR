@@ -24,6 +24,7 @@ import merge from 'lodash/merge';
 import { Switch } from '@adobe/react-spectrum';
 import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const InputSwitch = ({
   config,
@@ -42,15 +43,17 @@ export const InputSwitch = ({
     : '100%';
 
   return (
-    <Switch
-      value={data}
-      onChange={(value: boolean) => handleChange(path, value)}
-      id={id}
-      isDisabled={enabled === undefined ? false : !enabled}
-      autoFocus={appliedUiSchemaOptions.focus}
-      width={width}
-    >
-      {label}
-    </Switch>
+    <SpectrumProvider width={width}>
+      <Switch
+        value={data}
+        onChange={(value: boolean) => handleChange(path, value)}
+        id={id}
+        isDisabled={enabled === undefined ? false : !enabled}
+        autoFocus={appliedUiSchemaOptions.focus}
+        width={width}
+      >
+        {label}
+      </Switch>
+    </SpectrumProvider>
   );
 };

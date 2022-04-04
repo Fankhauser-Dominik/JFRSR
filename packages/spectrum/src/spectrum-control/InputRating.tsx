@@ -26,6 +26,7 @@ import { SpectrumInputProps } from './index';
 import { DimensionValue } from '@react-types/shared';
 import StarOutline from '@spectrum-icons/workflow/StarOutline';
 import Star from '@spectrum-icons/workflow/Star';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const InputRating = ({
   config,
@@ -49,7 +50,7 @@ export const InputRating = ({
     : '100%';
 
   return (
-    <div>
+    <SpectrumProvider width={width}>
       <RadioGroup
         label={label}
         necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
@@ -93,6 +94,6 @@ export const InputRating = ({
           );
         })}
       </RadioGroup>
-    </div>
+    </SpectrumProvider>
   );
 };

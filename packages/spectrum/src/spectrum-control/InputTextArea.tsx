@@ -28,6 +28,7 @@ import merge from 'lodash/merge';
 import { TextArea } from '@adobe/react-spectrum';
 import { DimensionValue } from '@react-types/shared';
 import { SpectrumInputProps } from './index';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const InputTextArea = ({
   config,
@@ -47,17 +48,19 @@ export const InputTextArea = ({
     : '100%';
 
   return (
-    <TextArea
-      type={appliedUiSchemaOptions.format ?? 'text'}
-      value={data ?? ''}
-      label={label}
-      isRequired={required}
-      necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
-      onChange={(value: string) => handleChange(path, value)}
-      id={id && `${id}-input`}
-      isDisabled={enabled === undefined ? false : !enabled}
-      autoFocus={appliedUiSchemaOptions.focus}
-      width={width}
-    />
+    <SpectrumProvider width={width}>
+      <TextArea
+        type={appliedUiSchemaOptions.format ?? 'text'}
+        value={data ?? ''}
+        label={label}
+        isRequired={required}
+        necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+        onChange={(value: string) => handleChange(path, value)}
+        id={id && `${id}-input`}
+        isDisabled={enabled === undefined ? false : !enabled}
+        autoFocus={appliedUiSchemaOptions.focus}
+        width={width}
+      />
+    </SpectrumProvider>
   );
 };
