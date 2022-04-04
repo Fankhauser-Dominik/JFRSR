@@ -121,15 +121,15 @@ const SpectrumOneOfRenderer = ({
   );
 
   return (
-    <View isHidden={!visible}>
-      <SpectrumProvider>
+    <SpectrumProvider>
+      <View isHidden={!visible}>
         <CombinatorProperties
           schema={_schema}
           combinatorKeyword={'oneOf'}
           path={path}
         />
         <Tabs
-          isDisabled={!enabled}
+          isDisabled={enabled === undefined ? false : !enabled}
           selectedKey={String(selectedIndex)}
           onSelectionChange={handleTabChange}
         >
@@ -155,33 +155,33 @@ const SpectrumOneOfRenderer = ({
             ))}
           </TabPanels>
         </Tabs>
-      </SpectrumProvider>
-      <DialogContainer onDismiss={handleClose}>
-        {open && (
-          <Dialog>
-            <Heading>Clear Form?</Heading>
-            <Divider />
-            <Content>
-              Your Data will be cleared if you navigate away from this Tab. Do
-              you want to Clear your Form?
-            </Content>
-            <ButtonGroup>
-              <Button variant='secondary' onPress={cancel}>
-                Cancel
-              </Button>
-              <Button
-                variant='cta'
-                onPress={confirm}
-                autoFocus
-                id={id && `oneOf-${id}-confirm-yes`}
-              >
-                Clear Form
-              </Button>
-            </ButtonGroup>
-          </Dialog>
-        )}
-      </DialogContainer>
-    </View>
+        <DialogContainer onDismiss={handleClose}>
+          {open && (
+            <Dialog>
+              <Heading>Clear Form?</Heading>
+              <Divider />
+              <Content>
+                Your Data will be cleared if you navigate away from this Tab. Do
+                you want to Clear your Form?
+              </Content>
+              <ButtonGroup>
+                <Button variant='secondary' onPress={cancel}>
+                  Cancel
+                </Button>
+                <Button
+                  variant='cta'
+                  onPress={confirm}
+                  autoFocus
+                  id={id && `oneOf-${id}-confirm-yes`}
+                >
+                  Clear Form
+                </Button>
+              </ButtonGroup>
+            </Dialog>
+          )}
+        </DialogContainer>
+      </View>
+    </SpectrumProvider>
   );
 };
 
