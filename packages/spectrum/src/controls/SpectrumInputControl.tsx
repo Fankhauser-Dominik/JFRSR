@@ -25,19 +25,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-import React, { useContext } from 'react';
+import React from 'react';
 import { ControlProps, isDescriptionHidden } from '@jsonforms/core';
 import merge from 'lodash/merge';
-import {
-  defaultTheme,
-  Flex,
-  Provider,
-  Text,
-  useProvider,
-  View,
-} from '@adobe/react-spectrum';
+import { Flex, Text, View } from '@adobe/react-spectrum';
 import { useFocus } from '../util/focus';
-import { ColorSchemeContext } from '../util/ColorSchemeContext';
+import SpectrumProvider from '../additional/SpectrumProvider';
 interface WithInput {
   input: any;
 }
@@ -58,13 +51,6 @@ export const SpectrumInputControl = (props: ControlProps & WithInput) => {
     appliedUiSchemaOptions.showUnfocusedDescription
   );
 
-  const colorSchemeContext = useContext(ColorSchemeContext);
-  const parentProvider = useProvider();
-  const colorScheme = parentProvider
-    ? parentProvider.colorScheme
-    : colorSchemeContext;
-  const theme = parentProvider ? parentProvider.theme : defaultTheme;
-
   return (
     <div
       onFocus={onFocus}
@@ -72,11 +58,7 @@ export const SpectrumInputControl = (props: ControlProps & WithInput) => {
       hidden={visible === undefined || visible === null ? false : !visible}
       id={id}
     >
-      <Provider
-        colorScheme={colorScheme}
-        theme={theme}
-        id='SpectrumInputControlProvider'
-      >
+      <SpectrumProvider>
         <Flex direction='column'>
           <InnerComponent
             {...props}
@@ -89,7 +71,7 @@ export const SpectrumInputControl = (props: ControlProps & WithInput) => {
             </Text>
           </View>
         </Flex>
-      </Provider>
+      </SpectrumProvider>
     </div>
   );
 };

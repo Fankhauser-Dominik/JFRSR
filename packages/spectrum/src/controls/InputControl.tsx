@@ -25,7 +25,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   ControlProps,
   isControl,
@@ -38,14 +38,7 @@ import { DispatchCell, withJsonFormsControlProps } from '@jsonforms/react';
 import { useFocus } from '../util/focus';
 import merge from 'lodash/merge';
 import maxBy from 'lodash/maxBy';
-import {
-  defaultTheme,
-  Flex,
-  Provider,
-  Text,
-  useProvider,
-} from '@adobe/react-spectrum';
-import { ColorSchemeContext } from '../util/ColorSchemeContext';
+import { Flex, Text } from '@adobe/react-spectrum';
 
 export const InputControl = ({
   cells,
@@ -76,13 +69,6 @@ export const InputControl = ({
     appliedUiSchemaOptions.showUnfocusedDescription
   );
 
-  const colorSchemeContext = useContext(ColorSchemeContext);
-  const parentProvider = useProvider();
-  const colorScheme = parentProvider
-    ? parentProvider.colorScheme
-    : colorSchemeContext;
-  const theme = parentProvider ? parentProvider.theme : defaultTheme;
-
   const cell = maxBy(cells, (r) => r.tester(uischema, schema));
   if (cell === undefined || cell.tester(uischema, schema) === NOT_APPLICABLE) {
     console.warn('No applicable cell found.', uischema, schema);
@@ -96,25 +82,19 @@ export const InputControl = ({
         onBlur={onBlur}
         id={id}
       >
-        <Provider
-          colorScheme={colorScheme}
-          theme={theme}
-          id='InputControlProvider'
-        >
-          <Flex direction='column'>
-            <DispatchCell
-              uischema={uischema}
-              schema={schema}
-              path={path}
-              id={id && `${id}-input`}
-            />
-            <div className={divClassNames}>
-              <Text>
-                {!isValid ? errors : showDescription ? description : null}
-              </Text>
-            </div>
-          </Flex>
-        </Provider>
+        <Flex direction='column'>
+          <DispatchCell
+            uischema={uischema}
+            schema={schema}
+            path={path}
+            id={id && `${id}-input`}
+          />
+          <div className={divClassNames}>
+            <Text>
+              {!isValid ? errors : showDescription ? description : null}
+            </Text>
+          </div>
+        </Flex>
       </div>
     );
   }

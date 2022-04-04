@@ -25,7 +25,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   and,
   Categorization,
@@ -44,19 +44,16 @@ import {
   Button,
   ButtonGroup,
   Content,
-  defaultTheme,
   Flex,
   Item,
-  Provider,
   TabList,
   TabPanels,
   Tabs,
-  useProvider,
 } from '@adobe/react-spectrum';
 import merge from 'lodash/merge';
 import { AjvProps, withAjvProps } from '../util';
 import { SpectrumVerticalLayout } from '../layouts';
-import { ColorSchemeContext } from '../util/ColorSchemeContext';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 import './SpectrumCategorizationStepper.css';
 
@@ -88,19 +85,8 @@ export const SpectrumCategorizationStepperRenderer = (
     isVisible(category, data, undefined, ajv)
   );
 
-  const colorSchemeContext = useContext(ColorSchemeContext);
-  const parentProvider = useProvider();
-  const colorScheme = parentProvider
-    ? parentProvider.colorScheme
-    : colorSchemeContext;
-  const theme = parentProvider ? parentProvider.theme : defaultTheme;
-
   return (
-    <Provider
-      colorScheme={colorScheme}
-      theme={theme}
-      id='SpectrumInputControlProvider'
-    >
+    <SpectrumProvider>
       <Flex
         direction='column'
         isHidden={!visible}
@@ -161,7 +147,7 @@ export const SpectrumCategorizationStepperRenderer = (
           <></>
         )}
       </Flex>
-    </Provider>
+    </SpectrumProvider>
   );
 };
 

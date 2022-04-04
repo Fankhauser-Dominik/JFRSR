@@ -60,7 +60,7 @@ export const InputDateTime = ({
     }
   };
   return (
-    <Provider locale={appliedUiSchemaOptions.calendar ?? 'gregory'}>
+    <Provider locale={appliedUiSchemaOptions.locale ?? 'gregory'}>
       <DatePicker
         label={computeLabel(
           label,

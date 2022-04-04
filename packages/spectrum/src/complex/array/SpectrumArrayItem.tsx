@@ -26,7 +26,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-import React, { useContext, ComponentType } from 'react';
+import React, { ComponentType } from 'react';
 import {
   Text,
   Flex,
@@ -36,9 +36,6 @@ import {
   TooltipTrigger,
   Tooltip,
   AlertDialog,
-  Provider,
-  useProvider,
-  defaultTheme,
 } from '@adobe/react-spectrum';
 import {
   composePaths,
@@ -61,9 +58,10 @@ import {
 import Delete from '@spectrum-icons/workflow/Delete';
 import ChevronDown from '@spectrum-icons/workflow/ChevronDown';
 import ChevronUp from '@spectrum-icons/workflow/ChevronUp';
-import { ColorSchemeContext } from '../../util/ColorSchemeContext';
 
 import './SpectrumArrayItem.css';
+
+import SpectrumProvider from '../../additional/SpectrumProvider';
 
 export interface OwnPropsOfSpectrumArrayItem {
   index: number;
@@ -97,21 +95,10 @@ const SpectrumArrayItem = ({
   uischemas,
   renderers,
 }: StatePropsOfSpectrumArrayItem) => {
-  const colorSchemeContext = useContext(ColorSchemeContext);
-  const parentProvider = useProvider();
-  const colorScheme = parentProvider
-    ? parentProvider.colorScheme
-    : colorSchemeContext;
-  const theme = parentProvider ? parentProvider.theme : defaultTheme;
-
   const foundUISchema = findUISchema(uischemas, schema, uischema.scope, path);
   const childPath = composePaths(path, `${index}`);
   return (
-    <Provider
-      colorScheme={colorScheme}
-      theme={theme}
-      id='SpectrumInputControlProvider'
-    >
+    <SpectrumProvider>
       <View
         borderWidth='thin'
         borderColor='dark'
@@ -186,7 +173,7 @@ const SpectrumArrayItem = ({
           ''
         )}
       </View>
-    </Provider>
+    </SpectrumProvider>
   );
 };
 

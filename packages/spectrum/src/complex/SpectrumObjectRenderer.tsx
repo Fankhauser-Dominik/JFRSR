@@ -25,6 +25,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
   */
+import React from 'react';
 import { isEmpty } from '../util/isEmpty';
 import startCase from 'lodash/startCase';
 import {
@@ -40,8 +41,6 @@ import {
   ResolvedJsonFormsDispatch,
   withJsonFormsDetailProps,
 } from '@jsonforms/react';
-import React from 'react';
-import { Provider, defaultTheme } from '@adobe/react-spectrum';
 
 const SpectrumObjectRenderer = ({
   renderers,
@@ -72,17 +71,15 @@ const SpectrumObjectRenderer = ({
     );
   }
   return (
-    <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
-      <ResolvedJsonFormsDispatch
-        visible={visible}
-        enabled={enabled}
-        schema={schema}
-        uischema={detailUiSchema}
-        path={path}
-        renderers={renderers}
-        cells={cells}
-      />
-    </Provider>
+    <ResolvedJsonFormsDispatch
+      visible={visible}
+      enabled={enabled}
+      schema={schema}
+      uischema={detailUiSchema}
+      path={path}
+      renderers={renderers}
+      cells={cells}
+    />
   );
 };
 

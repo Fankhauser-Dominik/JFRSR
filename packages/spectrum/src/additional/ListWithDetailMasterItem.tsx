@@ -26,24 +26,21 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   ActionButton,
   AlertDialog,
-  defaultTheme,
   DialogTrigger,
   Flex,
-  Provider,
   Text,
   Tooltip,
   TooltipTrigger,
-  useProvider,
   View,
 } from '@adobe/react-spectrum';
 import { StatePropsOfMasterItem } from '@jsonforms/core';
 import { withJsonFormsMasterListItemProps } from '@jsonforms/react';
 import Delete from '@spectrum-icons/workflow/Delete';
-import { ColorSchemeContext } from '../util/ColorSchemeContext';
+import SpectrumProvider from './SpectrumProvider';
 
 import './ListDetailMasterItem.css';
 
@@ -55,19 +52,8 @@ const ListWithDetailMasterItem = ({
   removeItem,
   selected,
 }: StatePropsOfMasterItem) => {
-  const colorSchemeContext = useContext(ColorSchemeContext);
-  const parentProvider = useProvider();
-  const colorScheme = parentProvider
-    ? parentProvider.colorScheme
-    : colorSchemeContext;
-  const theme = parentProvider ? parentProvider.theme : defaultTheme;
-
   return (
-    <Provider
-      colorScheme={colorScheme}
-      theme={theme}
-      id='SpectrumInputControlProvider'
-    >
+    <SpectrumProvider>
       <div
         className='list-with-detail-master-item-row'
         aria-selected={selected}
@@ -111,7 +97,7 @@ const ListWithDetailMasterItem = ({
           </View>
         </Flex>
       </div>
-    </Provider>
+    </SpectrumProvider>
   );
 };
 

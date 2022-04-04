@@ -41,7 +41,8 @@ import {
   ResolvedJsonFormsDispatch,
   withJsonFormsAllOfProps,
 } from '@jsonforms/react';
-import { View, Provider, defaultTheme } from '@adobe/react-spectrum';
+import { View } from '@adobe/react-spectrum';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 const SpectrumAllOfRenderer = ({
   schema,
@@ -62,7 +63,7 @@ const SpectrumAllOfRenderer = ({
   if (delegateUISchema) {
     return (
       <View isHidden={!visible}>
-        <Provider theme={defaultTheme} id='SpectrumInputControlProvider'>
+        <SpectrumProvider>
           <ResolvedJsonFormsDispatch
             schema={_schema}
             uischema={delegateUISchema}
@@ -70,7 +71,7 @@ const SpectrumAllOfRenderer = ({
             renderers={renderers}
             cells={cells}
           />
-        </Provider>
+        </SpectrumProvider>
       </View>
     );
   }

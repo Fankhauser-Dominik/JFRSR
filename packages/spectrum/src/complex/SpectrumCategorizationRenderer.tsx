@@ -25,7 +25,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
   */
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   and,
   Categorization,
@@ -41,18 +41,15 @@ import {
 import { withJsonFormsLayoutProps } from '@jsonforms/react';
 import {
   Content,
-  defaultTheme,
   Item,
-  Provider,
   TabList,
   TabPanels,
   Tabs,
-  useProvider,
   View,
 } from '@adobe/react-spectrum';
 import { AjvProps, withAjvProps } from '../util';
 import { SpectrumVerticalLayout } from '../layouts';
-import { ColorSchemeContext } from '../util/ColorSchemeContext';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 export const isSingleLevelCategorization: Tester = and(
   uiTypeIs('Categorization'),
@@ -89,20 +86,9 @@ export const SpectrumCategorizationRenderer = (
     isVisible(category, data, undefined, ajv)
   );
 
-  const colorSchemeContext = useContext(ColorSchemeContext);
-  const parentProvider = useProvider();
-  const colorScheme = parentProvider
-    ? parentProvider.colorScheme
-    : colorSchemeContext;
-  const theme = parentProvider ? parentProvider.theme : defaultTheme;
-
   return (
     <View isHidden={!visible}>
-      <Provider
-        colorScheme={colorScheme}
-        theme={theme}
-        id='SpectrumInputControlProvider'
-      >
+      <SpectrumProvider>
         <Tabs isDisabled={!enabled}>
           <TabList>
             {categories.map((category, index) => (
@@ -128,7 +114,7 @@ export const SpectrumCategorizationRenderer = (
             ))}
           </TabPanels>
         </Tabs>
-      </Provider>
+      </SpectrumProvider>
     </View>
   );
 };

@@ -62,7 +62,7 @@ export const InputTime = ({
   };
 
   return (
-    <Provider locale={appliedUiSchemaOptions.calendar ?? 'gregory'}>
+    <Provider locale={appliedUiSchemaOptions.locale ?? 'gregory'}>
       <TimeField
         label={label}
         granularity='minute'

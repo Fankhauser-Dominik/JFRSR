@@ -26,7 +26,7 @@
   THE SOFTWARE.
 */
 import { isEmpty } from '../util/isEmpty';
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   GroupLayout,
   RankedTester,
@@ -35,17 +35,9 @@ import {
   uiTypeIs,
 } from '@jsonforms/core';
 import { withJsonFormsLayoutProps } from '@jsonforms/react';
-import {
-  Content,
-  Divider,
-  Heading,
-  View,
-  Provider,
-  useProvider,
-  defaultTheme,
-} from '@adobe/react-spectrum';
+import { Content, Divider, Heading, View } from '@adobe/react-spectrum';
 import { renderChildren } from './util';
-import { ColorSchemeContext } from '../util/ColorSchemeContext';
+import SpectrumProvider from '../additional/SpectrumProvider';
 
 /**
  * Default tester for a group layout.
@@ -66,13 +58,6 @@ export const SpectrumGroupLayoutRenderer: FunctionComponent<RendererProps> = ({
 }: RendererProps) => {
   const group = uischema as GroupLayout;
 
-  const colorSchemeContext = useContext(ColorSchemeContext);
-  const parentProvider = useProvider();
-  const colorScheme = parentProvider
-    ? parentProvider.colorScheme
-    : colorSchemeContext;
-  const theme = parentProvider ? parentProvider.theme : defaultTheme;
-
   return (
     <View
       isHidden={visible === undefined || visible === null ? false : !visible}
@@ -81,11 +66,7 @@ export const SpectrumGroupLayoutRenderer: FunctionComponent<RendererProps> = ({
       borderRadius='medium'
       padding='size-250'
     >
-      <Provider
-        colorScheme={colorScheme}
-        theme={theme}
-        id='SpectrumInputControlProvider'
-      >
+      <SpectrumProvider>
         {!isEmpty(group.label) ? (
           <Heading level={4} margin={0}>
             {group.label}
@@ -99,7 +80,7 @@ export const SpectrumGroupLayoutRenderer: FunctionComponent<RendererProps> = ({
           ''
         )}
         <Content>{renderChildren(group, schema, {}, path, enabled)}</Content>
-      </Provider>
+      </SpectrumProvider>
     </View>
   );
 };

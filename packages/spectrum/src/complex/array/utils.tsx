@@ -22,7 +22,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-import React, { useContext } from 'react';
+import React from 'react';
 import { ErrorObject } from 'ajv';
 import Add from '@spectrum-icons/workflow/Add';
 import { UISchemaElement } from '@jsonforms/core';
@@ -35,12 +35,9 @@ import {
   Header,
   Flex,
   Heading,
-  Provider,
-  useProvider,
-  defaultTheme,
 } from '@adobe/react-spectrum';
 import { ErrorIndicator } from '../../components/ErrorIndicator';
-import { ColorSchemeContext } from '../../util/ColorSchemeContext';
+import SpectrumProvider from '../../additional/SpectrumProvider';
 
 export function getUIOptions(
   uischema: UISchemaElement,
@@ -69,24 +66,13 @@ export function AddButton(
     </ActionButton>
   );
 
-  const colorSchemeContext = useContext(ColorSchemeContext);
-  const parentProvider = useProvider();
-  const colorScheme = parentProvider
-    ? parentProvider.colorScheme
-    : colorSchemeContext;
-  const theme = parentProvider ? parentProvider.theme : defaultTheme;
-
   return addButtonLabelType === 'tooltip' ? (
-    <Provider
-      colorScheme={colorScheme}
-      theme={theme}
-      id='SpectrumInputControlProvider'
-    >
+    <SpectrumProvider>
       <TooltipTrigger delay={0}>
         {button}
         <Tooltip>{addButtonLabel}</Tooltip>
       </TooltipTrigger>
-    </Provider>
+    </SpectrumProvider>
   ) : (
     button
   );
