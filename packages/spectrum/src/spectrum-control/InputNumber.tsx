@@ -56,7 +56,7 @@ export const InputNumber = ({
         value={data ?? ''}
         onChange={(value: number) => handleChange(path, value)}
         id={id}
-        isDisabled={!enabled}
+        isDisabled={enabled === undefined ? false : !enabled}
         autoFocus={appliedUiSchemaOptions.focus}
         isRequired={required}
         validationState={isValid ? 'valid' : 'invalid'}

@@ -56,7 +56,7 @@ export const SpectrumBooleanButtonCell: FunctionComponent<CellProps> = (
       isSelected={isSelected}
       onChange={(selected) => handleChange(path, selected)}
       id={id}
-      isDisabled={!enabled}
+      isDisabled={enabled === undefined ? false : !enabled}
       autoFocus={autoFocus}
       width={width}
       aria-label={props.children ? undefined : path}

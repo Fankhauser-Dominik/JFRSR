@@ -80,7 +80,7 @@ export const InputDateTime = ({
           granularity={appliedUiSchemaOptions.granularity ?? null}
           necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
           id={id}
-          isDisabled={!enabled}
+          isDisabled={enabled === undefined ? false : !enabled}
           autoFocus={uischema.options && uischema.options.focus}
           hideTimeZone
         />

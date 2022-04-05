@@ -67,7 +67,7 @@ export const InputNumberFormatted = ({
         value={formattedNumber}
         onChange={onChange}
         id={id}
-        isDisabled={!enabled}
+        isDisabled={enabled === undefined ? false : !enabled}
         maxLength={schema.maxLength}
         autoFocus={appliedUiSchemaOptions.focus}
         isRequired={required}

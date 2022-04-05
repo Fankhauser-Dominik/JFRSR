@@ -34,6 +34,7 @@ import SpectrumProvider from '../additional/SpectrumProvider';
 export const InputDate = ({
   config,
   data,
+  enabled,
   handleChange,
   id,
   label,
@@ -57,6 +58,7 @@ export const InputDate = ({
         )}
         width={width}
         id={id}
+        isDisabled={enabled === undefined ? false : !enabled}
         necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
         value={data ? parseDate(data) : null}
         onChange={(datetime: any) =>

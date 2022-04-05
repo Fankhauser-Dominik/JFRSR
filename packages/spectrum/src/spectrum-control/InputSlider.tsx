@@ -56,7 +56,7 @@ export const InputSlider = ({
         maxValue={schema.maximum}
         isHidden={!visible}
         onChange={(value: any) => handleChange(path, value)}
-        isDisabled={!enabled}
+        isDisabled={enabled === undefined ? false : !enabled}
         width={width}
         step={schema.multipleOf || 1}
       />

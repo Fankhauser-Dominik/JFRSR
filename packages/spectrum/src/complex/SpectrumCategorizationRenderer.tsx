@@ -89,7 +89,7 @@ export const SpectrumCategorizationRenderer = (
   return (
     <View isHidden={!visible}>
       <SpectrumProvider>
-        <Tabs isDisabled={!enabled}>
+        <Tabs isDisabled={enabled === undefined ? false : !enabled}>
           <TabList>
             {categories.map((category, index) => (
               <Item key={index}>{category.label}</Item>
