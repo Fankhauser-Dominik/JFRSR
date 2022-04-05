@@ -44,24 +44,25 @@ The React Spectrum JSONForms project is build and tested via [Travis](https://tr
 - [x] boolean - Toggle
 - [x] boolean - Button
 - [x] integer - Number
-- [ ] integer - Text (Don't know what they mean)
-- [x] String - Text
-- [x] String - TextArea
-- [x] Enum - Combo
-- [x] Enum - Autocomplete
-- [ ] oneOf (const / title) - Combo
-- [ ] oneOf (const / title) - Autocomplete
+- [ ] integer - Text (Don't know what they mean and is only used in Angular Material and Ionic)
+- [x] number - Number
+- [ ] number - Text (Don't know what they mean and is only used in Angular Material and Ionic)
+- [x] number range - Slider
+- [x] string - Text
+- [x] string - TextArea
+- [x] enum - Combo
+- [x] enum - Autocomplete
 - [x] Date format - Date field
 - [x] Time format - Time field
 - [x] Datetime format - Datetime field
-- [ ] Object - Vertical grid
-- [ ] Array of primitives - List
+- [x] Object - Vertical grid
+- [x] Array of primitives - List
 - [x] Array of objects - Table
-- [ ] Array of objects - List
-- [ ] Array of objects - List with Detail
-- [ ] Array of enums - Multiple Choice
+- [x] Array of objects - List
+- [x] Array of objects - List with Detail
+- [x] Array of enums - Multiple Choice
 - [x] oneOf - Tabs
-- [ ] allOf - Tabs
+- [x] allOf - Vertical Grid
 - [x] anyOf - Tabs
 
 ## UI Schema Features
