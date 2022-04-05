@@ -67,7 +67,7 @@ export const InputTime = ({
       <Provider locale={appliedUiSchemaOptions.locale ?? 'gregory'}>
         <TimeField
           label={label}
-          granularity='minute'
+          granularity={appliedUiSchemaOptions.focus ?? 'minute'}
           value={
             data
               ? parseAbsoluteToLocal(moment().format(toISOString(data)))
@@ -85,12 +85,13 @@ export const InputTime = ({
                     .substring(
                       0,
                       5
-                    ) /* substring is needed, because it throws an error when we use the format HH:mm:ss */
+                    ) /* substring is needed, because ajv throws an error when we use the format HH:mm:ss */
                 : ''
             )
           }
           id={id}
           isRequired={required}
+          necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
           width={width}
           autoFocus={appliedUiSchemaOptions.focus}
           isDisabled={enabled === undefined ? false : !enabled}

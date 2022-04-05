@@ -56,6 +56,7 @@ export const InputNumber = ({
         value={data ?? ''}
         onChange={(value: number) => handleChange(path, value)}
         id={id}
+        necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
         isDisabled={enabled === undefined ? false : !enabled}
         autoFocus={appliedUiSchemaOptions.focus}
         isRequired={required}
