@@ -67,7 +67,36 @@ export const InputTime = ({
       <Provider locale={appliedUiSchemaOptions.locale ?? 'gregory'}>
         <TimeField
           label={label}
-          granularity={appliedUiSchemaOptions.focus ?? 'minute'}
+          granularity={appliedUiSchemaOptions.granularity ?? 'minute'}
+          hourCycle={appliedUiSchemaOptions.hourCycle}
+          isQuiet={appliedUiSchemaOptions.isQuiet ?? false}
+          labelPosition={appliedUiSchemaOptions.labelPosition ?? null}
+          labelAlign={appliedUiSchemaOptions.labelAlign ?? null}
+          id={id}
+          isRequired={required}
+          necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
+          width={width}
+          autoFocus={appliedUiSchemaOptions.focus}
+          isDisabled={enabled === undefined ? false : !enabled}
+          hideTimeZone={appliedUiSchemaOptions.hideTimeZone ?? true}
+          minValue={
+            appliedUiSchemaOptions.minValue
+              ? parseAbsoluteToLocal(
+                  moment().format(
+                    toISOString(appliedUiSchemaOptions.minValue.toString())
+                  )
+                )
+              : null
+          }
+          maxValue={
+            appliedUiSchemaOptions.maxValue
+              ? parseAbsoluteToLocal(
+                  moment().format(
+                    toISOString(appliedUiSchemaOptions.maxValue.toString())
+                  )
+                )
+              : null
+          }
           value={
             data
               ? parseAbsoluteToLocal(moment().format(toISOString(data)))
@@ -89,13 +118,6 @@ export const InputTime = ({
                 : ''
             )
           }
-          id={id}
-          isRequired={required}
-          necessityIndicator={appliedUiSchemaOptions.necessityIndicator ?? null}
-          width={width}
-          autoFocus={appliedUiSchemaOptions.focus}
-          isDisabled={enabled === undefined ? false : !enabled}
-          hideTimeZone
         />
       </Provider>
     </SpectrumProvider>
