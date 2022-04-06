@@ -65,7 +65,7 @@ const simpleAnyOf = and(
   )
 );
 
-export const spectrumAnyOfStringOrEnumControlTester: RankedTester = rankWith(
+export const SpectrumAnyOfStringOrEnumControlTester: RankedTester = rankWith(
   5,
   simpleAnyOf
 );

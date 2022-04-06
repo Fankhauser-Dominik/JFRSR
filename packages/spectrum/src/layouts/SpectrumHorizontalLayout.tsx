@@ -43,7 +43,7 @@ import SpectrumProvider from '../additional/SpectrumProvider';
  * Default tester for a horizontal layout.
  * @type {RankedTester}
  */
-export const spectrumHorizontalLayoutTester: RankedTester = rankWith(
+export const SpectrumHorizontalLayoutTester: RankedTester = rankWith(
   1,
   uiTypeIs('HorizontalLayout')
 );

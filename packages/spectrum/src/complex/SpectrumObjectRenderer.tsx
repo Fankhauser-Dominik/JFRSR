@@ -83,7 +83,7 @@ const SpectrumObjectRenderer = ({
   );
 };
 
-export const spectrumObjectControlTester: RankedTester = rankWith(
+export const SpectrumObjectControlTester: RankedTester = rankWith(
   2,
   isObjectControl
 );

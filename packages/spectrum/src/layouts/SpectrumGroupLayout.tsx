@@ -44,7 +44,7 @@ import SpectrumProvider from '../additional/SpectrumProvider';
  *
  * @type {RankedTester}
  */
-export const spectrumGroupLayoutTester: RankedTester = rankWith(
+export const SpectrumGroupLayoutTester: RankedTester = rankWith(
   1,
   uiTypeIs('Group')
 );

@@ -44,9 +44,10 @@ The React Spectrum JSONForms project is build and tested via [Travis](https://tr
 - [x] boolean - Toggle
 - [x] boolean - Button
 - [x] integer - Number
-- [ ] integer - Text (Don't know what they mean and is only used in Angular Material and Ionic)
+- [ ] integer - Text (only used in Angular Material and Ionic, toFormatted doesn't work)
+- [x] integer - Starrating
 - [x] number - Number
-- [ ] number - Text (Don't know what they mean and is only used in Angular Material and Ionic)
+- [ ] number - Text (only used in Angular Material and Ionic, toFormatted doesn't work)
 - [x] number range - Slider
 - [x] string - Text
 - [x] string - TextArea

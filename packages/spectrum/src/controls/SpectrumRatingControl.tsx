@@ -40,7 +40,7 @@ export const SpectrumRatingControl = (props: ControlProps) => (
   <SpectrumInputControl {...props} input={InputRating} />
 );
 
-export const spectrumRatingControlTester: RankedTester = rankWith(
+export const SpectrumRatingControlTester: RankedTester = rankWith(
   4,
   and(isIntegerControl, optionIs('rating', true))
 );

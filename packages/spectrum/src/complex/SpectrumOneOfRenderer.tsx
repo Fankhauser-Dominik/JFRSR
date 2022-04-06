@@ -185,7 +185,7 @@ const SpectrumOneOfRenderer = ({
   );
 };
 
-export const spectrumOneOfRendererTester: RankedTester = rankWith(
+export const SpectrumOneOfRendererTester: RankedTester = rankWith(
   3,
   isOneOfControl
 );

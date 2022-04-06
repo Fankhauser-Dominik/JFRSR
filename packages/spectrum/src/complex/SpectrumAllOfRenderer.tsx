@@ -100,7 +100,7 @@ const SpectrumAllOfRenderer = ({
   );
 };
 
-export const spectrumAllOfRendererTester: RankedTester = rankWith(
+export const SpectrumAllOfRendererTester: RankedTester = rankWith(
   4,
   isAllOfControl
 );

@@ -52,7 +52,7 @@ export const SpectrumOneOfEnumControl = (props: ControlProps) => {
   );
 };
 
-export const spectrumOneOfEnumControlTester: RankedTester = rankWith(
+export const SpectrumOneOfEnumControlTester: RankedTester = rankWith(
   5,
   isOneOfEnumControl
 );

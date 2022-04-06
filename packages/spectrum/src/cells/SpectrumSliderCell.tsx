@@ -28,25 +28,20 @@
 import React from 'react';
 import {
   CellProps,
-  Formatted,
-  isNumberFormatControl,
+  isRangeControl,
   RankedTester,
   rankWith,
 } from '@jsonforms/core';
 import { withJsonFormsCellProps } from '@jsonforms/react';
-import { InputNumberFormatted, SpectrumInputProps } from '../spectrum-control';
+import { InputSlider, SpectrumInputProps } from '../spectrum-control';
 
-export const SpectrumNumberFormatCell = (
-  props: CellProps & SpectrumInputProps & Formatted<number>
-) => <InputNumberFormatted {...props} />;
-
-/**
- * Default tester for text-based/string controls.
- * @type {RankedTester}
- */
-export const spectrumNumberFormatCellTester: RankedTester = rankWith(
-  4,
-  isNumberFormatControl
+export const SpectrumSliderCell = (props: CellProps & SpectrumInputProps) => (
+  <InputSlider {...props} />
 );
 
-export default withJsonFormsCellProps(SpectrumNumberFormatCell);
+export const SpectrumSliderCellTester: RankedTester = rankWith(
+  4,
+  isRangeControl
+);
+
+export default withJsonFormsCellProps(SpectrumSliderCell);

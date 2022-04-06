@@ -67,7 +67,7 @@ export const isSingleLevelCategorization: Tester = and(
   }
 );
 
-export const spectrumCategorizationRendererTester: RankedTester = rankWith(
+export const SpectrumCategorizationRendererTester: RankedTester = rankWith(
   1,
   isSingleLevelCategorization
 );

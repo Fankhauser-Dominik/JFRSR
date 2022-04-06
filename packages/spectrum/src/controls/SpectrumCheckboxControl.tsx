@@ -40,7 +40,7 @@ export const SpectrumCheckboxControl = (props: ControlProps) => (
   <SpectrumInputControl {...props} input={InputCheckbox} />
 );
 
-export const spectrumCheckboxControlTester: RankedTester = rankWith(
+export const SpectrumCheckboxControlTester: RankedTester = rankWith(
   2,
   isBooleanControl
 );

@@ -72,7 +72,7 @@ export const SpectrumBooleanControl = ({
   );
 };
 
-export const spectrumBooleanControlTester: RankedTester = rankWith(
+export const SpectrumBooleanControlTester: RankedTester = rankWith(
   2,
   and(isBooleanControl, optionIs('switch', true))
 );

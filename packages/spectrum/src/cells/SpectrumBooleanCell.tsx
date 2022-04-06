@@ -70,7 +70,7 @@ export const SpectrumBooleanCell: FunctionComponent<CellProps> = (
  * Default tester for boolean controls.
  * @type {RankedTester}
  */
-export const spectrumBooleanCellTester: RankedTester = rankWith(
+export const SpectrumBooleanCellTester: RankedTester = rankWith(
   2,
   and(isBooleanControl, optionIs('switch', true))
 );

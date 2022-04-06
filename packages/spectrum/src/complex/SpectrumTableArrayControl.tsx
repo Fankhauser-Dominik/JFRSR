@@ -83,7 +83,7 @@ const isTableOptionSet: Test.Tester = (uischema) => !!uischema.options?.table;
  * option is set.
  * @type {RankedTester}
  */
-export const spectrumTableArrayControlTester: RankedTester = rankWith(
+export const SpectrumTableArrayControlTester: RankedTester = rankWith(
   3,
   or(
     and(isObjectArrayControl, isTableOptionSet),

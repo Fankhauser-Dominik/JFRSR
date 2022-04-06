@@ -51,7 +51,7 @@ export const SpectrumEnumControl = (props: ControlProps) => {
     />
   );
 };
-export const spectrumEnumControlTester: RankedTester = rankWith(
+export const SpectrumEnumControlTester: RankedTester = rankWith(
   3,
   isEnumControl
 );

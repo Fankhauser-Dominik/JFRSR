@@ -73,7 +73,7 @@ const {
 const isTableOptionNotTrue: Test.Tester = (uischema) =>
   !uischema.options?.table;
 
-export const spectrumArrayControlGridTester: RankedTester = rankWith(
+export const SpectrumArrayControlGridTester: RankedTester = rankWith(
   3,
   or(
     and(isObjectArrayControl, isTableOptionNotTrue),

@@ -42,7 +42,7 @@ export const SpectrumSwitchControl = (props: ControlProps) => (
   <SpectrumInputControl {...props} input={InputSwitch} />
 );
 
-export const spectrumSwitchControlTester: RankedTester = rankWith(
+export const SpectrumSwitchControlTester: RankedTester = rankWith(
   3,
   and(isBooleanControl, optionIs('toggle', true))
 );

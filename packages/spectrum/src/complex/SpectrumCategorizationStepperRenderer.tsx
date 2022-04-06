@@ -57,7 +57,7 @@ import SpectrumProvider from '../additional/SpectrumProvider';
 
 import './SpectrumCategorizationStepper.css';
 
-export const spectrumCategorizationStepperRendererTester: RankedTester = rankWith(
+export const SpectrumCategorizationStepperRendererTester: RankedTester = rankWith(
   2,
   and(
     uiTypeIs('Categorization'),

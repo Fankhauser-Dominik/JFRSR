@@ -28,7 +28,6 @@ export * from './InputDateTime';
 export * from './InputEnum';
 export * from './InputInteger';
 export * from './InputNumber';
-export * from './InputNumberFormatted';
 export * from './InputRating';
 export * from './InputSlider';
 export * from './InputSwitch';
